@@ -1,0 +1,12 @@
+*.o
+# Libraries
+*.a
+
+# Shared objects (inc. Windows DLLs)
+# Executables
+*.out
+
+# Debug files
+*.dSYM/
+
+.DS_Store
