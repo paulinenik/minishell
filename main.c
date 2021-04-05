@@ -1,7 +1,7 @@
 #include <term.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft/libft.h"
+#include "libft.h"
 
 int     get_next_line(char **line)
 {
@@ -26,10 +26,13 @@ int     get_next_line(char **line)
 
 int     main(int argc, char **argv, char **envp)
 {
+	(void)argc;
+	(void)argv;
+	(void)envp;
 	char	buf[10000];
 	struct	termios	term;
 	int l;
-	char *term_name = "xterm-256color";
+	// char *term_name = "xterm-256color";
 
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);
