@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "libft/libft.h"
 #include <string.h>
+#include <stdio.h>
+#include "mshell.h"
 
 int     get_next_line(char **line)
 {
@@ -23,19 +25,42 @@ int     get_next_line(char **line)
 			(*line)[i] = buf[i];
 		(*line)[i] = '\0';
 	}
-	return (b_read > 0 ? 1 : b_read);
+	return (b_read);
 }
+
+char	**init(char **envp)
+{
+	int		i;
+	int		j;
+	char	**new;
+	
+	i = 0;
+	j = -1;
+	while(envp[i])
+		i++;
+	new = malloc((i + 1) * sizeof(char *));
+	new[i] = NULL;
+	while (++j < i)
+		new[j] = ft_strdup(envp[j]);
+	return (new);
+}
+
 
 int     main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	(void)envp;
-	char	buf[10000];
+	char	*buf;
+	char	**new;
 	struct	termios	term;
 	int l;
 	char *term_name = "xterm-256color";
+	t_data *data;
 
+	new = init(envp);
+	int i = -1;
+	while(new[++i])
+		printf("%s\n", new[i]);
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);
@@ -49,7 +74,8 @@ int     main(int argc, char **argv, char **envp)
 		tputs(save_cursor, 1, ft_putchar);
 		do
 		{
-			l = read(0, buf, 100);
+		// 	l = get_next_line(&buf);
+		 	l = read(0, buf, 1000000);
 			buf[l] = 0;
 			if(!ft_strncmp(buf,"\e[A",4))
 			{
@@ -63,16 +89,18 @@ int     main(int argc, char **argv, char **envp)
 				tputs(tigetstr("ed"), 1, ft_putchar);
 				write(1,"back",4);
 			}
-			else if(!strcmp(buf, key_backspace) && !strcmp(buf,"\177"))
+			else if(!ft_strncmp(buf, "\177", 2))
 			{
 				tputs(cursor_left, 1, ft_putchar);
 				tputs(tigetstr("ed"), 1, ft_putchar);
 			}
 			else
+			{
 				write (1, buf, l);
-			
-		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 2));
-
+			}
+		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
+		//sparse(buf, new);
 	 }
+	 write(1,"\n", 1);
 	return (0);
 }

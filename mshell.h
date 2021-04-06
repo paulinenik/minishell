@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/06 15:51:10 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/06 22:28:01 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,22 @@
 #include <term.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft.h"
-
-typedef struct	s_args
-{
-	char	*bin;
-	char    **args;
-}				t_args;
+#include "libft/libft.h"
+#include <stdio.h>
 
 typedef struct	s_data
 {
-	t_args			*arg;
+	char			*bin;
+	char    		**args;
 	struct s_data	*next;
 }				t_data;
 
-typedef struct	s_args
+typedef struct	s_all
 {
-	char	*bin;
-	char    **args;
-}				t_args;
+	//struct s_data	*next;
+}				t_all;
 
 void	parse(char *input, char **envp);
+void    logic(t_data *data);
 
 #endif
