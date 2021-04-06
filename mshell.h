@@ -31,6 +31,6 @@ typedef struct	s_all
 }				t_all;
 
 void	parse(char *input, char **envp);
-void    logic(t_data *data);
+void    get_pwd(t_data *data);
 
 #endif

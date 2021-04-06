@@ -7,6 +7,25 @@
 #include <stdio.h>
 #include "mshell.h"
 
+char	*add_char(char *str, char c)
+{
+	char	*reallocated;
+	size_t	str_len;
+
+	if (str == NULL)
+		str_len = 0;
+	else
+		str_len = ft_strlen(str);
+	reallocated = (char *)malloc(sizeof(char) * str_len + 2);
+	if (reallocated == NULL)
+		return(NULL);
+	ft_memcpy(reallocated, str, str_len);
+	reallocated[str_len] = c;
+	reallocated[str_len + 1] = '\0';
+	free(str);
+	return(reallocated);
+}
+
 int     get_next_line(char **line)
 {
 	char	buf[10000];
@@ -56,7 +75,8 @@ int     main(int argc, char **argv, char **envp)
 	int l;
 	char *term_name = "xterm-256color";
 	t_data *data;
-
+	data = malloc(sizeof (t_data));
+	data->bin = NULL;
 	new = init(envp);
 	int i = -1;
 	while(new[++i])
@@ -74,8 +94,7 @@ int     main(int argc, char **argv, char **envp)
 		tputs(save_cursor, 1, ft_putchar);
 		do
 		{
-		// 	l = get_next_line(&buf);
-		 	l = read(0, buf, 1000000);
+		 	l = read(0, buf, 100);
 			buf[l] = 0;
 			if(!ft_strncmp(buf,"\e[A",4))
 			{
@@ -96,10 +115,17 @@ int     main(int argc, char **argv, char **envp)
 			}
 			else
 			{
-				write (1, buf, l);
+				//printf("%s-buf\n",buf);
+				data->bin = add_char(data->bin, *buf);
+				// printf("%s - data\n",data->bin);
+				write (1, buf, 1);
 			}
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
 		//sparse(buf, new);
+		//printf("%s",buf);
+		
+		get_pwd(data);
+		data->bin = NULL;
 	 }
 	 write(1,"\n", 1);
 	return (0);
