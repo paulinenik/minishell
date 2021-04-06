@@ -47,9 +47,9 @@ void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(const char *c);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
-void				ft_putchar_fd(char c, int fd);
-void				ft_putstr_fd(char *s, int fd);
-void				ft_putendl_fd(char *s, int fd);
+int					ft_putchar(int i);
+void				ft_putstr(char *s, int *i);
+void				ft_putendl(char *s, int *i);
 void				ft_putnbr_fd(int n, int fd);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 

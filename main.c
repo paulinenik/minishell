@@ -1,7 +1,9 @@
 #include <term.h>
+#include <termios.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft.h"
+#include "libft/libft.h"
+#include <string.h>
 
 int     get_next_line(char **line)
 {
@@ -32,7 +34,7 @@ int     main(int argc, char **argv, char **envp)
 	char	buf[10000];
 	struct	termios	term;
 	int l;
-	// char *term_name = "xterm-256color";
+	char *term_name = "xterm-256color";
 
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);
@@ -40,17 +42,37 @@ int     main(int argc, char **argv, char **envp)
 	tcsetattr(0, TCSANOW, &term);
 	// term.c_cc[VMIN] = 1;
 	// term.c_cc[VTIME] = 0;
-	//tgetent(0, term_name);
-	write(1, "minishell$ ", 12);
-	while(ft_strncmp(buf, "\4", 2))
+	tgetent(0, term_name);
+	 while(ft_strncmp(buf, "\4", 2))
 	{
-	do
-	{
-		l = read(0, buf, 100);
-		write (1, buf, l);
-	} while (ft_strncmp(buf, "\n", 1));
+		write(1, "minishell$ ", 12);
+		tputs(save_cursor, 1, ft_putchar);
+		do
+		{
+			l = read(0, buf, 100);
+			buf[l] = 0;
+			if(!ft_strncmp(buf,"\e[A",4))
+			{
+				tputs(restore_cursor, 1, ft_putchar);
+				tputs(tigetstr("ed"), 1, ft_putchar);
+				write(1,"next",4);
+			}
+			else if(!ft_strncmp(buf,"\e[B", 4))
+			{
+				tputs(restore_cursor, 1, ft_putchar);
+				tputs(tigetstr("ed"), 1, ft_putchar);
+				write(1,"back",4);
+			}
+			else if(!strcmp(buf, key_backspace) && !strcmp(buf,"\177"))
+			{
+				tputs(cursor_left, 1, ft_putchar);
+				tputs(tigetstr("ed"), 1, ft_putchar);
+			}
+			else
+				write (1, buf, l);
+			
+		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 2));
 
-	write(1, "minishell$ ", 12);
-	}
+	 }
 	return (0);
 }

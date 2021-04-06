@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/03 16:23:01 by jshondra          #+#    #+#             */
-/*   Updated: 2020/11/04 18:50:17 by jshondra         ###   ########.fr       */
+/*   Created: 2020/11/03 16:30:28 by jshondra          #+#    #+#             */
+/*   Updated: 2020/12/06 21:15:13 by jshondra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar_fd(char c, int fd)
+void	ft_putstr(char *s, int *i)
 {
-	if (!fd)
-		return ;
-	write(fd, &c, 1);
+	if (s)
+	{
+		while (*s)
+		{
+			ft_putchar(*s);
+			s++;
+		}
+	}
 }
