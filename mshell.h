@@ -15,20 +15,22 @@
 #include <term.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft.h"
+#include "libft/libft.h"
+#include <stdio.h>
 
-##dgfdgfdg
-typedef struct	s_args
-{
-	char	*bin;
-	char    **args;
-}				t_args;
 typedef struct	s_data
 {
-	t_args			*arg;
+	char			*bin;
+	char    		**args;
 	struct s_data	*next;
 }				t_data;
 
+typedef struct	s_all
+{
+	//struct s_data	*next;
+}				t_all;
+
 void	parse(char *input, char **envp);
+void    logic(t_data *data);
 
 #endif

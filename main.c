@@ -5,6 +5,7 @@
 #include "libft/libft.h"
 #include <string.h>
 #include <stdio.h>
+#include "mshell.h"
 
 int     get_next_line(char **line)
 {
@@ -54,7 +55,7 @@ int     main(int argc, char **argv, char **envp)
 	struct	termios	term;
 	int l;
 	char *term_name = "xterm-256color";
-
+	t_data *data;
 
 	new = init(envp);
 	int i = -1;
@@ -71,11 +72,6 @@ int     main(int argc, char **argv, char **envp)
 	{
 		write(1, "minishell$ ", 12);
 		tputs(save_cursor, 1, ft_putchar);
-		while(tputs(cursor_right, 1, ft_putchar))
-		{
-			i++;
-		}
-		printf("%d", i);
 		do
 		{
 		// 	l = get_next_line(&buf);
@@ -93,15 +89,17 @@ int     main(int argc, char **argv, char **envp)
 				tputs(tigetstr("ed"), 1, ft_putchar);
 				write(1,"back",4);
 			}
-			else if(!strcmp(buf, "\177"))
+			else if(!ft_strncmp(buf, "\177", 2))
 			{
 				tputs(cursor_left, 1, ft_putchar);
 				tputs(tigetstr("ed"), 1, ft_putchar);
 			}
 			else
+			{
 				write (1, buf, l);
-			
+			}
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
+		//sparse(buf, new);
 	 }
 	 write(1,"\n", 1);
 	return (0);
