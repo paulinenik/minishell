@@ -23,14 +23,19 @@ typedef struct	s_data
 	char			*bin;
 	char    		**args;
 	struct s_data	*next;
+	char			**new;
+	
 }				t_data;
 
 typedef struct	s_all
 {
-	//struct s_data	*next;
+	char			**env;
+	char			*test;
 }				t_all;
 
 void	parse(char *input, char **envp);
 void    get_pwd(t_data *data);
+void    get_export(t_data *data);
+char	**init(char **envp, int k);
 
 #endif

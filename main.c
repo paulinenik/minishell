@@ -47,7 +47,7 @@ int     get_next_line(char **line)
 	return (b_read);
 }
 
-char	**init(char **envp)
+char	**init(char **envp, int k)
 {
 	int		i;
 	int		j;
@@ -57,8 +57,8 @@ char	**init(char **envp)
 	j = -1;
 	while(envp[i])
 		i++;
-	new = malloc((i + 1) * sizeof(char *));
-	new[i] = NULL;
+	new = malloc((i + 1 + k) * sizeof(char *));
+	new[i + k] = NULL;
 	while (++j < i)
 		new[j] = ft_strdup(envp[j]);
 	return (new);
@@ -71,16 +71,18 @@ int     main(int argc, char **argv, char **envp)
 	(void)argv;
 	char	*buf;
 	char	**new;
+	char	**test;
 	struct	termios	term;
 	int l;
 	char *term_name = "xterm-256color";
 	t_data *data;
 	data = malloc(sizeof (t_data));
 	data->bin = NULL;
-	new = init(envp);
-	int i = -1;
-	while(new[++i])
-		printf("%s\n", new[i]);
+	new = init(envp, 0);
+	data->new = new;
+	// int i = -1;
+	// while(new[++i])
+	// 	printf("%s\n", new[i]);
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);
@@ -88,6 +90,25 @@ int     main(int argc, char **argv, char **envp)
 	// term.c_cc[VMIN] = 1;
 	// term.c_cc[VTIME] = 0;
 	tgetent(0, term_name);
+	test = malloc((3) * sizeof(char*));
+	for(int j = 0; j < 3; j++)
+	{
+		test[j] = malloc(3+1);
+	}
+	// unsigned char c;
+	// for (int i = 0; i < 2; i++) {
+    //     for (int j = 0; j < 3; j++) {
+    //         printf("Enter your value.\n");
+    //         scanf("%c", &c);
+    //         test[i][j] = c;
+    //     }
+    // }
+		test[0] = "TER\0";
+		test[1] = "ASD\0";
+		test[2] = NULL;
+		data->args = test;
+		//printf("%s\n%s\n",test[0],test[1]);
+		int i = 0;
 	 while(ft_strncmp(buf, "\4", 2))
 	{
 		write(1, "minishell$ ", 12);
@@ -123,9 +144,15 @@ int     main(int argc, char **argv, char **envp)
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
 		//sparse(buf, new);
 		//printf("%s",buf);
-		
+	
+		// data->args = NULL;
 		get_pwd(data);
+		get_export(data);
+
+		free(data->bin);
+		test = NULL;
 		data->bin = NULL;
+		i++;	
 	 }
 	 write(1,"\n", 1);
 	return (0);
