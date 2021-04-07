@@ -2,29 +2,10 @@
 #include <termios.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft/libft.h"
+#include "libft.h"
 #include <string.h>
 #include <stdio.h>
 #include "mshell.h"
-
-char	*add_char(char *str, char c)
-{
-	char	*reallocated;
-	size_t	str_len;
-
-	if (str == NULL)
-		str_len = 0;
-	else
-		str_len = ft_strlen(str);
-	reallocated = (char *)malloc(sizeof(char) * str_len + 2);
-	if (reallocated == NULL)
-		return(NULL);
-	ft_memcpy(reallocated, str, str_len);
-	reallocated[str_len] = c;
-	reallocated[str_len + 1] = '\0';
-	free(str);
-	return(reallocated);
-}
 
 int     get_next_line(char **line)
 {
@@ -74,13 +55,13 @@ int     main(int argc, char **argv, char **envp)
 	struct	termios	term;
 	int l;
 	char *term_name = "xterm-256color";
-	t_data *data;
-	data = malloc(sizeof (t_data));
-	data->bin = NULL;
+	char	*input;
+	input = NULL;
+
 	new = init(envp);
 	int i = -1;
-	while(new[++i])
-		printf("%s\n", new[i]);
+	// while(new[++i])
+	// 	printf("%s\n", new[i]);
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);
@@ -115,17 +96,14 @@ int     main(int argc, char **argv, char **envp)
 			}
 			else
 			{
-				//printf("%s-buf\n",buf);
-				data->bin = add_char(data->bin, *buf);
-				// printf("%s - data\n",data->bin);
+				input = add_char(input, *buf);
 				write (1, buf, 1);
 			}
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
-		//sparse(buf, new);
-		//printf("%s",buf);
-		
-		get_pwd(data);
-		data->bin = NULL;
+		input = add_char(input, '\0');
+		parse(input, new);
+		free(input);
+		input = NULL;
 	 }
 	 write(1,"\n", 1);
 	return (0);

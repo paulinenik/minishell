@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/06 22:28:01 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/07 19:28:21 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 #include <stdlib.h>
 #include "libft/libft.h"
 #include <stdio.h>
-
 typedef struct	s_data
 {
 	char			*bin;
 	char    		**args;
+	// char			**env;
 	struct s_data	*next;
 }				t_data;
 
@@ -31,6 +31,15 @@ typedef struct	s_all
 }				t_all;
 
 void	parse(char *input, char **envp);
+t_data	*init_data(void);
+char	*add_char(char *str, char c);
+char	*init_exec_name(char **input, char **envp);
+char	*single_qoutation(char **input, char *arg);
+char	*double_quotation(char **input, char **envp, char *arg);
+char	*get_envp(char **input, char **envp, char *arg);
+char 	*get_var_value(char **envp, char *key);
+int		ft_putchar(int c);
+
 void    get_pwd(t_data *data);
 
 #endif
