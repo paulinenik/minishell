@@ -18,16 +18,80 @@ void	parse(char *input, char **envp)
 	t_data	*data;
 
 	data = init_data();
-	printf("%s - input\n", input);
+	// printf("%s - input\n", input);
 	data->bin = init_exec_name(&input, envp);
-	// while (input)
-	// {
-	// 	// init_arg(&input, envp, data->arg);
-	// 	// check_specchar(&input, envp, data);
-	// }
-	//pass to process(data, envp)
 	printf("%s - binary name\n", data->bin);
+	while (*input != '\0')
+	{
+		if (*input == ' ')
+		{
+			data->args = get_args(&input, envp);
+		}
+		// check_specchar(&input, envp, data);
+		input++;
+	}
+	// pass to process(data, envp)
 	get_pwd(data);
+	// exit(0);
+}
+
+char	**get_args(char **input, char **envp)
+{
+	char	**args;
+	char	*content;
+	t_list	*item;
+	t_list	*list;
+
+	args = NULL;
+	content = NULL;
+	(*input)++;
+	while (*input != '\0' && **input != ';' && **input != '|' && **input !='\n')
+	{
+		content = init_exec_name(input, envp);
+		item = ft_lstnew(content);
+		if (item == NULL)
+			exit(0);
+		printf("%s - output\n", *input);
+		ft_lstadd_back(&list, item);
+		// free(content);
+		// free(item);
+		// content = NULL;
+		if (**input == ' ')
+			(*input)++;
+		// printf("%s - output\n", *input);
+	}
+	args = list_to_array(list);
+	return (args);
+}
+
+char	**list_to_array(t_list *list)
+{
+	char	**array;
+	t_list	*head;
+	int		list_size;
+	int		i;
+
+	i = 0;
+	head = list;
+	array = (char **)malloc(sizeof(char *) * ft_lstsize(list) + 1);
+	if (array == NULL)
+		exit(0);
+	list_size = ft_lstsize(list);
+	printf("%d - size of list\n", list_size);
+	while (i < list_size)
+	{
+		array[i] = ft_strdup(list->content);
+		i++;
+		list = list->next;
+	}
+	array[i] = NULL;
+	while(i >= 0)
+	{
+		printf("%s - arg[%d]\n", array[i], i);
+		i--;
+	}
+	ft_lstclear(&head, &free);
+	return (array);
 }
 
 char	*add_char(char *str, char c)
