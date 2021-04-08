@@ -45,7 +45,7 @@ char	**get_args(char **input, char **envp)
 	args = NULL;
 	content = NULL;
 	(*input)++;
-	while (*input != '\0' && **input != ';' && **input != '|' && **input !='\n')
+	while (**input != '\0' && **input != ';' && **input != '|' && **input !='\n')
 	{
 		content = init_exec_name(input, envp);
 		item = ft_lstnew(content);
@@ -116,11 +116,11 @@ char	*add_char(char *str, char c)
 char	*init_exec_name(char **input, char **envp)
 {
 	char	*result;
-	size_t	name_len;
+	// size_t	name_len;
 
 	result = NULL;
 	// printf("|%s |- input\n", *input);
-	while (*input != '\0' && **input !=' ' && **input != ';' && **input != '|' && **input !='\n')
+	while (**input != '\0' && **input !=' ' && **input != ';' && **input != '|' && **input !='\n')
 	{
 		if (**input == 39)
 			result = single_qoutation(input, result);

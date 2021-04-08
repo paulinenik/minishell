@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 11:54:45 by jshondra          #+#    #+#             */
-/*   Updated: 2020/11/04 18:43:13 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/04/08 20:31:24 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static char		*plus(int n, int l)
 {
 	int		nbr;
-	int		k;
+	// int		k;
 	char	*str;
 
-	k = l;
+	// k = l;
 	nbr = n;
 	while (n != 0)
 	{

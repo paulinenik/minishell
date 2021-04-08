@@ -1,6 +1,7 @@
 *.o
 # Libraries
 *.a
+*.gch
 
 # Shared objects (inc. Windows DLLs)
 # Executables
