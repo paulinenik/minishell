@@ -7,12 +7,9 @@ t_data	*init_data(void)
 	data = (t_data *)malloc(sizeof(t_data));
 	// if (data == NULL)
 	// 	error
-	data->arg = (t_args *)malloc(sizeof(t_args));
-	// if (data->arg == NULL)
-	// error
+	data->bin = NULL;
+	data->args = NULL;
 	data->next = NULL;
-	data->arg->bin = NULL;
-	//malloc for args
 	return (data);
 }
 
@@ -20,15 +17,101 @@ void	parse(char *input, char **envp)
 {
 	t_data	*data;
 
+	if (ft_strlen(input) == 1)
+		return;
 	data = init_data();
-	init_exec_name(&input, envp, data->arg);
-	while (input)
+	// printf("|%s| - input\n", input);
+	data->bin = init_exec_name(&input, envp);
+	printf("%s - binary name\n", data->bin);
+	while (*input != '\0')
 	{
-		// init_arg(&input, envp, data->arg);
-		// check_specchar(&input, envp, data);
+		if (*input == ' ')
+		{
+			data->args = get_args(&input, envp);
+		}
+		if (ft_strchr("|><;", *input) != NULL)
+			check_specchar(&input, envp, data);
+		// else
+		input++;
 	}
-	free(input);
-	//pass to process(data, envp)
+	// pass to process(data, envp)
+	get_pwd(data);
+}
+
+void	check_specchar(char **input, char **envp, t_data *data)
+{
+	printf("We are in specchar now!\n");
+	if (**input == ';')
+	{
+		// pass to process
+		get_pwd(data);
+		free(data); //free data
+		(*input)++;
+		parse(*input, envp);
+	}
+	// if (**input == '|')
+		//pipe
+		// 
+	//redirect
+}
+
+char	**get_args(char **input, char **envp)
+{
+	char	**args;
+	char	*content;
+	t_list	*item;
+	t_list	*list;
+
+	args = NULL;
+	content = NULL;
+	list = NULL;
+	while (**input == ' ')
+		(*input)++;
+	while (**input != '\0' && **input != ';' && **input != '|' && **input !='\n')
+	{
+		content = init_exec_name(input, envp);
+		item = ft_lstnew(content);
+		if (item == NULL)
+			exit(0);
+		ft_lstadd_back(&list, item);
+		// free(content);
+		// free(item);
+		// content = NULL;
+		if (**input == ' ')
+			(*input)++;
+	}
+	args = list_to_array(list);
+	return (args);
+}
+
+char	**list_to_array(t_list *list)
+{
+	char	**array;
+	t_list	*head;
+	int		list_size;
+	int		i;
+
+	i = 0;
+	head = list;
+	array = (char **)malloc(sizeof(char *) * ft_lstsize(list) + 1);
+	if (array == NULL)
+		exit(0);
+	list_size = ft_lstsize(list);
+	// printf("%d - size of list\n", list_size);
+	while (i < list_size)
+	{
+		array[i] = ft_strdup(list->content);
+		i++;
+		list = list->next;
+	}
+	array[i] = NULL;
+	while(i >= 0)
+	{
+		printf("%s - arg[%d]\n", array[i], i);
+		i--;
+	}
+	ft_lstclear(&head, &free);
+	return (array);
 }
 
 char	*add_char(char *str, char c)
@@ -50,41 +133,41 @@ char	*add_char(char *str, char c)
 	return(reallocated);
 }
 
-void	init_exec_name(char **input, char **envp, t_args *arg)
+char	*init_exec_name(char **input, char **envp)
 {
-	char	*exec;
-	size_t	name_len;
+	char	*result;
 
-	exec = NULL;
-	while (*input != NULL && **input !=' ' && **input != ';' && **input != '|')
+	result = NULL;
+	while (**input == ' ')
+		(*input)++;
+	while (**input != '\0' && **input !=' ' && **input != ';' && **input != '|' && **input !='\n')
 	{
 		if (**input == 39)
-			exec = single_qoutation(input, exec);
+			result = single_qoutation(input, result);
 		else if (**input == 34)
-			exec = double_quotation(input, envp, exec);
+			result = double_quotation(input, envp, result);
 		else if (**input == 36)
-			exec = get_envp(input, envp, exec);
+			result = get_envp(input, envp, result);
 		// if (**input == '\')
 			//экранирование
 		else
-			exec = add_char(exec, **input);
-		(*input)++;
+		{
+			result = add_char(result, **input);
+			(*input)++;
+		}
 	}
-	if (arg->bin == NULL)
-		arg->bin = exec;
-	// else:
-	// add args to list
+	return (result);
 }
 
 char	*single_qoutation(char **input, char *arg)
 {
 	(*input)++;
-	while (**input != 39)
+	while (**input != 39 && **input != '\n')
 	{
 		arg = add_char(arg, **input);
 		(*input)++;
 	}
-	(*input)++;
+	// (*input)++;
 	return (arg);
 }
 
@@ -94,7 +177,7 @@ char	*double_quotation(char **input, char **envp, char *arg)
 	while (**input != 34)
 	{
 		if (**input == 36)
-			arg = get_envp_val(input, envp, arg);
+			arg = get_envp(input, envp, arg);
 		// if (**input == '\')
 			//экранирование
 		arg = add_char(arg, **input);
@@ -110,15 +193,20 @@ char	*get_envp(char **input, char **envp, char *arg)
 
 	key = NULL;
 	(*input)++;
+	// printf("%s - input in get_envp\n", *input);
 	while(**input != ' ' && **input != '\\' && **input != 39
-	&& **input != 34 && **input != ';' && **input != '|' && **input != 36)
+	&& **input != 34 && **input != ';' && **input != '|' && **input != 36 && **input != '\n')
 	{
 		key = add_char(key, **input);
 		if (key == NULL)
 			return (NULL);
 		(*input)++;
 	}
-	arg = ft_strjoin(arg, get_var_value(envp, key)); //free key
+	key = add_char(key, '=');
+	if (arg == NULL)
+		arg = ft_strdup(get_var_value(envp, key));
+	else
+		arg = ft_strjoin(arg, get_var_value(envp, key)); //free key
 	if (arg == NULL)
 		return (NULL);
 	return (arg);
@@ -130,7 +218,8 @@ char *get_var_value(char **envp, char *key)
 	int		i;
 
 	i = 0;
-	while (envp[i] && ft_strncmp(envp[i], key, ft_strlen(key)) != 0)
+	// printf("%s - key\n", key);
+	while (envp[i] && (ft_strncmp(envp[i], key, ft_strlen(key)) != 0))
 		i++;
 	if (envp[i] != NULL)
 		value = ft_strchr(envp[i], '=') + 1;
@@ -140,19 +229,6 @@ char *get_var_value(char **envp, char *key)
 		if (value == NULL)
 			return (NULL);
 	}
+	// printf("%s - value\n", value);
 	return (value);
-}
-
-int main(int argc, char **argv, char **envp)
-{
-	char *s;
-
-	(void)argc;
-	(void)argv;
-	s = NULL;
-	// s = ft_strdup("");
-	// s = ft_strdup("Hello World");
-	// s = add_char(s, '!');
-	printf("%s\n", envp[0]);
-	free(s);
 }

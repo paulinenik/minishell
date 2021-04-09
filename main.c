@@ -2,29 +2,10 @@
 #include <termios.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft/libft.h"
+#include "libft.h"
 #include <string.h>
 #include <stdio.h>
 #include "mshell.h"
-
-char	*add_char(char *str, char c)
-{
-	char	*reallocated;
-	size_t	str_len;
-
-	if (str == NULL)
-		str_len = 0;
-	else
-		str_len = ft_strlen(str);
-	reallocated = (char *)malloc(sizeof(char) * str_len + 2);
-	if (reallocated == NULL)
-		return(NULL);
-	ft_memcpy(reallocated, str, str_len);
-	reallocated[str_len] = c;
-	reallocated[str_len + 1] = '\0';
-	free(str);
-	return(reallocated);
-}
 
 int     get_next_line(char **line)
 {
@@ -71,15 +52,14 @@ int     main(int argc, char **argv, char **envp)
 	(void)argv;
 	char	*buf;
 	char	**new;
-	char	**test;
+	// char	**test;
 	struct	termios	term;
 	int l;
 	char *term_name = "xterm-256color";
-	t_data *data;
-	data = malloc(sizeof (t_data));
-	data->bin = NULL;
-	new = init(envp, 0);
-	data->new = new;
+	char	*input;
+	input = NULL;
+
+	new = init(envp);
 	// int i = -1;
 	// while(new[++i])
 	// 	printf("%s\n", new[i]);
@@ -90,11 +70,11 @@ int     main(int argc, char **argv, char **envp)
 	// term.c_cc[VMIN] = 1;
 	// term.c_cc[VTIME] = 0;
 	tgetent(0, term_name);
-	test = malloc((3) * sizeof(char*));
-	for(int j = 0; j < 3; j++)
-	{
-		test[j] = malloc(3+1);
-	}
+	// test = malloc((3) * sizeof(char*));
+	// for(int j = 0; j < 3; j++)
+	// {
+	// 	test[j] = malloc(3+1);
+	// }
 	// unsigned char c;
 	// for (int i = 0; i < 2; i++) {
     //     for (int j = 0; j < 3; j++) {
@@ -103,10 +83,9 @@ int     main(int argc, char **argv, char **envp)
     //         test[i][j] = c;
     //     }
     // }
-		test[0] = "ASC\0";
-		test[1] = "ASE\0";
-		test[2] = NULL;
-		data->args = test;
+		// test[0] = "ASC\0";
+		// test[1] = "ASE\0";
+		// test[2] = NULL;
 		//printf("%s\n%s\n",test[0],test[1]);
 		int i = 0;
 	 while(ft_strncmp(buf, "\4", 2))
@@ -136,22 +115,18 @@ int     main(int argc, char **argv, char **envp)
 			}
 			else
 			{
-				//printf("%s-buf\n",buf);
-				data->bin = add_char(data->bin, *buf);
-				// printf("%s - data\n",data->bin);
+				input = add_char(input, *buf);
 				write (1, buf, 1);
 			}
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
-		//sparse(buf, new);
-		//printf("%s",buf);
-	
-		// data->args = NULL;
-		get_pwd(data);
-		get_export(data);
+		input = add_char(input, '\0');
+		parse(input, new);
+		free(input);
+		input = NULL;
+		// get_pwd(data);
+		// get_export(data);
 
-		free(data->bin);
-		test = NULL;
-		data->bin = NULL;
+		// test = NULL;
 		i++;
 	 }
 	 write(1,"\n", 1);

@@ -3,12 +3,12 @@
 
 void    get_pwd(t_data *data)
 {
-	char dir[66];
-	if (!ft_strncmp(data->bin, "pwd", 3))
-	{
-		getcwd(dir, 66);
-		printf("%s\n", dir);
-	}
+    char dir[66];
+    if (!ft_strncmp(data->bin, "pwd\0", 4))
+    {
+        getcwd(dir, 66);
+        printf("%s\n", dir);
+    }
 }
 
 // void    get_env(t_data *data)
@@ -115,4 +115,3 @@ void    get_export(t_data *data)
 		while(copy[++i])
 			printf("declare -x \"%s\"\n", copy[i]);
 	}
-}
