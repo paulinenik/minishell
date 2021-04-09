@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/06 22:28:01 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/09 16:55:46 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void	parse(char *input, char **envp);
 void    get_pwd(t_data *data);
 void    get_export(t_data *data);
 char	**init(char **envp, int k);
+char	*delete_char(char *str);
 
 #endif
