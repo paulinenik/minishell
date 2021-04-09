@@ -8,7 +8,7 @@ t_data	*init_data(void)
 	// if (data == NULL)
 	// 	error
 	data->bin = NULL;
-	//malloc for args
+	data->args = NULL;
 	data->next = NULL;
 	return (data);
 }
@@ -17,8 +17,10 @@ void	parse(char *input, char **envp)
 {
 	t_data	*data;
 
+	if (ft_strlen(input) == 1)
+		return;
 	data = init_data();
-	// printf("%s - input\n", input);
+	// printf("|%s| - input\n", input);
 	data->bin = init_exec_name(&input, envp);
 	printf("%s - binary name\n", data->bin);
 	while (*input != '\0')
@@ -27,12 +29,30 @@ void	parse(char *input, char **envp)
 		{
 			data->args = get_args(&input, envp);
 		}
-		// check_specchar(&input, envp, data);
+		if (ft_strchr("|><;", *input) != NULL)
+			check_specchar(&input, envp, data);
+		// else
 		input++;
 	}
 	// pass to process(data, envp)
 	get_pwd(data);
-	// exit(0);
+}
+
+void	check_specchar(char **input, char **envp, t_data *data)
+{
+	printf("We are in specchar now!\n");
+	if (**input == ';')
+	{
+		// pass to process
+		get_pwd(data);
+		free(data); //free data
+		(*input)++;
+		parse(*input, envp);
+	}
+	// if (**input == '|')
+		//pipe
+		// 
+	//redirect
 }
 
 char	**get_args(char **input, char **envp)
@@ -44,21 +64,21 @@ char	**get_args(char **input, char **envp)
 
 	args = NULL;
 	content = NULL;
-	(*input)++;
+	list = NULL;
+	while (**input == ' ')
+		(*input)++;
 	while (**input != '\0' && **input != ';' && **input != '|' && **input !='\n')
 	{
 		content = init_exec_name(input, envp);
 		item = ft_lstnew(content);
 		if (item == NULL)
 			exit(0);
-		printf("%s - output\n", *input);
 		ft_lstadd_back(&list, item);
 		// free(content);
 		// free(item);
 		// content = NULL;
 		if (**input == ' ')
 			(*input)++;
-		// printf("%s - output\n", *input);
 	}
 	args = list_to_array(list);
 	return (args);
@@ -77,7 +97,7 @@ char	**list_to_array(t_list *list)
 	if (array == NULL)
 		exit(0);
 	list_size = ft_lstsize(list);
-	printf("%d - size of list\n", list_size);
+	// printf("%d - size of list\n", list_size);
 	while (i < list_size)
 	{
 		array[i] = ft_strdup(list->content);
@@ -116,10 +136,10 @@ char	*add_char(char *str, char c)
 char	*init_exec_name(char **input, char **envp)
 {
 	char	*result;
-	// size_t	name_len;
 
 	result = NULL;
-	// printf("|%s |- input\n", *input);
+	while (**input == ' ')
+		(*input)++;
 	while (**input != '\0' && **input !=' ' && **input != ';' && **input != '|' && **input !='\n')
 	{
 		if (**input == 39)
@@ -135,7 +155,6 @@ char	*init_exec_name(char **input, char **envp)
 			result = add_char(result, **input);
 			(*input)++;
 		}
-		// printf("|%s| - input in exec-name\n", *input);
 	}
 	return (result);
 }
@@ -184,14 +203,12 @@ char	*get_envp(char **input, char **envp, char *arg)
 		(*input)++;
 	}
 	key = add_char(key, '=');
-	// printf("%s - key in get_envp\n", key);
 	if (arg == NULL)
 		arg = ft_strdup(get_var_value(envp, key));
 	else
 		arg = ft_strjoin(arg, get_var_value(envp, key)); //free key
 	if (arg == NULL)
 		return (NULL);
-	// printf("%s - arg in get_envp\n", arg);
 	return (arg);
 }
 
