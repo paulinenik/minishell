@@ -27,7 +27,7 @@ char	**alph_sort(char **copy, int n)
         	for(int j = i + 1; j < n; j++)
 			{
 				printf("hellwo\n");
-				if(ft_strncmp(copy[i], copy[j], 1) > 0)
+				if(ft_strcmp(copy[i], copy[j]) > 0)
 				{
 					char *tmp = copy[i];
 					copy[i] = copy[j];
@@ -39,13 +39,33 @@ char	**alph_sort(char **copy, int n)
 		return(copy);
 }
 
+int		save_index(t_data *data)
+{
+	int i = -1;
+	int j = -1;
+	int k = 0;
+
+	while(data->args[++i])
+		{
+			j = -1;
+			while(data->new[++j])
+				if (!ft_strncmp(data->new[j], data->args[i], ft_strlen(data->new[j])))
+				{
+					k++;
+					break ;
+				}
+		}
+		return(k);
+}
+
 void    get_export(t_data *data)
 {
 	int i;
 	int j;
 	int nbr;
 	char **copy;
-	char *s;
+	int k = 0;
+	int len;
 
 	i = -1;
 	j = -1;
@@ -58,12 +78,35 @@ void    get_export(t_data *data)
 		while(data->args[++i]);
 		nbr = i;
 		while(data->new[++j]);
-		copy = init(data->new, i);
-		i++;
-		while(--i > 0)
-			copy[j + i - 1] = ft_strdup(data->args[i - 1]);
-		copy = alph_sort(copy, j + nbr);
-		j++;
+		len = j;
+		k = save_index(data);
+		copy = init(data->new, i - k);
+		i = -1;
+		while(data->args[++i])
+		{
+			j = -1;
+			k = -1;
+			while(data->new[++j])
+			{
+				if (!ft_strncmp(data->new[j], data->args[i], ft_strlen(data->new[j])))
+				{
+					k = i;
+					break ;
+				}
+			}
+			if (k == -1)
+			{
+				copy[len] = ft_strdup(data->args[i]);
+				len++;
+			}
+
+		}
+		copy[len] = NULL;
+		i = -1;
+		while(copy[++i]);
+		copy = alph_sort(copy, i);
+		j = -1;
+		while(data->new[++j]);
 		while(--j >= 0)
 		   free(data->new[j]);
 		free(data->new);

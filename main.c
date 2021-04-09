@@ -103,8 +103,8 @@ int     main(int argc, char **argv, char **envp)
     //         test[i][j] = c;
     //     }
     // }
-		test[0] = "TER\0";
-		test[1] = "ASD\0";
+		test[0] = "ASC\0";
+		test[1] = "ASE\0";
 		test[2] = NULL;
 		data->args = test;
 		//printf("%s\n%s\n",test[0],test[1]);
@@ -152,7 +152,7 @@ int     main(int argc, char **argv, char **envp)
 		free(data->bin);
 		test = NULL;
 		data->bin = NULL;
-		i++;	
+		i++;
 	 }
 	 write(1,"\n", 1);
 	return (0);
