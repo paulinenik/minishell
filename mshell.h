@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/12 17:47:16 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/12 19:17:09 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ typedef struct	s_data
 {
 	char			*bin;
 	char    		**args;
-	// char			**env;
 	struct s_data	*next;
-	char			**new;
 	
 }				t_data;
 
@@ -50,5 +48,7 @@ void    get_pwd(t_all *all);
 void    get_export(t_all *all);
 char	**init(char **envp, int k);
 char	*delete_char(char *str);
+void	td_array_clear(char **arr);
+void	clear_all(char **input, t_data *data);
 
 #endif

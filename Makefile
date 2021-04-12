@@ -2,6 +2,7 @@ SRCS	= 	main.c \
 			parse.c \
 			get_pwd.c \
 			delete_char.c \
+			clear.c \
 
 LIBFT	= libft/libft.a
 
@@ -19,8 +20,8 @@ CFLAGS = -Wall -Wextra -Werror
 
 $(NAME):	$(LIBFT) $(HDRS) $(SRCS) mshell.h
 			@cp $(LIBFT) .
-			$(CC) $(SRCS) $(TCAP_FLAGS) -I./libft libft.a -o $(NAME)
-			@echo "\033[36mminichell is compiled successfully\n"
+			$(CC) $(SRCS) -g $(TCAP_FLAGS) -I./libft libft.a -o $(NAME)
+			@echo "\033[36mminishell is compiled successfully\n\033[0m"
 
 $(LIBFT):	
 			@$(MAKE) -C ./libft
