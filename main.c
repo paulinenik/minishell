@@ -110,7 +110,7 @@ int     main(int argc, char **argv, char **envp)
 		parse(input, all);
 		free(input);
 		input = NULL;
-		//clear_all(&input, all->data);
+		clear_all(&all->data);
 		// write(1, "hello\n", 6);
 		// printf("%s input after clear\n", input);
 		i++;

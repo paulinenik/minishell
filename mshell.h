@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/12 19:17:09 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/12 21:56:06 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ char	*delete_char(char *str);
 void    get_env(t_all *all);
 void	get_cd(t_all *all);
 void	td_array_clear(char **arr);
-void	clear_all(char **input, t_data *data);
+void	clear_all(t_data **data);
 
 #endif
