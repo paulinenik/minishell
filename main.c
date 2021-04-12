@@ -106,8 +106,11 @@ int     main(int argc, char **argv, char **envp)
 			}
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
 		input = add_char(input, '\0');
+		
 		parse(input, all);
-		clear_all(&input, all->data);
+		free(input);
+		input = NULL;
+		//clear_all(&input, all->data);
 		// write(1, "hello\n", 6);
 		// printf("%s input after clear\n", input);
 		i++;

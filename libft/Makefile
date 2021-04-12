@@ -19,14 +19,11 @@ SRCS = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c 
        ft_atoi.c ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_toupper.c ft_tolower.c \
        ft_calloc.c ft_strdup.c \
        ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_putnbr_fd.c ft_putchar.c ft_itoa.c \
-	   ft_strmapi.c ft_strcmp.c \
-
-BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c \
-		ft_lstiter.c \
+	   ft_strmapi.c ft_strcmp.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
+	   ft_lstdelone.c ft_lstclear.c ft_lstiter.c \
 
 HEAD = libft.h
 
-OBJSBONUS = $(BONUS:.c=.o)
 
 OBJS = $(SRCS:.c=.o)
 
@@ -36,9 +33,6 @@ $(NAME): $(OBJS)
 	ar rc $(NAME) $(OBJS)
 	ranlib $(NAME)
 
-bonus: all $(OBJSBONUS)
-	ar rc $(NAME) $(OBJSBONUS)
-	ranlib $(NAME)
 
 %.o: %.c $(HEAD)
 	gcc $(CFLAGS) -c $< -o $@
@@ -51,5 +45,5 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re 
 

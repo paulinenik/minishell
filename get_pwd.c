@@ -139,7 +139,6 @@ void	get_cd(t_all *all)
 
 	i = 66;
 	getcwd(dir, 66);
-
 	if (!ft_strncmp(all->data->bin, "cd", 3))
 	{
 		if ((!ft_strncmp(all->data->args[0], "..", 3)))
