@@ -1,6 +1,7 @@
 #include "mshell.h"
 #include <unistd.h>
 
+
 void    get_pwd(t_all *all)
 {
     char dir[66];
@@ -118,3 +119,53 @@ void    get_export(t_all *all)
 			printf("declare -x \"%s\"\n", copy[i]);
 	}
 }
+
+void    get_env(t_all *all)
+{
+	int i;
+
+	i = -1;
+	if (!ft_strncmp(all->data->bin, "env", 4))
+		while(all->env[++i])
+			printf("declare -x \"%s\"\n", all->env[i]);
+
+}
+
+void	get_cd(t_all *all)
+{
+	char dir[66];
+	int i;
+	char *key;
+
+	i = 66;
+	getcwd(dir, 66);
+
+	if (!ft_strncmp(all->data->bin, "cd", 3))
+	{
+		if ((!ft_strncmp(all->data->args[0], "..", 3)))
+		{
+			while (dir[--i] != '/')
+				dir[i] = '\0';
+			chdir(dir);
+			//func(dir, "OLDPWD");
+		}
+		else if ((!ft_strncmp(all->data->args[0], "-", 2)))
+		{
+			key = get_var_value(all->env,"OLDPWD");
+			if (key == NULL)
+				printf("minishell: cd: OLDPWD not set\n");
+			
+			else 
+				chdir(key);
+		}
+		else
+		{
+			if (chdir(all->data->args[0]) == -1)
+				printf("minishell: cd: %s: No such file or directory\n", all->data->args[0]);
+
+		}
+
+	}
+}
+
+

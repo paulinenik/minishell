@@ -13,7 +13,7 @@ char	*delete_char(char *str)
 	if (reallocated == NULL)
 		return(NULL);
 	ft_memcpy(reallocated, str, str_len - 1);
-	reallocated[str_len] = '\0';
+	reallocated[str_len - 1] = '\0';
 	free(str);
 	return(reallocated);
 }

@@ -17,13 +17,14 @@
 #include <stdlib.h>
 #include "libft/libft.h"
 #include <stdio.h>
+
 typedef struct	s_data
 {
 	char			*bin;
 	char    		**args;
 	// char			**env;
 	struct s_data	*next;
-	char			**new;
+	
 	
 }				t_data;
 
@@ -50,5 +51,7 @@ void    get_pwd(t_all *all);
 void    get_export(t_all *all);
 char	**init(char **envp, int k);
 char	*delete_char(char *str);
+void    get_env(t_all *all);
+void	get_cd(t_all *all);
 
 #endif

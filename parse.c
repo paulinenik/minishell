@@ -38,6 +38,8 @@ void	parse(char *input, t_all *all)
 	all->data = data;
 	get_pwd(all);
 	get_export(all);
+	get_env(all);
+	get_cd(all);
 }
 
 // void	check_specchar(char **input, char **envp, t_data *data)

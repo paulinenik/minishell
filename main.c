@@ -2,7 +2,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "libft.h"
+#include "libft/libft.h"
 #include <string.h>
 #include <stdio.h>
 #include "mshell.h"
@@ -73,23 +73,6 @@ int     main(int argc, char **argv, char **envp)
 	// term.c_cc[VMIN] = 1;
 	// term.c_cc[VTIME] = 0;
 	tgetent(0, term_name);
-	// test = malloc((3) * sizeof(char*));
-	// for(int j = 0; j < 3; j++)
-	// {
-	// 	test[j] = malloc(3+1);
-	// }
-	// unsigned char c;
-	// for (int i = 0; i < 2; i++) {
-    //     for (int j = 0; j < 3; j++) {
-    //         printf("Enter your value.\n");
-    //         scanf("%c", &c);
-    //         test[i][j] = c;
-    //     }
-    // }
-		// test[0] = "ASC\0";
-		// test[1] = "ASE\0";
-		// test[2] = NULL;
-		//printf("%s\n%s\n",test[0],test[1]);
 		int i = 0;
 	 while(ft_strncmp(buf, "\4", 2))
 	{
@@ -115,6 +98,7 @@ int     main(int argc, char **argv, char **envp)
 			{
 				tputs(cursor_left, 1, ft_putchar);
 				tputs(tigetstr("ed"), 1, ft_putchar);
+				input = delete_char(input);
 			}
 			else
 			{
