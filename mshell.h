@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/09 22:21:19 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/12 17:47:16 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ typedef struct	s_data
 
 typedef struct	s_all
 {
+	t_data			*data;
 	char			**env;
-	char			*test;
 }				t_all;
 
-void	parse(char *input, char **envp);
+void	parse(char *input, t_all *all);
 t_data	*init_data(void);
 char	*add_char(char *str, char c);
 char	*init_exec_name(char **input, char **envp);
@@ -46,8 +46,8 @@ char	**get_args(char **input, char **envp);
 char	**list_to_array(t_list *list);
 void	check_specchar(char **input, char **envp, t_data *data);
 
-void    get_pwd(t_data *data);
-void    get_export(t_data *data);
+void    get_pwd(t_all *all);
+void    get_export(t_all *all);
 char	**init(char **envp, int k);
 char	*delete_char(char *str);
 

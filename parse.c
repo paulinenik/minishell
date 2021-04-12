@@ -13,7 +13,7 @@ t_data	*init_data(void)
 	return (data);
 }
 
-void	parse(char *input, char **envp)
+void	parse(char *input, t_all *all)
 {
 	t_data	*data;
 
@@ -21,39 +21,41 @@ void	parse(char *input, char **envp)
 		return;
 	data = init_data();
 	// printf("|%s| - input\n", input);
-	data->bin = init_exec_name(&input, envp);
+	data->bin = init_exec_name(&input, all->env);
 	printf("%s - binary name\n", data->bin);
 	while (*input != '\0')
 	{
 		if (*input == ' ')
 		{
-			data->args = get_args(&input, envp);
+			data->args = get_args(&input, all->env);
 		}
-		if (ft_strchr("|><;", *input) != NULL)
-			check_specchar(&input, envp, data);
+		// if (ft_strchr("|><;", *input) != NULL)
+		// 	check_specchar(&input, all->env, data);
 		// else
 		input++;
 	}
 	// pass to process(data, envp)
-	get_pwd(data);
+	all->data = data;
+	get_pwd(all);
+	get_export(all);
 }
 
-void	check_specchar(char **input, char **envp, t_data *data)
-{
-	printf("We are in specchar now!\n");
-	if (**input == ';')
-	{
-		// pass to process
-		get_pwd(data);
-		free(data); //free data
-		(*input)++;
-		parse(*input, envp);
-	}
-	// if (**input == '|')
-		//pipe
-		// 
-	//redirect
-}
+// void	check_specchar(char **input, char **envp, t_data *data)
+// {
+// 	printf("We are in specchar now!\n");
+// 	if (**input == ';')
+// 	{
+// 		// pass to process
+// 		get_pwd(data);
+// 		free(data); //free data
+// 		(*input)++;
+// 		parse(*input, envp);
+// 	}
+// 	// if (**input == '|')
+// 		//pipe
+// 		// 
+// 	//redirect
+// }
 
 char	**get_args(char **input, char **envp)
 {
