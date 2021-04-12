@@ -19,12 +19,16 @@ void    get_pwd(t_data *data)
 
 char	**alph_sort(char **copy, int n)
 {
-		int l;
-		for(int i = 0 ; i < n; i++)
+		int j;
+		int i;
+
+		i = -1;
+		while(++i < n)
 		{
 			printf("%s\n", copy[i]);
 			printf("hellwo\n");
-        	for(int j = i + 1; j < n; j++)
+			j = i + 1;
+        	while(j < n)
 			{
 				printf("hellwo\n");
 				if(ft_strcmp(copy[i], copy[j]) > 0)
@@ -33,7 +37,7 @@ char	**alph_sort(char **copy, int n)
 					copy[i] = copy[j];
 					copy[j] = tmp;
 				}
-    
+				j++;
 			}
 		}
 		return(copy);
