@@ -26,12 +26,12 @@ char	**alph_sort(char **copy, int n)
 		i = -1;
 		while(++i < n)
 		{
-			printf("%s\n", copy[i]);
-			printf("hellwo\n");
+			// printf("%s\n", copy[i]);
+			// printf("hellwo\n");
 			j = i + 1;
         	while(j < n)
 			{
-				printf("hellwo\n");
+				// printf("hellwo\n");
 				if(ft_strcmp(copy[i], copy[j]) > 0)
 				{
 					char *tmp = copy[i];

@@ -52,7 +52,6 @@ int     main(int argc, char **argv, char **envp)
 	(void)argv;
 	char	buf[101];
 	char	**new;
-	// char	**test;
 	t_all	*all;
 	struct	termios	term;
 	int l;
@@ -108,12 +107,9 @@ int     main(int argc, char **argv, char **envp)
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
 		input = add_char(input, '\0');
 		parse(input, all);
-		free(input);
-		input = NULL;
-		// get_pwd(data);
-		// get_export(data);
-
-		// test = NULL;
+		clear_all(&input, all->data);
+		// write(1, "hello\n", 6);
+		// printf("%s input after clear\n", input);
 		i++;
 	 }
 	 write(1,"\n", 1);
