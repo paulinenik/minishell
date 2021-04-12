@@ -1,10 +1,10 @@
 #include "mshell.h"
 #include <unistd.h>
 
-void    get_pwd(t_data *data)
+void    get_pwd(t_all *all)
 {
     char dir[66];
-    if (!ft_strncmp(data->bin, "pwd\0", 4))
+    if (!ft_strncmp(all->data->bin, "pwd\0", 4))
     {
         getcwd(dir, 66);
         printf("%s\n", dir);
@@ -43,7 +43,7 @@ char	**alph_sort(char **copy, int n)
 		return(copy);
 }
 
-int		save_index(t_data *data)
+int		save_index(t_data *data, char **envp)
 {
 	int i = -1;
 	int j = -1;
@@ -52,8 +52,8 @@ int		save_index(t_data *data)
 	while(data->args[++i])
 		{
 			j = -1;
-			while(data->new[++j])
-				if (!ft_strncmp(data->new[j], data->args[i], ft_strlen(data->new[j])))
+			while(envp[++j])
+				if (!ft_strncmp(envp[j], data->args[i], ft_strlen(envp[j])))
 				{
 					k++;
 					break ;
@@ -62,37 +62,35 @@ int		save_index(t_data *data)
 		return(k);
 }
 
-void    get_export(t_data *data)
+void    get_export(t_all *all)
 {
 	int i;
 	int j;
-	int nbr;
 	char **copy;
 	int k = 0;
 	int len;
 
 	i = -1;
 	j = -1;
-	if (!ft_strncmp(data->bin, "export", 6) && (data->args == NULL))
-			while(data->new[++i])
-				printf("declare -x \"%s\"\n", data->new[i]);
-	else if (!ft_strncmp(data->bin, "export", 6) && data->args != NULL)
+	if (!ft_strncmp(all->data->bin, "export", 6) && (all->data->args == NULL))
+			while(all->env[++i])
+				printf("declare -x \"%s\"\n", all->env[i]);
+	else if (!ft_strncmp(all->data->bin, "export", 6) && all->data->args != NULL)
 	{
 		i = -1;
-		while(data->args[++i]);
-		nbr = i;
-		while(data->new[++j]);
+		while(all->data->args[++i]);
+		while(all->env[++j]);
 		len = j;
-		k = save_index(data);
-		copy = init(data->new, i - k);
+		k = save_index(all->data, all->env);
+		copy = init(all->env, i - k);
 		i = -1;
-		while(data->args[++i])
+		while(all->data->args[++i])
 		{
 			j = -1;
 			k = -1;
-			while(data->new[++j])
+			while(all->env[++j])
 			{
-				if (!ft_strncmp(data->new[j], data->args[i], ft_strlen(data->new[j])))
+				if (!ft_strncmp(all->env[j], all->data->args[i], ft_strlen(all->env[j])))
 				{
 					k = i;
 					break ;
@@ -100,7 +98,7 @@ void    get_export(t_data *data)
 			}
 			if (k == -1)
 			{
-				copy[len] = ft_strdup(data->args[i]);
+				copy[len] = ft_strdup(all->data->args[i]);
 				len++;
 			}
 
@@ -110,12 +108,13 @@ void    get_export(t_data *data)
 		while(copy[++i]);
 		copy = alph_sort(copy, i);
 		j = -1;
-		while(data->new[++j]);
+		while(all->env[++j]);
 		while(--j >= 0)
-		   free(data->new[j]);
-		free(data->new);
-		data->new = copy;
+		   free(all->env[j]);
+		free(all->env);
+		all->env = copy;
 		i = -1;
 		while(copy[++i])
 			printf("declare -x \"%s\"\n", copy[i]);
 	}
+}

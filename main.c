@@ -50,16 +50,19 @@ int     main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	char	*buf;
+	char	buf[101];
 	char	**new;
 	// char	**test;
+	t_all	*all;
 	struct	termios	term;
 	int l;
 	char *term_name = "xterm-256color";
 	char	*input;
 	input = NULL;
 
-	new = init(envp);
+	all = (t_all *)malloc(sizeof(t_all));
+	all->env = init(envp, 0);
+	all->data = NULL;
 	// int i = -1;
 	// while(new[++i])
 	// 	printf("%s\n", new[i]);
@@ -120,7 +123,7 @@ int     main(int argc, char **argv, char **envp)
 			}
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
 		input = add_char(input, '\0');
-		parse(input, new);
+		parse(input, all);
 		free(input);
 		input = NULL;
 		// get_pwd(data);
