@@ -16,6 +16,9 @@ t_data	*init_data(void)
 static void	to_process(t_all *all)
 {
 	// write(1, "inpwd process\n", 12);
+	if (data_size(all->data) > 1)
+		revert_data(&all->data);
+	// printf("%s is new data->bin\n", all->data->bin);
 	get_pwd(all);
 	get_export(all);
 	get_env(all);
@@ -51,7 +54,9 @@ void	parse(char *input, t_all *all)
 
 void	check_specchar(char **input, t_all *all)
 {
-	// printf("We are in specchar now!\n");
+	t_data *next_data;
+
+	printf("We are in specchar now!\n");
 	if (**input == ';')
 	{
 		// pass to process
@@ -63,7 +68,11 @@ void	check_specchar(char **input, t_all *all)
 	}
 	if (**input == '|')
 	{
-		
+		next_data = init_data();
+		(*input)++;
+		next_data->bin = init_exec_name(input, all->env);
+		add_data_front(&all->data, next_data);
+		printf("%s is new data->bin\n", all->data->bin);
 	}
 	//redirect
 }
@@ -106,10 +115,12 @@ char	**list_to_array(t_list *list)
 
 	i = 0;
 	head = list;
-	array = (char **)malloc(sizeof(char *) * ft_lstsize(list) + 1);
+	if (list == NULL)
+		return(NULL);
+	list_size = ft_lstsize(list);
+	array = (char **)malloc(sizeof(char *) * list_size + 1);
 	if (array == NULL)
 		exit(0);
-	list_size = ft_lstsize(list);
 	// printf("%d - size of list\n", list_size);
 	while (i < list_size)
 	{

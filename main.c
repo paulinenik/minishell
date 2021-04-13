@@ -74,7 +74,7 @@ int     main(int argc, char **argv, char **envp)
 		int i = 0;
 	 while(ft_strncmp(buf, "\4", 2))
 	{
-		write(1, "\033[36mminishell$\033[0m ", 21);
+		write(1, "\033[36;1mminishell$\033[0m ", 23);
 		tputs(save_cursor, 1, ft_putchar);
 		do
 		{

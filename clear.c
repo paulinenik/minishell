@@ -23,8 +23,10 @@ void	clear_all(t_data **data)
 
 	if (!data)
 		return ;
-	while (*data)
+	printf("%d is size of data\n", data_size(*data));
+	while (*data != NULL)
 	{
+		printf("this go free %s\n", (*data)->bin);
 		free((*data)->bin);
 		(*data)->bin = NULL;
 		td_array_clear((*data)->args);

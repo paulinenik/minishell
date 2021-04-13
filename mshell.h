@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/13 15:39:02 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/13 17:26:07 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ int		ft_putchar(int c);
 char	**get_args(char **input, char **envp);
 char	**list_to_array(t_list *list);
 void	check_specchar(char **input, t_all *all);
+void	add_data_front(t_data **old, t_data *new);
+void	revert_data(t_data **data);
+int		data_size(t_data *data);
 
 void    get_pwd(t_all *all);
 void    get_export(t_all *all);
