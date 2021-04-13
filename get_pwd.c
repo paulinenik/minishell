@@ -127,7 +127,7 @@ void    get_env(t_all *all)
 	i = -1;
 	if (!ft_strncmp(all->data->bin, "env", 4))
 		while(all->env[++i])
-			printf("declare -x \"%s\"\n", all->env[i]);
+			printf("%s\n", all->env[i]);
 
 }
 
