@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/12 21:56:06 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/13 15:39:02 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char 	*get_var_value(char **envp, char *key);
 int		ft_putchar(int c);
 char	**get_args(char **input, char **envp);
 char	**list_to_array(t_list *list);
-void	check_specchar(char **input, char **envp, t_data *data);
+void	check_specchar(char **input, t_all *all);
 
 void    get_pwd(t_all *all);
 void    get_export(t_all *all);

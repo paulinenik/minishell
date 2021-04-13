@@ -51,7 +51,6 @@ int     main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	char	buf[101];
-	char	**new;
 	t_all	*all;
 	struct	termios	term;
 	int l;
@@ -75,7 +74,7 @@ int     main(int argc, char **argv, char **envp)
 		int i = 0;
 	 while(ft_strncmp(buf, "\4", 2))
 	{
-		write(1, "minishell$ ", 12);
+		write(1, "\033[36mminishell$\033[0m ", 21);
 		tputs(save_cursor, 1, ft_putchar);
 		do
 		{

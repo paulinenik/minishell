@@ -13,6 +13,16 @@ t_data	*init_data(void)
 	return (data);
 }
 
+static void	to_process(t_all *all)
+{
+	// write(1, "inpwd process\n", 12);
+	get_pwd(all);
+	get_export(all);
+	get_env(all);
+	get_cd(all);
+	// write(1, "out of process\n", 16);
+}
+
 void	parse(char *input, t_all *all)
 {
 	t_data	*data;
@@ -29,35 +39,34 @@ void	parse(char *input, t_all *all)
 		{
 			data->args = get_args(&input, all->env);
 		}
-		// if (ft_strchr("|><;", *input) != NULL)
-		// 	check_specchar(&input, all->env, data);
-		// else
-		input++;
+		else if (ft_strchr("|><;", *input) != NULL)
+			check_specchar(&input, all);
+		else
+			input++;
+		all->data = data;
 	}
 	// pass to process(data, envp)
-	all->data = data;
-	get_pwd(all);
-	get_export(all);
-	get_env(all);
-	get_cd(all);
+	to_process(all);
 }
 
-// void	check_specchar(char **input, char **envp, t_data *data)
-// {
-// 	printf("We are in specchar now!\n");
-// 	if (**input == ';')
-// 	{
-// 		// pass to process
-// 		get_pwd(data);
-// 		free(data); //free data
-// 		(*input)++;
-// 		parse(*input, envp);
-// 	}
-// 	// if (**input == '|')
-// 		//pipe
-// 		// 
-// 	//redirect
-// }
+void	check_specchar(char **input, t_all *all)
+{
+	// printf("We are in specchar now!\n");
+	if (**input == ';')
+	{
+		// pass to process
+		to_process(all);
+		clear_all(&all->data);
+		all->data = init_data();
+		(*input)++;
+		all->data->bin = init_exec_name(input, all->env);
+	}
+	if (**input == '|')
+	{
+		
+	}
+	//redirect
+}
 
 char	**get_args(char **input, char **envp)
 {

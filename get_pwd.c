@@ -114,9 +114,9 @@ void    get_export(t_all *all)
 		   free(all->env[j]);
 		free(all->env);
 		all->env = copy;
-		i = -1;
-		while(copy[++i])
-			printf("declare -x \"%s\"\n", copy[i]);
+		// i = -1;
+		// while(copy[++i])
+		// 	printf("declare -x \"%s\"\n", copy[i]);
 	}
 }
 
