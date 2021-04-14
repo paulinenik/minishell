@@ -183,8 +183,11 @@ char	*double_quotation(char **input, char **envp, char *arg)
 			arg = get_envp(input, envp, arg);
 		// if (**input == '\')
 			//экранирование
-		arg = add_char(arg, **input);
-		(*input)++;
+		else	
+		{
+			arg = add_char(arg, **input);
+			(*input)++;
+		}
 	}
 	(*input)++;
 	return (arg);
