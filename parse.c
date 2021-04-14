@@ -41,13 +41,11 @@ void	check_specchar(char **input, t_all *all)
 	// printf("We are in specchar now!\n");
 	if (**input == ';')
 	{
-		// pass to process
 		to_process(all);
 		clear_all(&all->data);
 		all->data = init_data();
 		(*input)++;
 		all->data->bin = init_exec_name(input, all->env);
-		// write(1, "hello\n", 6);
 	}
 	else if (**input == '|')
 	{
@@ -144,17 +142,17 @@ char	*init_exec_name(char **input, char **envp)
 		(*input)++;
 	while (**input != '\0' && **input !=' ' && **input != ';' && **input != '|' && **input !='\n')
 	{
-		// write(1, "init\n", 5);
 		if (**input == 39)
 			result = single_qoutation(input, result);
 		else if (**input == 34)
 			result = double_quotation(input, envp, result);
 		else if (**input == 36)
 			result = get_envp(input, envp, result);
-		// if (**input == '\')
-			//экранирование
 		else
 		{
+			if (!ft_strncmp(*input, "\\\\", 2) || !ft_strncmp(*input, "\\$", 2) \
+			|| !ft_strncmp(*input, "\\'", 2) || !ft_strncmp(*input, "\\\"", 2))
+				(*input)++;
 			result = add_char(result, **input);
 			(*input)++;
 		}
@@ -165,12 +163,12 @@ char	*init_exec_name(char **input, char **envp)
 char	*single_qoutation(char **input, char *arg)
 {
 	(*input)++;
-	while (**input != 39 && **input != '\n')
+	while (**input != 39)
 	{
 		arg = add_char(arg, **input);
 		(*input)++;
 	}
-	// (*input)++;
+	(*input)++;
 	return (arg);
 }
 
@@ -181,10 +179,11 @@ char	*double_quotation(char **input, char **envp, char *arg)
 	{
 		if (**input == 36)
 			arg = get_envp(input, envp, arg);
-		// if (**input == '\')
-			//экранирование
 		else	
 		{
+			if (!ft_strncmp(*input, "\\\\", 2) || !ft_strncmp(*input, "\\$", 2) \
+			|| !ft_strncmp(*input, "\\\"", 2))
+				(*input)++;
 			arg = add_char(arg, **input);
 			(*input)++;
 		}
@@ -201,7 +200,7 @@ char	*get_envp(char **input, char **envp, char *arg)
 	(*input)++;
 	// printf("%s - input in get_envp\n", *input);
 	while(**input != ' ' && **input != '\\' && **input != 39
-	&& **input != 34 && **input != ';' && **input != '|' && **input != 36 && **input != '\n')
+	&& **input != 34 && **input != ';' && **input != '|' && **input != 36 && **input != '\0')
 	{
 		key = add_char(key, **input);
 		if (key == NULL)
@@ -212,7 +211,8 @@ char	*get_envp(char **input, char **envp, char *arg)
 	if (arg == NULL)
 		arg = ft_strdup(get_var_value(envp, key));
 	else
-		arg = ft_strjoin(arg, get_var_value(envp, key)); //free key
+		arg = ft_strjoin(arg, get_var_value(envp, key));
+	free(key);
 	if (arg == NULL)
 		return (NULL);
 	return (arg);
