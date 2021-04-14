@@ -1,62 +1,44 @@
 #include "mshell.h"
 
-t_data	*init_data(void)
-{
-	t_data *data;
-
-	data = (t_data *)malloc(sizeof(t_data));
-	// if (data == NULL)
-	// 	error
-	data->bin = NULL;
-	data->args = NULL;
-	data->next = NULL;
-	return (data);
-}
-
 static void	to_process(t_all *all)
 {
-	// write(1, "inpwd process\n", 12);
 	if (data_size(all->data) > 1)
 		revert_data(&all->data);
-	// printf("%s is new data->bin\n", all->data->bin);
 	get_pwd(all);
+	// write(1, "inpwd process\n", 12);
 	get_export(all);
 	get_env(all);
 	get_cd(all);
-	// write(1, "out of process\n", 16);
 }
 
 void	parse(char *input, t_all *all)
 {
-	t_data	*data;
-
 	if (ft_strlen(input) == 1)
 		return;
-	data = init_data();
-	// printf("|%s| - input\n", input);
-	data->bin = init_exec_name(&input, all->env);
-	printf("%s - binary name\n", data->bin);
+	all->data = init_data();
+	all->data->bin = init_exec_name(&input, all->env);
+	// printf("|%s| %zu - input\n", input, ft_strlen(input));
+	printf("%s - binary name\n", all->data->bin);
 	while (*input != '\0')
 	{
 		if (*input == ' ')
 		{
-			data->args = get_args(&input, all->env);
+			all->data->args = get_args(&input, all->env);
 		}
 		else if (ft_strchr("|><;", *input) != NULL)
 			check_specchar(&input, all);
 		else
 			input++;
-		all->data = data;
 	}
-	// pass to process(data, envp)
-	to_process(all);
+	if (all->data->bin)
+		to_process(all);
 }
 
 void	check_specchar(char **input, t_all *all)
 {
 	t_data *next_data;
 
-	printf("We are in specchar now!\n");
+	// printf("We are in specchar now!\n");
 	if (**input == ';')
 	{
 		// pass to process
@@ -65,14 +47,14 @@ void	check_specchar(char **input, t_all *all)
 		all->data = init_data();
 		(*input)++;
 		all->data->bin = init_exec_name(input, all->env);
+		// write(1, "hello\n", 6);
 	}
-	if (**input == '|')
+	else if (**input == '|')
 	{
 		next_data = init_data();
 		(*input)++;
 		next_data->bin = init_exec_name(input, all->env);
 		add_data_front(&all->data, next_data);
-		printf("%s is new data->bin\n", all->data->bin);
 	}
 	//redirect
 }
@@ -96,9 +78,6 @@ char	**get_args(char **input, char **envp)
 		if (item == NULL)
 			exit(0);
 		ft_lstadd_back(&list, item);
-		// free(content);
-		// free(item);
-		// content = NULL;
 		if (**input == ' ')
 			(*input)++;
 	}
@@ -121,7 +100,6 @@ char	**list_to_array(t_list *list)
 	array = (char **)malloc(sizeof(char *) * list_size + 1);
 	if (array == NULL)
 		exit(0);
-	// printf("%d - size of list\n", list_size);
 	while (i < list_size)
 	{
 		array[i] = ft_strdup(list->content);
@@ -166,6 +144,7 @@ char	*init_exec_name(char **input, char **envp)
 		(*input)++;
 	while (**input != '\0' && **input !=' ' && **input != ';' && **input != '|' && **input !='\n')
 	{
+		// write(1, "init\n", 5);
 		if (**input == 39)
 			result = single_qoutation(input, result);
 		else if (**input == 34)

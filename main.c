@@ -100,7 +100,8 @@ int     main(int argc, char **argv, char **envp)
 			}
 			else
 			{
-				input = add_char(input, *buf);
+				if (*buf != '\n')
+					input = add_char(input, *buf);
 				write (1, buf, 1);
 			}
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
