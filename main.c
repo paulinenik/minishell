@@ -131,7 +131,7 @@ int     main(int argc, char **argv, char **envp)
 			}
 			else if(!ft_strncmp(buf, "\e[C", 4))
 			{
-				if (buf[i] != 0 && i != 0)
+				if (i < ft_strlen(input))
 				{
 					tputs(cursor_right, 1, ft_putchar);
 					i++;
