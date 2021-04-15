@@ -54,5 +54,6 @@ void    get_env(t_all *all);
 void	get_cd(t_all *all);
 void	td_array_clear(char **arr);
 void	clear_all(char **input, t_data *data);
+void	get_echo(t_all *all);
 
 #endif

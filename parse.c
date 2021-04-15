@@ -40,6 +40,7 @@ void	parse(char *input, t_all *all)
 	get_export(all);
 	get_env(all);
 	get_cd(all);
+	get_echo(all);
 }
 
 // void	check_specchar(char **input, char **envp, t_data *data)

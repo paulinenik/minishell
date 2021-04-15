@@ -74,8 +74,17 @@ void    get_export(t_all *all)
 	i = -1;
 	j = -1;
 	if (!ft_strncmp(all->data->bin, "export", 6) && (all->data->args == NULL))
-			while(all->env[++i])
-				printf("declare -x \"%s\"\n", all->env[i]);
+	{
+		copy = init(all->env, 0);
+		while(copy[++i])
+			copy = alph_sort(copy, i);
+		i = -1;
+		while(copy[++i])
+		 	printf("declare -x \"%s\"\n", copy[i]);
+		
+			// while(all->env[++i])
+			// 	printf("declare -x \"%s\"\n", all->env[i]);
+	}
 	else if (!ft_strncmp(all->data->bin, "export", 6) && all->data->args != NULL)
 	{
 		i = -1;
@@ -105,18 +114,19 @@ void    get_export(t_all *all)
 
 		}
 		copy[len] = NULL;
-		i = -1;
-		while(copy[++i]);
-		copy = alph_sort(copy, i);
+		
 		j = -1;
 		while(all->env[++j]);
 		while(--j >= 0)
 		   free(all->env[j]);
 		free(all->env);
 		all->env = copy;
-		i = -1;
-		while(copy[++i])
-			printf("declare -x \"%s\"\n", copy[i]);
+		// i = -1;
+		// while(copy[++i]);
+		// copy = alph_sort(copy, i);
+		// i = -1;
+		// while(copy[++i])
+		// 	printf("declare -x \"%s\"\n", copy[i]);
 	}
 }
 
@@ -127,7 +137,7 @@ void    get_env(t_all *all)
 	i = -1;
 	if (!ft_strncmp(all->data->bin, "env", 4))
 		while(all->env[++i])
-			printf("declare -x \"%s\"\n", all->env[i]);
+			printf("%s\n", all->env[i]);
 
 }
 
@@ -141,7 +151,13 @@ void	get_cd(t_all *all)
 	getcwd(dir, 66);
 	if (!ft_strncmp(all->data->bin, "cd", 3))
 	{
-		if ((!ft_strncmp(all->data->args[0], "..", 3)))
+		if (all->data->args == NULL || all->data->args[0][0] == '~')
+		{
+			write(1,"here",5);
+			// i = chdir("~");
+			printf("-%d-", chdir(get_var_value(all->env,"HOME")));
+		}
+		else if ((!ft_strncmp(all->data->args[0], "..", 3)))
 		{
 			while (dir[--i] != '/')
 				dir[i] = '\0';
@@ -157,6 +173,8 @@ void	get_cd(t_all *all)
 			else 
 				chdir(key);
 		}
+		else if ((!ft_strncmp(all->data->args[0], "/", 2)))
+			chdir("/");
 		else
 		{
 			if (chdir(all->data->args[0]) == -1)
@@ -167,4 +185,25 @@ void	get_cd(t_all *all)
 	}
 }
 
+void	get_echo(t_all *all)
+{
+	int i;
+
+	i = -1;
+	if (!ft_strncmp(all->data->bin, "echo", 4))
+	{
+		if (all->data->args == NULL)
+			printf("\n");
+		else
+		{
+			while(all->data->args[++i])
+			{
+				write(1, all->data->args[i], ft_strlen(all->data->args[i]));
+				write(1," ", 1);
+			}
+			write(1,"\n", 1);
+		}
+	}
+	
+}
 
