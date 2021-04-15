@@ -12,12 +12,6 @@ void    get_pwd(t_all *all)
     }
 }
 
-// void    get_env(t_data *data)
-// {
-//     if (!ft_strncmp(data->bin, "env", 3))
-
-// }
-
 char	**alph_sort(char **copy, int n)
 {
 		int j;
@@ -154,7 +148,6 @@ void	get_cd(t_all *all)
 	key = NULL;
 	i = 1024;
 	getcwd(dir, 1024);
-	all->old_pwd = dir;
 	if (!ft_strncmp(all->data->bin, "cd", 3))
 	{
 		if (all->data->args == NULL || all->data->args[0][0] == '~')
@@ -170,16 +163,14 @@ void	get_cd(t_all *all)
 			else
 				check_dir(key);
 		}
-		else if ((!ft_strncmp(all->data->args[0], "-", 2)))
-		{
-			key = get_var_value(all->env,"OLDPWD");
-			if (key == NULL || key[0] == 0)
-				printf("minishell: cd: OLDPWD not set\n");
-			else
-				check_dir(key);
-		}
-		// else if ((!ft_strncmp(all->data->args[0], "/", 2)))
-		// 	chdir("/");
+		// else if ((!ft_strncmp(all->data->args[0], "-", 2)))
+		// {
+		// 	key = get_var_value(all->env,"OLDPWD");
+		// 	if (key == NULL || key[0] == 0)
+		// 		printf("minishell: cd: OLDPWD not set\n");
+		// 	else
+		// 		check_dir(key);
+		// }
 		else
 			check_dir(all->data->args[0]);
 	}

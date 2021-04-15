@@ -87,10 +87,13 @@ int     main(int argc, char **argv, char **envp)
 	// term.c_cc[VTIME] = 0;
 	tgetent(0, term_name);
 		int i = 0;
+		int len = 0;
 	 while(ft_strncmp(buf, "\4", 2))
 	{
 		write(1, "\033[36;1mminishell$\033[0m ", 23);
 		tputs(save_cursor, 1, ft_putchar);
+		i = 0;
+		len = 0;
 		do
 		{
 		 	l = read(0, buf, 100);
@@ -109,15 +112,38 @@ int     main(int argc, char **argv, char **envp)
 			}
 			else if(!ft_strncmp(buf, "\177", 2))
 			{
-				tputs(cursor_left, 1, ft_putchar);
-				tputs(tigetstr("ed"), 1, ft_putchar);
-				input = delete_char(input);
+				if (i > 0)
+				{
+					tputs(cursor_left, 1, ft_putchar);
+					tputs(tgetstr("dc", 0), 1, ft_putchar);
+					input = delete_char(input);
+					i--;
+				}
+			}
+			else if(!ft_strncmp(buf, "\e[D", 4))
+			{
+				if (i > 0)
+				{
+					tputs(cursor_left, 1, ft_putchar);
+					i--;
+				}
+				//tputs(tigetstr("ed"), 1, ft_putchar);
+			}
+			else if(!ft_strncmp(buf, "\e[C", 4))
+			{
+				if (buf[i] != 0 && i != 0)
+				{
+					tputs(cursor_right, 1, ft_putchar);
+					i++;
+				}
+				//tputs(tigetstr("ed"), 1, ft_putchar);
 			}
 			else
 			{
 				if (*buf != '\n')
 					input = add_char(input, *buf);
 				write (1, buf, 1);
+				i++;
 			}
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
 		input = add_char(input, '\0');
