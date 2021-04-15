@@ -4,10 +4,10 @@
 
 void    get_pwd(t_all *all)
 {
-    char dir[66];
+    char dir[1024];
     if (!ft_strncmp(all->data->bin, "pwd\0", 4))
     {
-        getcwd(dir, 66);
+        getcwd(dir, 1024);
         printf("%s\n", dir);
     }
 }
@@ -54,7 +54,7 @@ int		save_index(t_data *data, char **envp)
 		{
 			j = -1;
 			while(envp[++j])
-				if (!ft_strncmp(envp[j], data->args[i], ft_strlen(envp[j])))
+				if (!ft_strcmp(envp[j], data->args[i]))
 				{
 					k++;
 					break ;
@@ -103,7 +103,7 @@ void    get_export(t_all *all)
 			k = -1;
 			while(all->env[++j])
 			{
-				if (!ft_strncmp(all->env[j], all->data->args[i], ft_strlen(all->env[j])))
+				if (!ft_strcmp(all->env[j], all->data->args[i]))
 				{
 					k = i;
 					break ;
@@ -139,49 +139,103 @@ void    get_env(t_all *all)
 
 }
 
+void	check_dir(char *str)
+{
+	if (chdir(str) == -1)
+		printf("minishell: cd: %s: No such file or directory\n", str);
+}
+
 void	get_cd(t_all *all)
 {
-	char dir[66];
+	char dir[1024];
 	int i;
 	char *key;
 
-	i = 66;
-	getcwd(dir, 66);
+	key = NULL;
+	i = 1024;
+	getcwd(dir, 1024);
+	all->old_pwd = dir;
 	if (!ft_strncmp(all->data->bin, "cd", 3))
 	{
 		if (all->data->args == NULL || all->data->args[0][0] == '~')
-		{
+		{	
+			if (all->data->args == NULL)
+			{
+				printf("minishell: cd: HOME not set\n");
+				return ;
+			}
 			key = get_var_value(all->env,"HOME");
-			if (key == NULL)
-				printf("-%d-", chdir(all->home_path));
+			if (key == NULL || key[0] == 0)
+				chdir(all->home_path);
 			else
-				printf("-%d-", chdir(key));
-		}
-		else if ((!ft_strncmp(all->data->args[0], "..", 3)))
-		{
-			while (dir[--i] != '/')
-				dir[i] = '\0';
-			chdir(dir);
-			//func(dir, "OLDPWD");
+				check_dir(key);
 		}
 		else if ((!ft_strncmp(all->data->args[0], "-", 2)))
 		{
 			key = get_var_value(all->env,"OLDPWD");
-			if (key == NULL)
+			if (key == NULL || key[0] == 0)
 				printf("minishell: cd: OLDPWD not set\n");
-			
-			else 
-				chdir(key);
+			else
+				check_dir(key);
 		}
-		else if ((!ft_strncmp(all->data->args[0], "/", 2)))
-			chdir("/");
+		// else if ((!ft_strncmp(all->data->args[0], "/", 2)))
+		// 	chdir("/");
 		else
+			check_dir(all->data->args[0]);
+	}
+}
+
+void    get_unset(t_all *all)
+{
+	int i;
+	int j;
+	char **copy;
+	int k = 0;
+	int f = 0;
+	i = -1;
+	j = -1;
+	if (!ft_strncmp(all->data->bin, "unset", 5) && (all->data->args != NULL))
+	{
+		while(all->data->args[++i])
 		{
-			if (chdir(all->data->args[0]) == -1)
-				printf("minishell: cd: %s: No such file or directory\n", all->data->args[0]);
-
+			j = -1;
+			while(all->env[++j])
+				if (!ft_strncmp(all->env[j], all->data->args[i], ft_strlen(all->data->args[i])))
+				{
+					k++;
+					break ;
+				}
 		}
+		i = -1;
+		j = -1;
+		while(all->env[++i]);
+		copy = malloc((i + 1 - k) * sizeof(char *));
+		copy[i - k] = NULL;
+		i = -1;
+		while(all->env[++i])
+			{
+				j = -1;
+				k = -1;
+				while(all->data->args[++j])
+				{
+					k = (ft_strncmp(all->env[i], all->data->args[j], ft_strlen(all->data->args[j])));
+					if (k == 0)
+						break ;
+				}
+				if (k != 0)
+				{
+					copy[f] = ft_strdup(all->env[i]);
+					f++;
+				}
+			}
+			copy[f] = NULL;
 
+		j = -1;
+		while(all->env[++j]);
+		while(--j >= 0)
+		   free(all->env[j]);
+		free(all->env);
+		all->env = copy;
 	}
 }
 

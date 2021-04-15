@@ -31,7 +31,8 @@ typedef struct	s_all
 {
 	t_data			*data;
 	char			**env;
-	char			*home_path;
+	char			home_path[100];
+	char			*old_pwd;
 }				t_all;
 
 void	parse(char *input, t_all *all);
@@ -60,5 +61,6 @@ void	td_array_clear(char **arr);
 // void	clear_all(char **input, t_data *data);
 void	get_echo(t_all *all);
 void	clear_all(t_data **data);
+void    get_unset(t_all *all);
 
 #endif

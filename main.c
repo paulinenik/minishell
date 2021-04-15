@@ -45,6 +45,23 @@ char	**init(char **envp, int k)
 	return (new);
 }
 
+void	path_init(t_all *all)
+{
+	int i;
+	char *str;
+	
+	i = -1;
+	str = get_var_value(all->env,"HOME");
+	while(*str)
+	{
+		all->home_path[++i] = *str;
+		str++;
+	}
+	all->home_path[++i] = '\0';
+	i = -1;
+	while(all->home_path[++i])
+		printf("%c",all->home_path[i]);
+}
 
 int     main(int argc, char **argv, char **envp)
 {
@@ -61,10 +78,7 @@ int     main(int argc, char **argv, char **envp)
 	all = (t_all *)malloc(sizeof(t_all));
 	all->env = init(envp, 0);
 	all->data = NULL;
-	all->home_path = get_var_value(all->env,"HOME"); 
-	// int i = -1;
-	// while(new[++i])
-	// 	printf("%s\n", new[i]);
+	path_init(all);
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);

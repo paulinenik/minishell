@@ -10,6 +10,7 @@ static void	to_process(t_all *all)
 	get_env(all);
 	get_cd(all);
 	get_echo(all);
+	get_unset(all);
 }
 
 void	parse(char *input, t_all *all)
