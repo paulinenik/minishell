@@ -3,6 +3,7 @@ SRCS	= 	main.c \
 			get_pwd.c \
 			delete_char.c \
 			clear.c \
+			data_func.c \
 
 LIBFT	= libft/libft.a
 
@@ -28,6 +29,9 @@ $(LIBFT):
 			@echo "\033[36mlibft is compiled successfully\n\033[0m"
 		
 all:		$(NAME)
+
+f:			
+			$(CC) $(CFLAGS) $(SRCS) -g $(TCAP_FLAGS) -I./libft libft.a -o $(NAME)
 
 clean:	
 			$(RM) $(NAME)

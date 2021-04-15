@@ -51,7 +51,6 @@ int     main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	char	buf[101];
-	char	**new;
 	t_all	*all;
 	struct	termios	term;
 	int l;
@@ -75,7 +74,7 @@ int     main(int argc, char **argv, char **envp)
 		int i = 0;
 	 while(ft_strncmp(buf, "\4", 2))
 	{
-		write(1, "minishell$ ", 12);
+		write(1, "\033[36;1mminishell$\033[0m ", 23);
 		tputs(save_cursor, 1, ft_putchar);
 		do
 		{
@@ -101,7 +100,8 @@ int     main(int argc, char **argv, char **envp)
 			}
 			else
 			{
-				input = add_char(input, *buf);
+				if (*buf != '\n')
+					input = add_char(input, *buf);
 				write (1, buf, 1);
 			}
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
@@ -110,7 +110,7 @@ int     main(int argc, char **argv, char **envp)
 		parse(input, all);
 		free(input);
 		input = NULL;
-		//clear_all(&input, all->data);
+		clear_all(&all->data);
 		// write(1, "hello\n", 6);
 		// printf("%s input after clear\n", input);
 		i++;
