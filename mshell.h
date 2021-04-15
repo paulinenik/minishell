@@ -31,6 +31,7 @@ typedef struct	s_all
 {
 	t_data			*data;
 	char			**env;
+	char			*home_path;
 }				t_all;
 
 void	parse(char *input, t_all *all);
@@ -56,11 +57,8 @@ char	*delete_char(char *str);
 void    get_env(t_all *all);
 void	get_cd(t_all *all);
 void	td_array_clear(char **arr);
-<<<<<<< HEAD
-void	clear_all(char **input, t_data *data);
+// void	clear_all(char **input, t_data *data);
 void	get_echo(t_all *all);
-=======
 void	clear_all(t_data **data);
->>>>>>> fadbb6c60ac6e74433969ace42089f08f578dc7d
 
 #endif

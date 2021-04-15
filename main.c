@@ -61,6 +61,7 @@ int     main(int argc, char **argv, char **envp)
 	all = (t_all *)malloc(sizeof(t_all));
 	all->env = init(envp, 0);
 	all->data = NULL;
+	all->home_path = get_var_value(all->env,"HOME"); 
 	// int i = -1;
 	// while(new[++i])
 	// 	printf("%s\n", new[i]);

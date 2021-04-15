@@ -77,10 +77,13 @@ void    get_export(t_all *all)
 	{
 		copy = init(all->env, 0);
 		while(copy[++i])
-			copy = alph_sort(copy, i);
+			copy = alph_sort(copy, i + 1);
 		i = -1;
 		while(copy[++i])
 		 	printf("declare -x \"%s\"\n", copy[i]);
+		while(--i >= 0)
+		   free(copy[i]);
+		free(copy);
 		
 			// while(all->env[++i])
 			// 	printf("declare -x \"%s\"\n", all->env[i]);
@@ -121,12 +124,7 @@ void    get_export(t_all *all)
 		   free(all->env[j]);
 		free(all->env);
 		all->env = copy;
-		// i = -1;
-		// while(copy[++i]);
-		// copy = alph_sort(copy, i);
-		// i = -1;
-		// while(copy[++i])
-		// 	printf("declare -x \"%s\"\n", copy[i]);
+		
 	}
 }
 
@@ -153,9 +151,11 @@ void	get_cd(t_all *all)
 	{
 		if (all->data->args == NULL || all->data->args[0][0] == '~')
 		{
-			write(1,"here",5);
-			// i = chdir("~");
-			printf("-%d-", chdir(get_var_value(all->env,"HOME")));
+			key = get_var_value(all->env,"HOME");
+			if (key == NULL)
+				printf("-%d-", chdir(all->home_path));
+			else
+				printf("-%d-", chdir(key));
 		}
 		else if ((!ft_strncmp(all->data->args[0], "..", 3)))
 		{

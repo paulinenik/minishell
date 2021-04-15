@@ -9,6 +9,7 @@ static void	to_process(t_all *all)
 	get_export(all);
 	get_env(all);
 	get_cd(all);
+	get_echo(all);
 }
 
 void	parse(char *input, t_all *all)
@@ -30,18 +31,8 @@ void	parse(char *input, t_all *all)
 		else
 			input++;
 	}
-<<<<<<< HEAD
-	// pass to process(data, envp)
-	all->data = data;
-	get_pwd(all);
-	get_export(all);
-	get_env(all);
-	get_cd(all);
-	get_echo(all);
-=======
 	if (all->data->bin)
 		to_process(all);
->>>>>>> fadbb6c60ac6e74433969ace42089f08f578dc7d
 }
 
 void	check_specchar(char **input, t_all *all)
