@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include "libft/libft.h"
 #include <stdio.h>
+#include <fcntl.h>
 
 typedef struct	s_data
 {
@@ -35,6 +36,7 @@ typedef struct	s_all
 	char			*old_pwd;
 	char			**commands_hist;
 	int				size;
+	int 			fd;
 }				t_all;
 
 void	parse(char *input, t_all *all);

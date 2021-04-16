@@ -63,6 +63,14 @@ void	path_init(t_all *all)
 		printf("%c",all->home_path[i]);
 }
 
+void	print_in_file(char *f, char *str,t_all *all)
+{
+	//fd = open(f, O_RDWR);
+  	write(all->fd, str, ft_strlen(str));
+	write(all->fd,"\n", 1);
+  //	close(all->fd);
+}
+
 void	create_history(t_all *all, char *str)
 {
 	int		i;
@@ -74,15 +82,18 @@ void	create_history(t_all *all, char *str)
 		all->size += 1;
 		if (all->commands_hist == NULL)
 		{
+			all->fd = open("./bash.txt", O_RDWR);
 			all->commands_hist = malloc(2);
 			all->commands_hist[0] = ft_strdup(str);
 			all->commands_hist[1] = NULL;
+			print_in_file("./bash.txt", str, all);
 		}
 		else
 		{
 			while(all->commands_hist[++i]);
 			copy = init(all->commands_hist, 1);
 			copy[i] = ft_strdup(str);
+			print_in_file("./bash.txt", str, all);
 			copy[i + 1] = NULL;
 			i++;
 			while(--i >= 0)
@@ -141,6 +152,12 @@ int     main(int argc, char **argv, char **envp)
 					all->size--;
 				write(1,all->commands_hist[all->size],ft_strlen(all->commands_hist[all->size]));
 				i = ft_strlen(all->commands_hist[all->size]);
+				if (input != NULL)
+					free(input);
+				input = NULL;
+				int l = -1;
+				while(all->commands_hist[all->size][++l])
+					input = add_char(input, all->commands_hist[all->size][l]);
 			}
 			else if(!ft_strncmp(buf,"\e[B", 4))
 			{
@@ -150,6 +167,12 @@ int     main(int argc, char **argv, char **envp)
 					all->size++;
 				write(1,all->commands_hist[all->size],ft_strlen(all->commands_hist[all->size]));
 				i = ft_strlen(all->commands_hist[all->size]);
+				if (input != NULL)
+					free(input);
+				input = NULL;
+				int l = -1;
+				while(all->commands_hist[all->size][++l])
+					input = add_char(input, all->commands_hist[all->size][l]);
 			}
 			else if(!ft_strncmp(buf, "\177", 2))
 			{
@@ -191,7 +214,8 @@ int     main(int argc, char **argv, char **envp)
 		//printf("stroka - %s", input);
 		create_history(all, input);
 		parse(input, all);
-		free(input);
+		if (input != NULL)
+			free(input);
 		input = NULL;
 		clear_all(&all->data);
 		// write(1, "hello\n", 6);
@@ -199,5 +223,6 @@ int     main(int argc, char **argv, char **envp)
 		i++;
 	 }
 	 write(1,"\n", 1);
+	 close(all->fd);
 	return (0);
 }
