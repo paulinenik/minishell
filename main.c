@@ -63,6 +63,39 @@ void	path_init(t_all *all)
 		printf("%c",all->home_path[i]);
 }
 
+void	create_history(t_all *all, char *str)
+{
+	int		i;
+	char	**copy;
+
+	i = -1;
+	all->size += 1;
+	if(str != NULL)
+	{
+		if (all->size == 1)
+		{
+			all->commands_hist = malloc(2);
+			all->commands_hist[0] = ft_strdup(str);
+			all->commands_hist[1] = NULL;
+		}
+		else
+		{
+			while(all->commands_hist[++i]);
+			copy = init(all->commands_hist, 1);
+			copy[i] = ft_strdup(str);
+			copy[i + 1] = NULL;
+			i++;
+			while(--i >= 0)
+				free(all->commands_hist[i]);
+			free(all->commands_hist);
+			all->commands_hist = copy;
+			i = -1;
+			while(all->commands_hist[++i])
+				printf("\n my command -%s-\n", all->commands_hist[i]);
+		}
+	}
+}
+
 int     main(int argc, char **argv, char **envp)
 {
 	(void)argc;
@@ -78,6 +111,8 @@ int     main(int argc, char **argv, char **envp)
 	all = (t_all *)malloc(sizeof(t_all));
 	all->env = init(envp, 0);
 	all->data = NULL;
+	all->commands_hist = NULL;
+	all->size = 0;
 	path_init(all);
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);
@@ -147,7 +182,8 @@ int     main(int argc, char **argv, char **envp)
 			}
 		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
 		input = add_char(input, '\0');
-		
+		//printf("stroka - %s", input);
+		create_history(all, input);
 		parse(input, all);
 		free(input);
 		input = NULL;

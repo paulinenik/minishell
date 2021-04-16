@@ -33,6 +33,8 @@ typedef struct	s_all
 	char			**env;
 	char			home_path[100];
 	char			*old_pwd;
+	char			**commands_hist;
+	int				size;
 }				t_all;
 
 void	parse(char *input, t_all *all);
