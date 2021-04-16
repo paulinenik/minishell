@@ -69,10 +69,10 @@ void	create_history(t_all *all, char *str)
 	char	**copy;
 
 	i = -1;
-	all->size += 1;
-	if(str != NULL)
+	if(ft_strcmp(str,""))
 	{
-		if (all->size == 1)
+		all->size += 1;
+		if (all->commands_hist == NULL)
 		{
 			all->commands_hist = malloc(2);
 			all->commands_hist[0] = ft_strdup(str);
@@ -137,13 +137,19 @@ int     main(int argc, char **argv, char **envp)
 			{
 				tputs(restore_cursor, 1, ft_putchar);
 				tputs(tigetstr("ed"), 1, ft_putchar);
-				write(1,"next",4);
+				if (all->size > 0)
+					all->size--;
+				write(1,all->commands_hist[all->size],ft_strlen(all->commands_hist[all->size]));
+				i = ft_strlen(all->commands_hist[all->size]);
 			}
 			else if(!ft_strncmp(buf,"\e[B", 4))
 			{
 				tputs(restore_cursor, 1, ft_putchar);
 				tputs(tigetstr("ed"), 1, ft_putchar);
-				write(1,"back",4);
+				if (all->commands_hist[all->size + 1])
+					all->size++;
+				write(1,all->commands_hist[all->size],ft_strlen(all->commands_hist[all->size]));
+				i = ft_strlen(all->commands_hist[all->size]);
 			}
 			else if(!ft_strncmp(buf, "\177", 2))
 			{
