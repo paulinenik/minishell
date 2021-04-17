@@ -147,7 +147,8 @@ int     main(int argc, char **argv, char **envp)
 			if(!ft_strncmp(buf,"\e[A",4))
 			{
 				tputs(restore_cursor, 1, ft_putchar);
-				tputs(tigetstr("ed"), 1, ft_putchar);
+				tputs(tgetstr("dc", 0), 1, ft_putchar);
+				//tputs(tigetstr("ed"), 1, ft_putchar);
 				if (all->size > 0)
 					all->size--;
 				write(1,all->commands_hist[all->size],ft_strlen(all->commands_hist[all->size]));
@@ -162,7 +163,8 @@ int     main(int argc, char **argv, char **envp)
 			else if(!ft_strncmp(buf,"\e[B", 4))
 			{
 				tputs(restore_cursor, 1, ft_putchar);
-				tputs(tigetstr("ed"), 1, ft_putchar);
+				tputs(tgetstr("dc", 0), 1, ft_putchar);
+				//tputs(tigetstr("ed"), 1, ft_putchar);
 				if (all->commands_hist[all->size + 1])
 					all->size++;
 				write(1,all->commands_hist[all->size],ft_strlen(all->commands_hist[all->size]));
