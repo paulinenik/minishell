@@ -147,8 +147,10 @@ int     main(int argc, char **argv, char **envp)
 			if(!ft_strncmp(buf,"\e[A",4))
 			{
 				tputs(restore_cursor, 1, ft_putchar);
-				tputs(tgetstr("dc", 0), 1, ft_putchar);
-				//tputs(tigetstr("ed"), 1, ft_putchar);
+				//tputs(tgetstr("dc", 0), 1, ft_putchar);
+				tputs(tigetstr("ed"), 1, ft_putchar);
+				if(all->commands_hist != NULL)
+				{
 				if (all->size > 0)
 					all->size--;
 				write(1,all->commands_hist[all->size],ft_strlen(all->commands_hist[all->size]));
@@ -160,21 +162,25 @@ int     main(int argc, char **argv, char **envp)
 				while(all->commands_hist[all->size][++l])
 					input = add_char(input, all->commands_hist[all->size][l]);
 			}
+			}
 			else if(!ft_strncmp(buf,"\e[B", 4))
 			{
 				tputs(restore_cursor, 1, ft_putchar);
-				tputs(tgetstr("dc", 0), 1, ft_putchar);
-				//tputs(tigetstr("ed"), 1, ft_putchar);
-				if (all->commands_hist[all->size + 1])
-					all->size++;
-				write(1,all->commands_hist[all->size],ft_strlen(all->commands_hist[all->size]));
-				i = ft_strlen(all->commands_hist[all->size]);
-				if (input != NULL)
-					free(input);
-				input = NULL;
-				int l = -1;
-				while(all->commands_hist[all->size][++l])
-					input = add_char(input, all->commands_hist[all->size][l]);
+				//tputs(tgetstr("dc", 0), 1, ft_putchar);
+				tputs(tigetstr("ed"), 1, ft_putchar);
+				if(all->commands_hist != NULL)
+				{
+					if (all->commands_hist[all->size + 1])
+						all->size++;
+					write(1,all->commands_hist[all->size],ft_strlen(all->commands_hist[all->size]));
+					i = ft_strlen(all->commands_hist[all->size]);
+					if (input != NULL)
+						free(input);
+					input = NULL;
+					int l = -1;
+					while(all->commands_hist[all->size][++l])
+						input = add_char(input, all->commands_hist[all->size][l]);
+				}
 			}
 			else if(!ft_strncmp(buf, "\177", 2))
 			{
