@@ -10,6 +10,8 @@ t_data	*init_data(void)
 	data->bin = NULL;
 	data->args = NULL;
 	data->next = NULL;
+	data->fd = init_fd();
+	data->old_fd = init_fd();
 	return (data);
 }
 

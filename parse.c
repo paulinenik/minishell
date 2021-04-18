@@ -2,6 +2,7 @@
 
 static void	to_process(t_all *all)
 {
+	change_fd(all->data);
 	if (data_size(all->data) > 1)
 		revert_data(&all->data);
 	get_pwd(all);
@@ -11,6 +12,7 @@ static void	to_process(t_all *all)
 	get_cd(all);
 	get_echo(all);
 	get_unset(all);
+	return_fd(all->data);
 }
 
 void	parse(char *input, t_all *all)
@@ -56,7 +58,8 @@ void	check_specchar(char **input, t_all *all)
 		next_data->bin = init_exec_name(input, all->env);
 		add_data_front(&all->data, next_data);
 	}
-	//redirect
+	else
+		redirect_parse(input, all);
 }
 
 char	**get_args(char **input, char **envp)
@@ -71,7 +74,7 @@ char	**get_args(char **input, char **envp)
 	list = NULL;
 	while (**input == ' ')
 		(*input)++;
-	while (**input != '\0' && **input != ';' && **input != '|' && **input !='\n')
+	while (**input != '\0' && **input != ';' && **input != '|' && **input !='\n' && **input !='>' && **input != '<')
 	{
 		content = init_exec_name(input, envp);
 		item = ft_lstnew(content);

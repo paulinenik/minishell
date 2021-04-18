@@ -28,6 +28,10 @@ void	clear_all(t_data **data)
 		free((*data)->bin);
 		(*data)->bin = NULL;
 		td_array_clear((*data)->args);
+		free((*data)->fd);
+		(*data)->fd = NULL;
+		free((*data)->old_fd);
+		(*data)->old_fd = NULL;
 		head = (*data);
 		free(*data);
 		(*data) = head->next;
