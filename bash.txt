@@ -1,4 +1,6 @@
-pwd a > b > c; cd ../ ; pwd
+helllo sdsa
+hellllllll
+ pwd
 cd
 cd
 env

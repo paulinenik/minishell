@@ -6,7 +6,6 @@ static void	to_process(t_all *all)
 	if (data_size(all->data) > 1)
 		revert_data(&all->data);
 	get_pwd(all);
-	// write(1, "inpwd process\n", 12);
 	get_export(all);
 	get_env(all);
 	get_cd(all);
@@ -18,7 +17,7 @@ static void	to_process(t_all *all)
 void	parse(char *input, t_all *all)
 {
 	if (ft_strlen(input) == 1)
-		return;
+		return ;
 	all->data = init_data();
 	all->data->bin = init_exec_name(&input, all->env);
 	// printf("|%s| %zu - input\n", input, ft_strlen(input));
@@ -40,9 +39,8 @@ void	parse(char *input, t_all *all)
 
 void	check_specchar(char **input, t_all *all)
 {
-	t_data *next_data;
+	t_data	*next_data;
 
-	// printf("We are in specchar now!\n");
 	if (**input == ';')
 	{
 		to_process(all);
@@ -74,7 +72,7 @@ char	**get_args(char **input, char **envp)
 	list = NULL;
 	while (**input == ' ')
 		(*input)++;
-	while (**input != '\0' && **input != ';' && **input != '|' && **input !='\n' && **input !='>' && **input != '<')
+	while (**input != '\0' && **input != ';' && **input != '|' && **input != '\n' && **input != '>' && **input != '<')
 	{
 		content = init_exec_name(input, envp);
 		item = ft_lstnew(content);
@@ -98,7 +96,7 @@ char	**list_to_array(t_list *list)
 	i = 0;
 	head = list;
 	if (list == NULL)
-		return(NULL);
+		return (NULL);
 	list_size = ft_lstsize(list);
 	array = (char **)malloc(sizeof(char *) * list_size + 1);
 	if (array == NULL)
@@ -110,11 +108,11 @@ char	**list_to_array(t_list *list)
 		list = list->next;
 	}
 	array[i] = NULL;
-	while(i >= 0)
-	{
-		printf("%s - arg[%d]\n", array[i], i);
-		i--;
-	}
+	// while (i >= 0)
+	// {
+	// 	printf("%s - arg[%d]\n", array[i], i);
+	// 	i--;
+	// }
 	ft_lstclear(&head, &free);
 	return (array);
 }
@@ -130,12 +128,12 @@ char	*add_char(char *str, char c)
 		str_len = ft_strlen(str);
 	reallocated = (char *)malloc(sizeof(char) * str_len + 2);
 	if (reallocated == NULL)
-		return(NULL);
+		return (NULL);
 	ft_memcpy(reallocated, str, str_len);
 	reallocated[str_len] = c;
 	reallocated[str_len + 1] = '\0';
 	free(str);
-	return(reallocated);
+	return (reallocated);
 }
 
 char	*init_exec_name(char **input, char **envp)
@@ -145,7 +143,7 @@ char	*init_exec_name(char **input, char **envp)
 	result = NULL;
 	while (**input == ' ')
 		(*input)++;
-	while (**input != '\0' && **input !=' ' && **input != ';' && **input != '|' && **input !='\n')
+	while (**input != '\0' && **input != ' ' && **input != ';' && **input != '|' && **input != '\n')
 	{
 		if (**input == 39)
 			result = single_qoutation(input, result);
@@ -184,7 +182,7 @@ char	*double_quotation(char **input, char **envp, char *arg)
 	{
 		if (**input == 36)
 			arg = get_envp(input, envp, arg);
-		else	
+		else
 		{
 			if (!ft_strncmp(*input, "\\\\", 2) || !ft_strncmp(*input, "\\$", 2) \
 			|| !ft_strncmp(*input, "\\\"", 2))
@@ -203,8 +201,7 @@ char	*get_envp(char **input, char **envp, char *arg)
 
 	key = NULL;
 	(*input)++;
-	// printf("%s - input in get_envp\n", *input);
-	while(**input != ' ' && **input != '\\' && **input != 39
+	while (**input != ' ' && **input != '\\' && **input != 39
 	&& **input != 34 && **input != ';' && **input != '|' && **input != 36 && **input != '\0')
 	{
 		key = add_char(key, **input);
@@ -223,13 +220,12 @@ char	*get_envp(char **input, char **envp, char *arg)
 	return (arg);
 }
 
-char *get_var_value(char **envp, char *key)
+char	*get_var_value(char **envp, char *key)
 {
 	char	*value;
 	int		i;
 
 	i = 0;
-	// printf("%s - key\n", key);
 	while (envp[i] && (ft_strncmp(envp[i], key, ft_strlen(key)) != 0))
 		i++;
 	if (envp[i] != NULL)
@@ -240,6 +236,5 @@ char *get_var_value(char **envp, char *key)
 		if (value == NULL)
 			return (NULL);
 	}
-	// printf("%s - value\n", value);
 	return (value);
 }

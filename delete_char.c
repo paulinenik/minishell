@@ -11,9 +11,9 @@ char	*delete_char(char *str)
 		str_len = ft_strlen(str);
 	reallocated = (char *)malloc(sizeof(char) * str_len);
 	if (reallocated == NULL)
-		return(NULL);
+		return (NULL);
 	ft_memcpy(reallocated, str, str_len - 1);
 	reallocated[str_len - 1] = '\0';
 	free(str);
-	return(reallocated);
+	return (reallocated);
 }

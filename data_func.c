@@ -2,7 +2,7 @@
 
 t_data	*init_data(void)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = (t_data *)malloc(sizeof(t_data));
 	// if (data == NULL)
@@ -37,7 +37,7 @@ void	revert_data(t_data **data)
 
 	reversed = NULL;
 	size = data_size(*data);
-	while((*data) != NULL)
+	while ((*data) != NULL)
 	{
 		next = (*data)->next;
 		add_data_front(&reversed, *data);
@@ -47,9 +47,9 @@ void	revert_data(t_data **data)
 	*data = reversed;
 }
 
-int		data_size(t_data *data)
+int	data_size(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (data && i < 5)

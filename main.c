@@ -229,8 +229,8 @@ int     main(int argc, char **argv, char **envp)
 		// write(1, "hello\n", 6);
 		// printf("%s input after clear\n", input);
 		i++;
-	 }
-	 write(1,"\n", 1);
-	 close(all->fd);
+	}
+	write(1,"\n", 1);
+	close(all->fd);
 	return (0);
 }

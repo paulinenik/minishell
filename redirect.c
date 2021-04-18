@@ -2,7 +2,7 @@
 
 int	*init_fd(void)
 {
-	int *fds;
+	int	*fds;
 
 	fds = (int *)malloc(sizeof(int) * 2);
 	fds[0] = 0;
@@ -33,7 +33,7 @@ void	redirect_parse(char **input, t_all *all)
 
 void	redirect_append(char **input, t_all *all)
 {
-	char *path;
+	char	*path;
 
 	(*input)++;
 	write(1, "hello\n", 6);
@@ -48,7 +48,7 @@ void	redirect_append(char **input, t_all *all)
 
 void	redirect_write(char **input, t_all *all)
 {
-	char *path;
+	char	*path;
 
 	(*input)++;
 	path = init_exec_name(input, all->env);
@@ -62,7 +62,7 @@ void	redirect_write(char **input, t_all *all)
 
 void	redirect_read(char **input, t_all *all)
 {
-	char *path;
+	char	*path;
 
 	(*input)++;
 	path = init_exec_name(input, all->env);
