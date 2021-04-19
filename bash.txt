@@ -1,13 +1,10 @@
-helllo sdsa
-hellllllll
- pwd
-cd
-cd
-env
-export a=123
-env
-unset a
-env
-d ../
-$HOME'whegrhew'
-p''w''d
+ls
+e .
+code libft
+bash
+nishell
+pwd
+/bin/ls
+ "hello $_ world"
+echo "hello $_ world"
+echo "hello $_ world"

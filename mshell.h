@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/18 22:25:50 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/19 18:59:56 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "libft/libft.h"
 #include <stdio.h>
 #include <fcntl.h>
-
+#include <dirent.h>
 typedef struct	s_data
 {
 	char			*bin;
@@ -57,16 +57,16 @@ void	add_data_front(t_data **old, t_data *new);
 void	revert_data(t_data **data);
 int		data_size(t_data *data);
 
-void    get_pwd(t_all *all);
-void    get_export(t_all *all);
+int    get_pwd(t_all *all);
+int    get_export(t_all *all);
 char	**init(char **envp, int k);
 char	*delete_char(char *str);
-void    get_env(t_all *all);
-void	get_cd(t_all *all);
+int    get_env(t_all *all);
+int	get_cd(t_all *all);
 void	td_array_clear(char **arr);
-void	get_echo(t_all *all);
+int	get_echo(t_all *all);
 void	clear_all(t_data **data);
-void    get_unset(t_all *all);
+int    get_unset(t_all *all);
 
 int	*init_fd(void);
 void	redirect_parse(char **input, t_all *all);
@@ -75,5 +75,9 @@ void	redirect_write(char **input, t_all *all);
 void	redirect_read(char **input, t_all *all);
 void	change_fd(t_data *data);
 void	return_fd(t_data *data);
+
+void	to_process(t_all *all);
+int exec_cmd(t_all * all);
+char *check_path(char *filename, char *path);
 
 #endif

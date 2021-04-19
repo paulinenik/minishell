@@ -1,19 +1,5 @@
 #include "mshell.h"
 
-static void	to_process(t_all *all)
-{
-	change_fd(all->data);
-	if (data_size(all->data) > 1)
-		revert_data(&all->data);
-	get_pwd(all);
-	get_export(all);
-	get_env(all);
-	get_cd(all);
-	get_echo(all);
-	get_unset(all);
-	return_fd(all->data);
-}
-
 void	parse(char *input, t_all *all)
 {
 	if (ft_strlen(input) == 1)

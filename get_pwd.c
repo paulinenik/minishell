@@ -2,14 +2,14 @@
 #include <unistd.h>
 
 
-void    get_pwd(t_all *all)
+int    get_pwd(t_all *all)
 {
     char dir[1024];
-    if (!ft_strncmp(all->data->bin, "pwd\0", 4))
-    {
-        getcwd(dir, 1024);
-        printf("%s\n", dir);
-    }
+    if (ft_strncmp(all->data->bin, "pwd\0", 4))
+		return (1);
+	getcwd(dir, 1024);
+	printf("%s\n", dir);
+	return (0);
 }
 
 char	**alph_sort(char **copy, int n)
@@ -69,7 +69,7 @@ int		check_for_value(t_all *all, int i)
 	return(-1);
 }
 
-void    get_export(t_all *all)
+int    get_export(t_all *all)
 {
 	int i;
 	int j;
@@ -80,7 +80,9 @@ void    get_export(t_all *all)
 
 	i = -1;
 	j = -1;
-	if (!ft_strncmp(all->data->bin, "export", 6) && (all->data->args == NULL))
+	if (ft_strncmp(all->data->bin, "export\0", 7))
+		return(1);
+	if (all->data->args == NULL)
 	{
 		j = -1;
 		i = -1;
@@ -113,7 +115,7 @@ void    get_export(t_all *all)
 			// while(all->env[++i])
 			// 	printf("declare -x \"%s\"\n", all->env[i]);
 	}
-	else if (!ft_strncmp(all->data->bin, "export", 6) && all->data->args != NULL)
+	else if (all->data->args != NULL)
 	{
 		i = -1;
 		int nbr = 0;
@@ -178,17 +180,19 @@ void    get_export(t_all *all)
 		free(all->env);
 		all->env = copy;
 	}
+	return (0);
 }
 
-void    get_env(t_all *all)
+int    get_env(t_all *all)
 {
 	int i;
 
 	i = -1;
-	if (!ft_strncmp(all->data->bin, "env", 4))
-		while(all->env[++i])
-			printf("%s\n", all->env[i]);
-
+	if (ft_strncmp(all->data->bin, "env", 4))
+		return (1);
+	while(all->env[++i])
+		printf("%s\n", all->env[i]);
+	return (0);
 }
 
 void	check_dir(char *str)
@@ -197,7 +201,7 @@ void	check_dir(char *str)
 		printf("minishell: cd: %s: No such file or directory\n", str);
 }
 
-void	get_cd(t_all *all)
+int	get_cd(t_all *all)
 {
 	char dir[1024];
 	int i;
@@ -206,35 +210,35 @@ void	get_cd(t_all *all)
 	key = NULL;
 	i = 1024;
 	getcwd(dir, 1024);
-	if (!ft_strncmp(all->data->bin, "cd", 3))
-	{
-		if (all->data->args == NULL || all->data->args[0][0] == '~')
-		{	
-			if (all->data->args == NULL)
-			{
-				printf("minishell: cd: HOME not set\n");
-				return ;
-			}
-			key = get_var_value(all->env,"HOME");
-			if (key == NULL || key[0] == 0)
-				chdir(all->home_path);
-			else
-				check_dir(key);
+	if (ft_strncmp(all->data->bin, "cd", 3))
+		return (1);
+	if (all->data->args == NULL || all->data->args[0][0] == '~')
+	{	
+		if (all->data->args == NULL)
+		{
+			printf("minishell: cd: HOME not set\n");
+			return (0);
 		}
-		// else if ((!ft_strncmp(all->data->args[0], "-", 2)))
-		// {
-		// 	key = get_var_value(all->env,"OLDPWD");
-		// 	if (key == NULL || key[0] == 0)
-		// 		printf("minishell: cd: OLDPWD not set\n");
-		// 	else
-		// 		check_dir(key);
-		// }
+		key = get_var_value(all->env,"HOME");
+		if (key == NULL || key[0] == 0)
+			chdir(all->home_path);
 		else
-			check_dir(all->data->args[0]);
+			check_dir(key);
 	}
+	// else if ((!ft_strncmp(all->data->args[0], "-", 2)))
+	// {
+	// 	key = get_var_value(all->env,"OLDPWD");
+	// 	if (key == NULL || key[0] == 0)
+	// 		printf("minishell: cd: OLDPWD not set\n");
+	// 	else
+	// 		check_dir(key);
+	// }
+	else
+		check_dir(all->data->args[0]);
+	return (0);
 }
 
-void    get_unset(t_all *all)
+int    get_unset(t_all *all)
 {
 	int i;
 	int j;
@@ -243,7 +247,9 @@ void    get_unset(t_all *all)
 	int f = 0;
 	i = -1;
 	j = -1;
-	if (!ft_strncmp(all->data->bin, "unset", 5) && (all->data->args != NULL))
+	if (ft_strncmp(all->data->bin, "unset", 6))
+		return (1);
+	if ((all->data->args != NULL))
 	{
 		while(all->data->args[++i])
 		{
@@ -286,27 +292,27 @@ void    get_unset(t_all *all)
 		free(all->env);
 		all->env = copy;
 	}
+	return (0);
 }
 
-void	get_echo(t_all *all)
+int	get_echo(t_all *all)
 {
 	int i;
 
 	i = -1;
-	if (!ft_strncmp(all->data->bin, "echo", 4))
+	if (ft_strncmp(all->data->bin, "echo", 5))
+		return (1);
+	if (all->data->args == NULL)
+		printf("\n");
+	else
 	{
-		if (all->data->args == NULL)
-			printf("\n");
-		else
+		while(all->data->args[++i])
 		{
-			while(all->data->args[++i])
-			{
-				write(1, all->data->args[i], ft_strlen(all->data->args[i]));
-				write(1," ", 1);
-			}
-			write(1,"\n", 1);
+			write(1, all->data->args[i], ft_strlen(all->data->args[i]));
+			write(1," ", 1);
 		}
+		write(1,"\n", 1);
 	}
-	
+	return (0)	;
 }
 

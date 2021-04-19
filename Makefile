@@ -5,6 +5,7 @@ SRCS	= 	main.c \
 			clear.c \
 			data_func.c \
 			redirect.c \
+			exec_cmd.c \
 
 LIBFT	= libft/libft.a
 

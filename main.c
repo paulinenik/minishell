@@ -59,8 +59,8 @@ void	path_init(t_all *all)
 	}
 	all->home_path[++i] = '\0';
 	i = -1;
-	while(all->home_path[++i])
-		printf("%c",all->home_path[i]);
+	// while(all->home_path[++i])
+	// 	printf("%c",all->home_path[i]);
 }
 
 void	print_in_file(char *f, char *str,t_all *all)
@@ -100,9 +100,9 @@ void	create_history(t_all *all, char *str)
 				free(all->commands_hist[i]);
 			free(all->commands_hist);
 			all->commands_hist = copy;
-			i = -1;
-			while(all->commands_hist[++i])
-				printf("\n my command -%s-\n", all->commands_hist[i]);
+			// i = -1;
+			// while(all->commands_hist[++i])
+			// 	printf("\n my command -%s-\n", all->commands_hist[i]);
 		}
 	}
 }
