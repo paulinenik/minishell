@@ -36,7 +36,7 @@ void	redirect_append(char **input, t_all *all)
 	char	*path;
 
 	(*input)++;
-	write(1, "hello\n", 6);
+	// write(1, "hello\n", 6);
 	path = init_exec_name(input, all->env);
 	if (all->data->fd[1] != 1)
 		close(all->data->fd[1]);

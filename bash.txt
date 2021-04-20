@@ -1,8 +1,7 @@
-ls
-e .
-code libft
-bash
-nishell
+pwd
+pwd
+pwd
+norminette parse.c
 pwd
 /bin/ls
  "hello $_ world"

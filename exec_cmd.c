@@ -1,5 +1,23 @@
 #include "mshell.h"
 
+
+static int	exec_builtin(t_all * all)
+{
+	if (!get_pwd(all))
+		return (0);
+	if (!get_export(all))
+		return (0);
+	if (!get_env(all))
+		return (0);
+	if (!get_cd(all))
+		return (0);
+	if (!get_echo(all))
+		return (0);
+	if (!get_unset(all))
+		return (0);
+	return (1);
+}
+
 void	to_process(t_all *all)
 {
 	int exit_status;
@@ -8,13 +26,8 @@ void	to_process(t_all *all)
 	change_fd(all->data);
 	if (data_size(all->data) > 1)
 		revert_data(&all->data);
-	exit_status  = get_pwd(all);
-	exit_status  = get_export(all);
-	exit_status  = get_env(all);
-	exit_status  = get_cd(all);
-	exit_status  = get_echo(all);
-	exit_status  = get_unset(all);
-	if (exit_status)
+	exit_status = exec_builtin(all);
+	if (exit_status == 1)
 		exit_status = exec_cmd(all);
 	return_fd(all->data);
 }
@@ -31,7 +44,7 @@ int exec_cmd(t_all * all)
 		path = ft_strdup(all->data->bin);
 	if (all->data->args == NULL)
 	{
-		write(1, "hello\n", 6);
+		// write(1, "hello\n", 6);
 		pwd = (char **)malloc(sizeof(char) * 2);
 		pwd[0] = ft_strdup(".");
 		pwd[1] = NULL;
@@ -73,6 +86,6 @@ char *check_path(char *filename, char *path)
 		closedir(dir_stream);
 		i++;
 	}
-	td_array_clear(path_list);
+	// td_array_clear(path_list);
 	return (newpath);
 }
