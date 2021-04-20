@@ -1,9 +1,8 @@
-pwd
-pwd
-pwd
-norminette parse.c
-pwd
-/bin/ls
+ls libft
+ls libft
+norminette
+ > norm
+in/ls
  "hello $_ world"
 echo "hello $_ world"
 echo "hello $_ world"

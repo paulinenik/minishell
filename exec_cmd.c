@@ -35,25 +35,31 @@ void	to_process(t_all *all)
 int exec_cmd(t_all * all)
 {
 	char **pwd;
+	char	**argv;
 	char *path;
 
 	pwd = NULL;
+	argv = NULL;
 	if (!ft_strchr(all->data->bin, '/'))
 		path = check_path(all->data->bin, getenv("PATH"));
 	else
 		path = ft_strdup(all->data->bin);
 	if (all->data->args == NULL)
 	{
-		// write(1, "hello\n", 6);
 		pwd = (char **)malloc(sizeof(char) * 2);
 		pwd[0] = ft_strdup(".");
 		pwd[1] = NULL;
 		execve(path, pwd, all->env);
 	}
 	else
-		execve(path, all->data->args, all->env);
+	{
+		write(1, "hello\n", 6);
+		argv = array_add_front(all->data->args, all->data->bin);
+		execve(path, argv, all->env);
+	}
 	free(path);
 	td_array_clear(pwd);
+	td_array_clear(argv);
 	return (0);
 }
 
@@ -80,12 +86,13 @@ char *check_path(char *filename, char *path)
 			info = readdir(dir_stream);
 		if (info)
 		{
-			newpath = add_char(path_list[i], '/');
-			newpath = ft_strjoin(newpath, filename);
+			path_list[i] = add_char(path_list[i], '/');
+			newpath = ft_strjoin(path_list[i], filename);
+			break;
 		}
 		closedir(dir_stream);
 		i++;
 	}
-	// td_array_clear(path_list);
+	td_array_clear(path_list);
 	return (newpath);
 }

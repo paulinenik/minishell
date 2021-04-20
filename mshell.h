@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/19 18:59:56 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/20 20:50:24 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,8 @@ void	return_fd(t_data *data);
 void	to_process(t_all *all);
 int exec_cmd(t_all * all);
 char *check_path(char *filename, char *path);
+
+int	array_size(char **arr);
+char	**array_add_front(char **arr, char *str);
 
 #endif
