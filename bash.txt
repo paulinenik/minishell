@@ -1,8 +1,9 @@
+ls
+ls
+norminette parse.c
+ls
 ls libft
-ls libft
-norminette
- > norm
-in/ls
- "hello $_ world"
-echo "hello $_ world"
+git status
+git add bash.txt exec_cmd.c 
+orld"
 echo "hello $_ world"

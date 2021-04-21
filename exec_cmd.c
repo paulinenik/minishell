@@ -37,6 +37,8 @@ int exec_cmd(t_all * all)
 	char **pwd;
 	char	**argv;
 	char *path;
+	int	status;
+	pid_t	pid;
 
 	pwd = NULL;
 	argv = NULL;
@@ -44,19 +46,26 @@ int exec_cmd(t_all * all)
 		path = check_path(all->data->bin, getenv("PATH"));
 	else
 		path = ft_strdup(all->data->bin);
-	if (all->data->args == NULL)
+	pid = fork();
+	if (pid == 0)
 	{
-		pwd = (char **)malloc(sizeof(char) * 2);
-		pwd[0] = ft_strdup(".");
-		pwd[1] = NULL;
-		execve(path, pwd, all->env);
+		if (all->data->args == NULL)
+		{
+			pwd = (char **)malloc(sizeof(char) * 2);
+			pwd[0] = ft_strdup(".");
+			pwd[1] = NULL;
+			status = execve(path, pwd, all->env);
+		}
+		else
+		{
+			write(1, "hello\n", 6);
+			argv = array_add_front(all->data->args, all->data->bin);
+			status = execve(path, argv, all->env);
+		}
+		// if (status == -1)
+		// 	exit
 	}
-	else
-	{
-		write(1, "hello\n", 6);
-		argv = array_add_front(all->data->args, all->data->bin);
-		execve(path, argv, all->env);
-	}
+	waitpid(pid, NULL, WUNTRACED);
 	free(path);
 	td_array_clear(pwd);
 	td_array_clear(argv);
