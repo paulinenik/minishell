@@ -1,9 +1,23 @@
-ls
-ls
-norminette parse.c
-ls
-ls libft
-git status
-git add bash.txt exec_cmd.c 
-orld"
-echo "hello $_ world"
+export
+export ABC=4
+export
+export abc=5
+export
+3
+export
+export ABC=5
+export
+export abc=4
+export
+export
+export bc
+export
+o $"HOME"""
+echo "'$HO<E
+echo "'HOME
+clear
+clear
+clear
+echo "'$HOME'"
+bash
+bash
