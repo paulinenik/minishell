@@ -84,7 +84,7 @@ char	**list_to_array(t_list *list)
 	if (list == NULL)
 		return (NULL);
 	list_size = ft_lstsize(list);
-	array = (char **)malloc(sizeof(char *) * list_size + 1);
+	array = (char **)malloc(sizeof(char *) * (list_size + 1));
 	if (array == NULL)
 		exit(0);
 	while (i < list_size)

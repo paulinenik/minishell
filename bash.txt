@@ -1,9 +1,52 @@
 ls
-ls
-norminette parse.c
-ls
+leaks minishell
+/usr/bin/leaks
+leaks
+inishell
 ls libft
-git status
-git add bash.txt exec_cmd.c 
-orld"
-echo "hello $_ world"
+leaks minishell
+export MallocStartLogging=1
+export MallocStartLoggingNoCompact=1
+leaks minishell
+nv 22
+d rgordon
+pwd
+cd minishell  
+pwd
+ls
+cd rgordon
+cd minishell
+ls
+cd ..
+cd minishell     
+bash
+exit
+pwd
+cd
+cd $HOME
+pwd
+cd $OLDPWD
+pwd
+echo $OLDPWD
+cd minishell
+cd libft
+echo $OLDPWD
+pwd
+cd ..
+cd libft lslsl
+pwd
+cd .. askdsa
+pwd
+cd "minishell       "
+echo a; echo b; echo c;
+echo "a ; echo b"; echo c
+;;
+;
+ls
+ls > abc
+cat abc
+sort < abc
+wc < abc
+code abc
+wc < abc
+sort < abs

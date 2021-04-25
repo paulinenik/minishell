@@ -83,7 +83,7 @@ void	create_history(t_all *all, char *str)
 		if (all->commands_hist == NULL)
 		{
 			all->fd = open("./bash.txt", O_RDWR);
-			all->commands_hist = malloc(2);
+			all->commands_hist = malloc(sizeof(char *) * 2);
 			all->commands_hist[0] = ft_strdup(str);
 			all->commands_hist[1] = NULL;
 			print_in_file("./bash.txt", str, all);

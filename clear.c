@@ -32,8 +32,8 @@ void	clear_all(t_data **data)
 		(*data)->fd = NULL;
 		free((*data)->old_fd);
 		(*data)->old_fd = NULL;
-		head = (*data);
+		head = (*data)->next;
 		free(*data);
-		(*data) = head->next;
+		(*data) = head;
 	}
 }
