@@ -1,18 +1,14 @@
-export
-export ABC=4
-export
-export abc=5
-export
-3
-export
-export ABC=5
-export
-export abc=4
-export
-export
-export bc
-export
-o $"HOME"""
+echo $HOME../
+
+cd $HOME/AF; pwd
+d$HOME
+pwd
+cd $HOME/AF; pwd
+echo $OLDPWD
+cd $OLDPWD/../../AF; pwd
+echo $OLDPWD/../../AF
+man ascii
+""
 echo "'$HO<E
 echo "'HOME
 clear

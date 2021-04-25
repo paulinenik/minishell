@@ -184,26 +184,35 @@ char	*double_quotation(char **input, char **envp, char *arg)
 char	*get_envp(char **input, char **envp, char *arg)
 {
 	char	*key;
+	char	*new;
 
 	key = NULL;
 	(*input)++;
-	while (**input != ' ' && **input != '\\' && **input != 39
-	&& **input != 34 && **input != ';' && **input != '|' && **input != 36 && **input != '\0')
+	if (**input == '?')
+	{
+		(*input)++;
+		free(arg);
+		return (null_strjoin(arg, ft_itoa(g_error)));
+	}
+	while (ft_isalnum(**input) != 0)
 	{
 		key = add_char(key, **input);
-		if (key == NULL)
-			return (NULL);
+		// if (key == NULL)
+		// 	malloc error
 		(*input)++;
 	}
+	if (key == NULL)
+	{
+		free(arg);
+		return (null_strjoin(arg, "$"));
+	}
 	key = add_char(key, '=');
-	if (arg == NULL)
-		arg = ft_strdup(get_var_value(envp, key));
-	else
-		arg = ft_strjoin(arg, get_var_value(envp, key));
+	new = null_strjoin(arg, get_var_value(envp, key));
+	free(arg);
 	free(key);
-	if (arg == NULL)
-		return (NULL);
-	return (arg);
+	// if (arg == NULL)
+	// 	malloc error
+	return (new);
 }
 
 char	*get_var_value(char **envp, char *key)

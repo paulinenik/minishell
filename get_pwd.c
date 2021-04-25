@@ -281,14 +281,14 @@ int	get_echo(t_all *all)
 		while(all->data->args[++i])
 		{
 			//write(1, all->data->args[i], ft_strlen(all->data->args[i]));
-			if (!ft_strncmp(all->data->args[i], "$?", 2))
-				write(1,"brya\n", 5);
-				//printf("%ddnfidifd", g_error);
-			else
-			{
+			// if (!ft_strncmp(all->data->args[i], "$?", 2))
+			// 	write(1,"brya\n", 5);
+			// 	//printf("%ddnfidifd", g_error);
+			// else
+			// {
 				write(1, all->data->args[i], ft_strlen(all->data->args[i]));
-				write(1,"dfd ", 1);
-			}
+			// 	write(1,"dfd ", 1);
+			// }
 		}
 		write(1,"\n", 1);
 	}

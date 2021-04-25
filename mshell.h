@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/20 20:50:24 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/04/25 15:48:49 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,7 @@ char *check_path(char *filename, char *path);
 
 int	array_size(char **arr);
 char	**array_add_front(char **arr, char *str);
+
+char	*null_strjoin(char const *s1, char const *s2);
 
 #endif
