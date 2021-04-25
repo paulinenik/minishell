@@ -38,6 +38,9 @@ f:
 clean:	
 			$(RM) $(NAME)
 
+leaks:		
+			$(CC) $(SRCS) -g $(TCAP_FLAGS) -I./libft libft.a -o $(NAME) -fsanitize=address -fno-omit-frame-pointer -ggdb
+
 fclean:		clean
 			make fclean -C libft/
 			$(RM) $(NAME) libft.a
