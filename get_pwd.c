@@ -83,102 +83,74 @@ int    get_export(t_all *all)
 	if (ft_strncmp(all->data->bin, "export\0", 7))
 		return(1);
 	if (all->data->args == NULL)
-	{
-		j = -1;
-		i = -1;
-		copy = init(all->env, 0);
-		while(copy[++i])
-			copy = alph_sort(copy, i + 1);
-		i = -1;
-		while(copy[++i])
-		{
-			write(1,"\ndeclare -x ",13);
-			j = -1;
-			while(copy[i][++j])
-			{
-				if(copy[i][j] == '=')
-				{
-					write(1,"=\"",3);
-					write(1, (copy[i] + j + 1), ft_strlen(copy[i] + j + 1));
-					write(1,"\"",1);
-					break ;
-				}
-				else
-					write(1,&copy[i][j], 1);
-			}	
-		}
-		write(1,"\n",1);
-		while(--i >= 0)
-		   free(copy[i]);
-		free(copy);
-		
-			// while(all->env[++i])
-			// 	printf("declare -x \"%s\"\n", all->env[i]);
-	}
+		print_export(all, -1, -1, copy);
 	else if (all->data->args != NULL)
 	{
-		i = -1;
-		int nbr = 0;
-		while(all->data->args[++i]);
-		while(all->env[++j]);
-		len = j;
-		k = save_index(all->data, all->env);
-		copy = init(all->env, i - k);
-		i = -1;
-		while(all->data->args[++i])
-		{
-			j = -1;
-			k = -1;
-			int temp = -1;
-			nbr = check_for_value(all, i);
-			while(all->env[++j])
-			{
-				temp = -1;
-				while(all->data->args[i][++temp])
-					{
-						if(all->data->args[i][temp] == '=')
-							break ;
-						if(ft_isalnum(all->data->args[i][temp]) == 0)
-						{
-							// write(1,&all->data->args[i][temp], 1);
-							temp = -2;
-							break ;
-						}
-					}
-				if ((all->data->args[i][0] <= '9' && all->data->args[i][0] >= '0') || temp == -2)
-				{
-						write(1, "minishell: export: ", 20);
-						write(1,all->data->args[i], ft_strlen(all->data->args[i]));
-						write(1,": not a valid identifier\n",26);
-						// printf("minishell: export: %s: not a valid identifier", all->data->args[i]);
-					k = i;
-					break ;
-				}
-				if (nbr != -1)
-				{
-					if(!ft_strncmp(all->data->args[i], all->env[j], nbr))
-					{
-						free(copy[j]);
-						copy[j] = NULL;
-						copy[j] = ft_strdup(all->data->args[i]);
-						k = 0;
-						break ;
-					}
-				}
-			}
-			if (k == -1 && nbr != -1)
-			{
-				copy[len] = ft_strdup(all->data->args[i]);
-				len++;
-			}
-		}
-		copy[len] = NULL;
-		j = -1;
-		while(all->env[++j]);
-		while(--j >= 0)
-		   free(all->env[j]);
-		free(all->env);
-		all->env = copy;
+		check_export(all, -1, len, copy);
+		// i = -1;
+		// int nbr = 0;
+		// while(all->data->args[++i]);
+		// while(all->env[++j]);
+		// len = j;
+		// k = save_index(all->data, all->env);
+		// copy = init(all->env, i - k);
+		// i = -1;
+		// while(all->data->args[++i])
+		// {
+		// 	j = -1;
+		// 	k = -1;
+		// 	int temp = -1;
+		// 	nbr = check_for_value(all, i);
+		// 	while(all->env[++j])
+		// 	{
+		// 		temp = -1;
+		// 		while(all->data->args[i][++temp])
+		// 			{
+		// 				if(all->data->args[i][temp] == '=')
+		// 					break ;
+		// 				if(ft_isalnum(all->data->args[i][temp]) == 0)
+		// 				{
+		// 					// write(1,&all->data->args[i][temp], 1);
+		// 					temp = -2;
+		// 					break ;
+		// 				}
+		// 			}
+		// 		if ((all->data->args[i][0] <= '9' && all->data->args[i][0] >= '0') || temp == -2)
+		// 		{
+		// 				write(1, "minishell: export: ", 20);
+		// 				write(1,all->data->args[i], ft_strlen(all->data->args[i]));
+		// 				write(1,": not a valid identifier\n",26);
+		// 				// printf("minishell: export: %s: not a valid identifier", all->data->args[i]);
+		// 				g_error = 1;
+		// 			k = i;
+		// 			break ;
+		// 		}
+		// 		if (nbr != -1)
+		// 		{
+		// 			if(!ft_strncmp(all->data->args[i], all->env[j], nbr))
+		// 			{
+		// 				free(copy[j]);
+		// 				copy[j] = NULL;
+		// 				copy[j] = ft_strdup(all->data->args[i]);
+		// 				k = 0;
+		// 				break ;
+		// 			}
+		// 		}
+		// 	}
+		// 	if (k == -1 && nbr != -1)
+		// 	{
+		// 		copy[len] = ft_strdup(all->data->args[i]);
+		// 		len++;
+		// 	}
+		// }
+		// copy[len] = NULL;
+		// check_export(all, -1, len, copy);
+		// j = -1;
+		// while(all->env[++j]);
+		// while(--j >= 0)
+		//    free(all->env[j]);
+		// free(all->env);
+		// all->env = copy;
 	}
 	return (0);
 }
@@ -303,16 +275,50 @@ int	get_echo(t_all *all)
 	if (ft_strncmp(all->data->bin, "echo", 5))
 		return (1);
 	if (all->data->args == NULL)
-		printf("\n");
+		write(1,"brya\n", 5);
 	else
 	{
 		while(all->data->args[++i])
 		{
-			write(1, all->data->args[i], ft_strlen(all->data->args[i]));
-			write(1," ", 1);
+			//write(1, all->data->args[i], ft_strlen(all->data->args[i]));
+			if (!ft_strncmp(all->data->args[i], "$?", 2))
+				write(1,"brya\n", 5);
+				//printf("%ddnfidifd", g_error);
+			else
+			{
+				write(1, all->data->args[i], ft_strlen(all->data->args[i]));
+				write(1,"dfd ", 1);
+			}
 		}
 		write(1,"\n", 1);
 	}
 	return (0)	;
 }
+
+// int	get_echo(t_all *all)
+// {
+// 	int i;
+
+// 	i = -1;
+// 	if (ft_strncmp(all->data->bin, "echo", 5))
+// 		return(1);
+// 		if (all->data->args == NULL)
+// 			printf("\n");
+// 		else
+// 		{
+// 			while(all->data->args[++i])
+// 			{
+// 				if (ft_strcmp(all->data->args[i], "$?"))
+// 					ft_putnbr_fd(g_error, 1);
+// 				else
+// 				{
+// 					write(1, all->data->args[i], ft_strlen(all->data->args[i]));
+// 					write(1," ", 1);
+// 				}
+// 			}
+// 			write(1,"\n", 1);
+// 		}
+// 	return (0);
+// }
+	
 

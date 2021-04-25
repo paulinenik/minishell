@@ -111,6 +111,7 @@ int     main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
+	g_error = 0;
 	char	buf[101];
 	t_all	*all;
 	struct	termios	term;

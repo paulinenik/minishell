@@ -12,25 +12,25 @@
 
 #include "libft.h"
 
-void	cut(int *n, int fd)
+void	cut(int *n)
 {
 	if (*n == -2147483648)
 	{
-		write(fd, "-2147483648", 11);
+		write(1, "-2147483648", 11);
 	}
 }
 
-void	put(int *n, int *b, int fd)
+void	put(int *n, int *b)
 {
 	if ((*n < 0) && (*n != -2147483648))
 	{
-		write(fd, "-", 1);
+		write(1, "-", 1);
 		*n *= -1;
 		*b *= -1;
 	}
 }
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_putnbr(int n)
 {
 	int		l;
 	int		v;
@@ -38,19 +38,17 @@ void	ft_putnbr_fd(int n, int fd)
 
 	l = 1;
 	v = n;
-	put(&v, &n, fd);
-	if (!fd)
-		return ;
+	put(&v, &n);
 	while ((v = v / 10) > 0)
 		l *= 10;
 	while (l > 0)
 	{
-		cut(&n, fd);
+		cut(&n);
 		if (n == -2147483648)
 			break ;
 		v = n / l;
 		c = v + 48;
-		write(fd, &c, 1);
+		write(1, &c, 1);
 		if (v % l == 0)
 			v = v / l;
 		else

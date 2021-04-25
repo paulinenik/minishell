@@ -41,6 +41,7 @@ typedef struct	s_all
 	int 			fd;
 }				t_all;
 
+int		g_error;
 void	parse(char *input, t_all *all);
 t_data	*init_data(void);
 char	*add_char(char *str, char c);
@@ -64,11 +65,16 @@ char	*delete_char(char *str);
 int    get_env(t_all *all);
 int	get_cd(t_all *all);
 void	td_array_clear(char **arr);
-int	get_echo(t_all *all);
+int		get_echo(t_all *all);
 void	clear_all(t_data **data);
-int    get_unset(t_all *all);
+int		get_unset(t_all *all);
+void	print_export(t_all *all, int i, int j, char **copy);
+char	**alph_sort(char **copy, int n);
+void	check_export(t_all *all, int i, int j, char **copy);
+int		check_for_value(t_all *all, int i);
+int		save_index(t_data *data, char **envp);
 
-int	*init_fd(void);
+int		*init_fd(void);
 void	redirect_parse(char **input, t_all *all);
 void	redirect_append(char **input, t_all *all);
 void	redirect_write(char **input, t_all *all);
