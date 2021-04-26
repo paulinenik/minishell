@@ -12,7 +12,6 @@ int	*init_fd(void)
 
 void	redirect_parse(char **input, t_all *all)
 {
-	all->data->fd = init_fd();
 	if (**input == '>' && *(*input + 1) == '>')
 	{
 		(*input)++;

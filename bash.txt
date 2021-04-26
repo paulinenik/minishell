@@ -1,18 +1,16 @@
-export abc
-export
-export abcdef
-export
-export abcdef=5
-export
-export ab=4
-export
-export ab
-export
-port
-export abc
-export
-pwd
-scii
+echo hello >a world >b >c 123234
+cat c
+rld >b >c lalala
+cat c
+ a
+ls
+cat a
+ >b >c
+c world
+echo hello >a >b >c world
+ld
+ls . libft
+
 ""
 echo "'$HO<E
 echo "'HOME
