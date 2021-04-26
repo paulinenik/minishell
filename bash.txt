@@ -1,13 +1,18 @@
-echo $HOME../
+asd
+sad
+sd
+dpp[
+lsls
+expot
+expot
+git hist
+ c world; cat c
+c lalala
+cat c
+hello >> b >> c world
+echo asdas hello world
+ls . libft
 
-cd $HOME/AF; pwd
-d$HOME
-pwd
-cd $HOME/AF; pwd
-echo $OLDPWD
-cd $OLDPWD/../../AF; pwd
-echo $OLDPWD/../../AF
-man ascii
 ""
 echo "'$HO<E
 echo "'HOME

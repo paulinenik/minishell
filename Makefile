@@ -8,6 +8,7 @@ SRCS	= 	main.c \
 			exec_cmd.c \
 			print_export.c \
 			null_strjoin.c \
+			array_concat.c \
 
 LIBFT	= libft/libft.a
 
@@ -34,7 +35,7 @@ $(LIBFT):
 		
 all:		$(NAME)
 
-f:			
+flags:			
 			$(CC) $(CFLAGS) $(SRCS) -g $(TCAP_FLAGS) -I./libft libft.a -o $(NAME)
 
 clean:	

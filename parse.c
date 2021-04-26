@@ -43,7 +43,12 @@ void	check_specchar(char **input, t_all *all)
 		add_data_front(&all->data, next_data);
 	}
 	else
+	{
 		redirect_parse(input, all);
+		array_concat(all->data, get_args(input, all->env));
+	}
+		//продолжить парсить аргументы
+		//соединить массивы
 }
 
 char	**get_args(char **input, char **envp)
