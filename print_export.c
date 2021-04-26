@@ -27,10 +27,10 @@ void print_export(t_all *all, int i, int j, char **copy)
     free(copy);
 }
 
-int     help_export(t_all *all, int i, int j, int temp)
-{
+// int     help_export(t_all *all, int i, int j, int temp)
+// {
 
-}
+// }
 
 void check_export(t_all *all, int i, int len, char **copy)
 {

@@ -12,7 +12,10 @@ void	parse(char *input, t_all *all)
 	{
 		if (*input == ' ')
 		{
-			all->data->args = get_args(&input, all->env);
+			if (all->data->args == NULL)
+				all->data->args = get_args(&input, all->env);
+			else
+				array_concat(all->data, get_args(&input, all->env));
 		}
 		else if (ft_strchr("|><;", *input) != NULL)
 			check_specchar(&input, all);
@@ -45,7 +48,7 @@ void	check_specchar(char **input, t_all *all)
 	else
 	{
 		redirect_parse(input, all);
-		array_concat(all->data, get_args(input, all->env));
+		// array_concat(all->data, get_args(input, all->env));
 	}
 		//продолжить парсить аргументы
 		//соединить массивы
@@ -61,6 +64,7 @@ char	**get_args(char **input, char **envp)
 	args = NULL;
 	content = NULL;
 	list = NULL;
+	write(1, "hello\n", 6);
 	while (**input == ' ')
 		(*input)++;
 	while (**input != '\0' && **input != ';' && **input != '|' && **input != '\n' && **input != '>' && **input != '<')
@@ -95,6 +99,8 @@ char	**list_to_array(t_list *list)
 	while (i < list_size)
 	{
 		array[i] = ft_strdup(list->content);
+		// free(list->content);
+		// list->content = NULL;
 		i++;
 		list = list->next;
 	}

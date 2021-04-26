@@ -1,16 +1,14 @@
-asd
-sad
-sd
-dpp[
-lsls
-expot
-expot
-git hist
- c world; cat c
-c lalala
+echo hello >a world >b >c 123234
 cat c
-hello >> b >> c world
-echo asdas hello world
+rld >b >c lalala
+cat c
+ a
+ls
+cat a
+ >b >c
+c world
+echo hello >a >b >c world
+ld
 ls . libft
 
 ""

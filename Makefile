@@ -35,7 +35,8 @@ $(LIBFT):
 		
 all:		$(NAME)
 
-flags:			
+flags:		$(LIBFT) $(HDRS) $(SRCS) mshell.h
+			@cp $(LIBFT) .
 			$(CC) $(CFLAGS) $(SRCS) -g $(TCAP_FLAGS) -I./libft libft.a -o $(NAME)
 
 clean:	
