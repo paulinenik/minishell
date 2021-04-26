@@ -1,13 +1,18 @@
-echo $HOME../
-
-cd $HOME/AF; pwd
-d$HOME
+export abc
+export
+export abcdef
+export
+export abcdef=5
+export
+export ab=4
+export
+export ab
+export
+port
+export abc
+export
 pwd
-cd $HOME/AF; pwd
-echo $OLDPWD
-cd $OLDPWD/../../AF; pwd
-echo $OLDPWD/../../AF
-man ascii
+scii
 ""
 echo "'$HO<E
 echo "'HOME

@@ -58,11 +58,18 @@ int		save_index(t_data *data, char **envp)
 }
 
 
-int		check_for_value(t_all *all, int i)
+int		check_for_value(t_all *all, int i, int k)
 {
 	int j;
 
 	j = -1;
+	if(k == -1)
+	{
+		while(all->env[i][++j])
+				if(all->env[i][j] == '=')
+					return (j);
+			return(-1);
+	}
 	while(all->data->args[i][++j])
 		if(all->data->args[i][j] == '=')
 			return (j);
@@ -84,73 +91,87 @@ int    get_export(t_all *all)
 		return(1);
 	if (all->data->args == NULL)
 		print_export(all, -1, -1, copy);
+	
+	//	check_export(all, -1, len, copy);
 	else if (all->data->args != NULL)
 	{
-		check_export(all, -1, len, copy);
-		// i = -1;
-		// int nbr = 0;
-		// while(all->data->args[++i]);
-		// while(all->env[++j]);
-		// len = j;
-		// k = save_index(all->data, all->env);
-		// copy = init(all->env, i - k);
-		// i = -1;
-		// while(all->data->args[++i])
-		// {
-		// 	j = -1;
-		// 	k = -1;
-		// 	int temp = -1;
-		// 	nbr = check_for_value(all, i);
-		// 	while(all->env[++j])
-		// 	{
-		// 		temp = -1;
-		// 		while(all->data->args[i][++temp])
-		// 			{
-		// 				if(all->data->args[i][temp] == '=')
-		// 					break ;
-		// 				if(ft_isalnum(all->data->args[i][temp]) == 0)
-		// 				{
-		// 					// write(1,&all->data->args[i][temp], 1);
-		// 					temp = -2;
-		// 					break ;
-		// 				}
-		// 			}
-		// 		if ((all->data->args[i][0] <= '9' && all->data->args[i][0] >= '0') || temp == -2)
-		// 		{
-		// 				write(1, "minishell: export: ", 20);
-		// 				write(1,all->data->args[i], ft_strlen(all->data->args[i]));
-		// 				write(1,": not a valid identifier\n",26);
-		// 				// printf("minishell: export: %s: not a valid identifier", all->data->args[i]);
-		// 				g_error = 1;
-		// 			k = i;
-		// 			break ;
-		// 		}
-		// 		if (nbr != -1)
-		// 		{
-		// 			if(!ft_strncmp(all->data->args[i], all->env[j], nbr))
-		// 			{
-		// 				free(copy[j]);
-		// 				copy[j] = NULL;
-		// 				copy[j] = ft_strdup(all->data->args[i]);
-		// 				k = 0;
-		// 				break ;
-		// 			}
-		// 		}
-		// 	}
-		// 	if (k == -1 && nbr != -1)
-		// 	{
-		// 		copy[len] = ft_strdup(all->data->args[i]);
-		// 		len++;
-		// 	}
-		// }
-		// copy[len] = NULL;
-		// check_export(all, -1, len, copy);
-		// j = -1;
-		// while(all->env[++j]);
-		// while(--j >= 0)
-		//    free(all->env[j]);
-		// free(all->env);
-		// all->env = copy;
+		i = -1;
+		int nbr = 0;
+		while(all->data->args[++i]);
+		while(all->env[++j]);
+		len = j;
+		k = save_index(all->data, all->env);
+		copy = init(all->env, i - k);
+		i = -1;
+		while(all->data->args[++i])
+		{
+			j = -1;
+			k = -1;
+			int temp = -1;
+			nbr = check_for_value(all, i, 0);
+			while(all->env[++j])
+			{
+				temp = -1;
+				while(all->data->args[i][++temp])
+					{
+						if(all->data->args[i][temp] == '=')
+							break ;
+						if(ft_isalnum(all->data->args[i][temp]) == 0)
+						{
+							
+							temp = -1;
+							break ;
+						}
+					}
+				if ((all->data->args[i][0] <= '9' && all->data->args[i][0] >= '0') || temp == -1)
+				{
+						write(1, "minishell: export: ", 20);
+						write(1,all->data->args[i], ft_strlen(all->data->args[i]));
+						write(1,": not a valid identifier\n",26);
+						// printf("minishell: export: %s: not a valid identifier", all->data->args[i]);
+					k = i;
+					break ;
+				}
+				if (nbr != -1)
+				{
+					if (!ft_strncmp(all->env[j],all->data->args[i], nbr + 1) ||
+					(ft_strncmp(all->data->args[i],all->env[j], ft_strlen(all->data->args[i]) + 1) == 61 ))
+					{
+						write(1,"hmeee",5);
+						free(copy[j]);
+						copy[j] = NULL;
+						copy[j] = ft_strdup(all->data->args[i]);
+						k = 0;
+						break ;
+					}
+
+				}
+				if (nbr == -1 && !ft_scmp(all->data->args[i], all->env[j],'='))
+				{
+					write(1,"here",5);
+					k = 0;
+					if (check_for_value(all, j, -1) != -1 && (ft_strlen(all->data->args[i]) > check_for_value(all, j, -1)))
+					{
+						k = -1;
+					}
+					
+				}
+		}
+			if (k == -1)
+			{
+				write(1,"HELLO",6);
+				copy[len] = ft_strdup(all->data->args[i]);
+				len++;
+			}
+		}
+		copy[len] = NULL;
+		i = -1;
+		j = -1;
+		while(all->env[++j]);
+		while(--j >= 0)
+		   free(all->env[j]);
+		free(all->env);
+		all->env = copy;
 	}
 	return (0);
 }

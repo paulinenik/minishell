@@ -71,7 +71,7 @@ int		get_unset(t_all *all);
 void	print_export(t_all *all, int i, int j, char **copy);
 char	**alph_sort(char **copy, int n);
 void	check_export(t_all *all, int i, int j, char **copy);
-int		check_for_value(t_all *all, int i);
+int		check_for_value(t_all *all, int i, int k);
 int		save_index(t_data *data, char **envp);
 
 int		*init_fd(void);
