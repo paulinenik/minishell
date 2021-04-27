@@ -78,101 +78,13 @@ int		check_for_value(t_all *all, int i, int k)
 
 int    get_export(t_all *all)
 {
-	int i;
-	int j;
-	char **copy;
-	int k = 0;
-	int len;
-	char *str;
-
-	i = -1;
-	j = -1;
+	
 	if (ft_strncmp(all->data->bin, "export\0", 7))
 		return(1);
 	if (all->data->args == NULL)
-		print_export(all, -1, -1, copy);
-	
-	//	check_export(all, -1, len, copy);
+		print_export(all, -1, -1);
 	else if (all->data->args != NULL)
-	{
-		i = -1;
-		int nbr = 0;
-		while(all->data->args[++i]);
-		while(all->env[++j]);
-		len = j;
-		k = save_index(all->data, all->env);
-		copy = init(all->env, i - k);
-		i = -1;
-		while(all->data->args[++i])
-		{
-			j = -1;
-			k = -1;
-			int temp = -1;
-			nbr = check_for_value(all, i, 0);
-			while(all->env[++j])
-			{
-				temp = -1;
-				while(all->data->args[i][++temp])
-					{
-						if(all->data->args[i][temp] == '=')
-							break ;
-						if(ft_isalnum(all->data->args[i][temp]) == 0)
-						{
-							
-							temp = -1;
-							break ;
-						}
-					}
-				if ((all->data->args[i][0] <= '9' && all->data->args[i][0] >= '0') || temp == -1)
-				{
-						write(1, "minishell: export: ", 20);
-						write(1,all->data->args[i], ft_strlen(all->data->args[i]));
-						write(1,": not a valid identifier\n",26);
-						// printf("minishell: export: %s: not a valid identifier", all->data->args[i]);
-					k = i;
-					break ;
-				}
-				if (nbr != -1)
-				{
-					if (!ft_strncmp(all->env[j],all->data->args[i], nbr + 1) ||
-					(ft_strncmp(all->data->args[i],all->env[j], ft_strlen(all->data->args[i]) + 1) == 61 ))
-					{
-						write(1,"hmeee",5);
-						free(copy[j]);
-						copy[j] = NULL;
-						copy[j] = ft_strdup(all->data->args[i]);
-						k = 0;
-						break ;
-					}
-
-				}
-				if (nbr == -1 && !ft_scmp(all->data->args[i], all->env[j],'='))
-				{
-					write(1,"here",5);
-					k = 0;
-					if (check_for_value(all, j, -1) != -1 && (ft_strlen(all->data->args[i]) > check_for_value(all, j, -1)))
-					{
-						k = -1;
-					}
-					
-				}
-		}
-			if (k == -1)
-			{
-				write(1,"HELLO",6);
-				copy[len] = ft_strdup(all->data->args[i]);
-				len++;
-			}
-		}
-		copy[len] = NULL;
-		i = -1;
-		j = -1;
-		while(all->env[++j]);
-		while(--j >= 0)
-		   free(all->env[j]);
-		free(all->env);
-		all->env = copy;
-	}
+		check_export(all, -1, -1, -1);
 	return (0);
 }
 
@@ -197,11 +109,9 @@ void	check_dir(char *str)
 int	get_cd(t_all *all)
 {
 	char dir[1024];
-	int i;
 	char *key;
 
 	key = NULL;
-	i = 1024;
 	getcwd(dir, 1024);
 	if (ft_strncmp(all->data->bin, "cd", 3))
 		return (1);
@@ -242,17 +152,22 @@ int    get_unset(t_all *all)
 	j = -1;
 	if (ft_strncmp(all->data->bin, "unset", 6))
 		return (1);
+	
 	if ((all->data->args != NULL))
 	{
 		while(all->data->args[++i])
 		{
 			j = -1;
 			while(all->env[++j])
-				if (!ft_strncmp(all->env[j], all->data->args[i], ft_strlen(all->data->args[i])))
+				if (!ft_strcmp(all->env[j], all->data->args[i]) 
+				|| (ft_strncmp(all->data->args[i],all->env[j], ft_strlen(all->data->args[i]) + 1) == 61))
 				{
 					k++;
 					break ;
 				}
+			alnum_search(all->data->args, i, -1, -1);
+			
+
 		}
 		i = -1;
 		j = -1;
@@ -266,9 +181,17 @@ int    get_unset(t_all *all)
 				k = -1;
 				while(all->data->args[++j])
 				{
-					k = (ft_strncmp(all->env[i], all->data->args[j], ft_strlen(all->data->args[j])));
+					if(check_for_value(all, j, 0) != -1)
+						continue ;
+					k = (ft_strcmp(all->env[i], all->data->args[j]));
 					if (k == 0)
 						break ;
+					 if (!ft_scmp(all->data->args[j],all->env[i],'='))
+					 {
+						write(1,"hello",4);
+						k = 0;
+						break ;
+					}
 				}
 				if (k != 0)
 				{

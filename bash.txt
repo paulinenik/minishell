@@ -1,24 +1,22 @@
-export abc
-export
-export abcdef
-export
-export abcdef=5
-export
-export ab=4
-export
-export ab
-export
-port
-export abc
 export
 pwd
-scii
-""
-echo "'$HO<E
-echo "'HOME
-clear
-clear
-clear
-echo "'$HOME'"
+879
+unset abc=879
+export
+nset abc=90
+export abc=190
+export
+unset abc=190
+export
+rt abc=9 ab=5
+export
+unset ab
+export
+unset abc=9
+export
+export abc=9
+unset abc=10
+export
+ho "'$HOME'"
 bash
 bash

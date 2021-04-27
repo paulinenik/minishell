@@ -63,7 +63,7 @@ void	path_init(t_all *all)
 	// 	printf("%c",all->home_path[i]);
 }
 
-void	print_in_file(char *f, char *str,t_all *all)
+void	print_in_file(char *str,t_all *all)
 {
 	//fd = open(f, O_RDWR);
   	write(all->fd, str, ft_strlen(str));
@@ -86,14 +86,14 @@ void	create_history(t_all *all, char *str)
 			all->commands_hist = malloc(sizeof(char *) * 2);
 			all->commands_hist[0] = ft_strdup(str);
 			all->commands_hist[1] = NULL;
-			print_in_file("./bash.txt", str, all);
+			print_in_file(str, all);
 		}
 		else
 		{
 			while(all->commands_hist[++i]);
 			copy = init(all->commands_hist, 1);
 			copy[i] = ft_strdup(str);
-			print_in_file("./bash.txt", str, all);
+			print_in_file(str, all);
 			copy[i + 1] = NULL;
 			i++;
 			while(--i >= 0)
@@ -109,6 +109,7 @@ void	create_history(t_all *all, char *str)
 
 int     main(int argc, char **argv, char **envp)
 {
+	printf("%d\n", ft_strncmp("ab","ab=", 3));
 	(void)argc;
 	(void)argv;
 	g_error = 0;
@@ -134,13 +135,13 @@ int     main(int argc, char **argv, char **envp)
 	// term.c_cc[VTIME] = 0;
 	tgetent(0, term_name);
 		int i = 0;
-		int len = 0;
+	//	int len = 0;
 	 while(ft_strncmp(buf, "\4", 2))
 	{
 		write(1, "\033[36;1mminishell$\033[0m ", 23);
 		tputs(save_cursor, 1, ft_putchar);
 		i = 0;
-		len = 0;
+		//len = 0;
 		do
 		{
 		 	l = read(0, buf, 100);
@@ -204,7 +205,7 @@ int     main(int argc, char **argv, char **envp)
 			}
 			else if(!ft_strncmp(buf, "\e[C", 4))
 			{
-				if (i < ft_strlen(input))
+				if (i < (int)ft_strlen(input))
 				{
 					tputs(cursor_right, 1, ft_putchar);
 					i++;
