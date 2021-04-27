@@ -18,5 +18,25 @@ export abc=9
 unset abc=10
 export
 ho "'$HOME'"
+echo hello >a world >b >c 123234
+cat c
+rld >b >c lalala
+cat c
+ a
+ls
+cat a
+ >b >c
+c world
+echo hello >a >b >c world
+ld
+ls . libft
+
+""
+echo "'$HO<E
+echo "'HOME
+clear
+clear
+clear
+echo "'$HOME'"
 bash
 bash
