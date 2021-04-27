@@ -38,6 +38,7 @@ typedef struct	s_all
 	char			*old_pwd;
 	char			**commands_hist;
 	int				size;
+	int				len_env;
 	int 			fd;
 }				t_all;
 
@@ -68,11 +69,12 @@ void	td_array_clear(char **arr);
 int		get_echo(t_all *all);
 void	clear_all(t_data **data);
 int		get_unset(t_all *all);
-void	print_export(t_all *all, int i, int j, char **copy);
+void	print_export(t_all *all, int i, int j);
 char	**alph_sort(char **copy, int n);
-void	check_export(t_all *all, int i, int j, char **copy);
+void	check_export(t_all *all, int i, int j, int len);
 int		check_for_value(t_all *all, int i, int k);
 int		save_index(t_data *data, char **envp);
+int     alnum_search(char **str, int i, int temp, int s);
 
 int		*init_fd(void);
 void	redirect_parse(char **input, t_all *all);
