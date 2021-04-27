@@ -125,9 +125,9 @@ int    get_export(t_all *all)
 					}
 				if ((all->data->args[i][0] <= '9' && all->data->args[i][0] >= '0') || temp == -1)
 				{
-						write(1, "minishell: export: ", 20);
+						write(1, "minishell: export: `", 21);
 						write(1,all->data->args[i], ft_strlen(all->data->args[i]));
-						write(1,": not a valid identifier\n",26);
+						write(1,"': not a valid identifier\n",27);
 						// printf("minishell: export: %s: not a valid identifier", all->data->args[i]);
 					k = i;
 					break ;

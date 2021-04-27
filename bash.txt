@@ -1,22 +1,23 @@
-echo hello >a world >b >c 123234
+echo $"PATH"
+echo hello >a world >b >c lalalala
 cat c
-rld >b >c lalala
-cat c
- a
-ls
-cat a
- >b >c
-c world
-echo hello >a >b >c world
-ld
-ls . libft
 
-""
-echo "'$HO<E
-echo "'HOME
-clear
-clear
-clear
-echo "'$HOME'"
-bash
-bash
+export "111"="222"
+export 'a'='b'
+export
+export 'a'='c'
+export
+export b=5 b=7 b=8
+export
+unset a1=10
+unset 1_qq
+export
+export
+unset a; export
+unset b; export
+export
+export a b c
+export
+unset a b c
+export
+unset ""

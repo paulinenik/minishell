@@ -44,8 +44,6 @@ int exec_cmd(t_all *all)
 	argv = NULL;
 	if (!ft_strchr(all->data->bin, '/'))
 		path = check_path(all->data->bin, get_var_value(all->env, "PATH"));
-		// // write(1, "helo\n", 5);
-		// path = ft_strdup(all->data->bin);
 	else
 		path = ft_strdup(all->data->bin);
 	pid = fork();
@@ -60,14 +58,14 @@ int exec_cmd(t_all *all)
 		}
 		else
 		{
-			// write(1, "hello\n", 6);
 			argv = array_add_front(all->data->args, all->data->bin);
 			status = execve(path, argv, all->env);
 		}
 		if (status == -1)
-			exit(127);
+			exit(127); //127?
 	}
-	waitpid(pid, &status, WUNTRACED);
+	wait(&status);
+	g_error = status;
 	free(path);
 	td_array_clear(pwd);
 	td_array_clear(argv);
