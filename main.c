@@ -52,13 +52,7 @@ void	path_init(t_all *all)
 	
 	i = -1;
 	str = get_var_value(all->env,"HOME");
-	while(*str)
-	{
-		all->home_path[++i] = *str;
-		str++;
-	}
-	all->home_path[++i] = '\0';
-	i = -1;
+	all->home_path = ft_strdup(str);
 	// while(all->home_path[++i])
 	// 	printf("%c",all->home_path[i]);
 }

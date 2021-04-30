@@ -1,21 +1,18 @@
-export
-pwd
-879
-unset abc=879
-export
-nset abc=90
-export abc=190
-export
-unset abc=190
-export
-rt abc=9 ab=5
+export abc=23
+export ab=34 abcde=745
 export
 unset ab
 export
-unset abc=9
+unset abcde
 export
-export abc=9
-unset abc=10
+normte get_pwd.c
+notminette get_pwd.c
+
+rt
+export abc=8 ab=19 abcde=01
+unset ab
+export
+ abc=10
 export
 ho "'$HOME'"
 echo hello >a world >b >c 123234

@@ -34,7 +34,7 @@ typedef struct	s_all
 {
 	t_data			*data;
 	char			**env;
-	char			home_path[100];
+	char			*home_path;
 	char			*old_pwd;
 	char			**commands_hist;
 	int				size;
@@ -75,6 +75,8 @@ void	check_export(t_all *all, int i, int j, int len);
 int		check_for_value(t_all *all, int i, int k);
 int		save_index(t_data *data, char **envp);
 int     alnum_search(char **str, int i, int temp, int s);
+char	**unseter(t_all *all, int i, int j, char **copy);
+
 
 int		*init_fd(void);
 void	redirect_parse(char **input, t_all *all);
