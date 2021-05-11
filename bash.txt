@@ -1,12 +1,15 @@
-export abc=23
-export ab=34 abcde=745
-export
-unset ab
-export
-unset abcde
-export
-normte get_pwd.c
-notminette get_pwd.c
+ls | wc
+ls | grep main | wc
+git status
+rm a b
+rm myls
+git status
+ wc
+cat b
+cat b | wc
+cat b | wc
+git status | wc
+d.c
 
 rt
 export abc=8 ab=19 abcde=01

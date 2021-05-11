@@ -7,7 +7,7 @@ void	parse(char *input, t_all *all)
 	all->data = init_data();
 	all->data->bin = init_exec_name(&input, all->env);
 	// printf("|%s| %zu - input\n", input, ft_strlen(input));
-	printf("%s - binary name\n", all->data->bin);
+	// printf("%s - binary name\n", all->data->bin);
 	while (*input != '\0')
 	{
 		if (*input == ' ')
@@ -29,6 +29,7 @@ void	parse(char *input, t_all *all)
 void	check_specchar(char **input, t_all *all)
 {
 	t_data	*next_data;
+	int		pipes_fd[2];
 
 	if (**input == ';')
 	{
@@ -40,9 +41,14 @@ void	check_specchar(char **input, t_all *all)
 	}
 	else if (**input == '|')
 	{
+		if (pipe(pipes_fd) < 0)
+			printf("error\n");
+		if (all->data->fd[1] == 1)
+			all->data->fd[1] = pipes_fd[1];
 		next_data = init_data();
 		(*input)++;
 		next_data->bin = init_exec_name(input, all->env);
+		next_data->fd[0] = pipes_fd[0];
 		add_data_front(&all->data, next_data);
 	}
 	else

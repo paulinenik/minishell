@@ -21,15 +21,23 @@ static int	exec_builtin(t_all * all)
 void	to_process(t_all *all)
 {
 	int exit_status;
+	t_data	*data;
 
 	exit_status = 1;
-	change_fd(all->data);
 	if (data_size(all->data) > 1)
 		revert_data(&all->data);
-	exit_status = exec_builtin(all);
-	if (exit_status == 1)
-		exit_status = exec_cmd(all);
-	return_fd(all->data);
+	data = all->data;
+	while (all->data != NULL)
+	{
+		change_fd(all->data);
+		exit_status = exec_builtin(all);
+		if (exit_status == 1)
+			exit_status = exec_cmd(all);
+		return_fd(all->data);
+
+		all->data = all->data->next;
+	}
+	all->data = data;
 }
 
 int exec_cmd(t_all *all)
