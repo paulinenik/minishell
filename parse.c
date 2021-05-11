@@ -33,6 +33,12 @@ void	check_specchar(char **input, t_all *all)
 
 	if (**input == ';')
 	{
+		if (all->data->bin == NULL)
+		{
+			printf("syntax error\n");
+			**input = '\0';
+			return ;
+		}
 		to_process(all);
 		clear_all(&all->data);
 		all->data = init_data();
@@ -49,6 +55,12 @@ void	check_specchar(char **input, t_all *all)
 		(*input)++;
 		next_data->bin = init_exec_name(input, all->env);
 		next_data->fd[0] = pipes_fd[0];
+		if (all->data->bin == NULL || next_data->bin == NULL)
+		{
+			printf("syntax error\n");
+			**input = '\0';
+			return ;
+		}
 		add_data_front(&all->data, next_data);
 	}
 	else
