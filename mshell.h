@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/04/25 16:44:56 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/05/11 16:59:25 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <dirent.h>
+#include <errno.h>
+#include <string.h>
 typedef struct	s_data
 {
 	char			*bin;

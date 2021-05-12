@@ -6,8 +6,6 @@ void	parse(char *input, t_all *all)
 		return ;
 	all->data = init_data();
 	all->data->bin = init_exec_name(&input, all->env);
-	// printf("|%s| %zu - input\n", input, ft_strlen(input));
-	// printf("%s - binary name\n", all->data->bin);
 	while (*input != '\0')
 	{
 		if (*input == ' ')
@@ -35,7 +33,7 @@ void	check_specchar(char **input, t_all *all)
 	{
 		if (all->data->bin == NULL)
 		{
-			printf("syntax error\n");
+			printf("minishell: syntax error near unexpected token `%s'\n", *input);
 			**input = '\0';
 			return ;
 		}
@@ -64,12 +62,7 @@ void	check_specchar(char **input, t_all *all)
 		add_data_front(&all->data, next_data);
 	}
 	else
-	{
 		redirect_parse(input, all);
-		// array_concat(all->data, get_args(input, all->env));
-	}
-		//продолжить парсить аргументы
-		//соединить массивы
 }
 
 char	**get_args(char **input, char **envp)
@@ -82,18 +75,20 @@ char	**get_args(char **input, char **envp)
 	args = NULL;
 	content = NULL;
 	list = NULL;
-	write(1, "hello\n", 6);
 	while (**input == ' ')
 		(*input)++;
 	while (**input != '\0' && **input != ';' && **input != '|' && **input != '\n' && **input != '>' && **input != '<')
 	{
 		content = init_exec_name(input, envp);
-		item = ft_lstnew(content);
-		if (item == NULL)
-			exit(0);
-		ft_lstadd_back(&list, item);
-		if (**input == ' ')
-			(*input)++;
+		if (content != NULL)
+		{
+			item = ft_lstnew(content);
+			// if (item == NULL)
+			// 	exit(0);
+			ft_lstadd_back(&list, item);
+			if (**input == ' ')
+				(*input)++;
+		}
 	}
 	args = list_to_array(list);
 	return (args);
@@ -125,7 +120,7 @@ char	**list_to_array(t_list *list)
 	array[i] = NULL;
 	// while (i >= 0)
 	// {
-	// 	printf("%s - arg[%d]\n", array[i], i);
+	// 	printf("|%s| - arg[%d]\n", array[i], i);
 	// 	i--;
 	// }
 	ft_lstclear(&head, &free);
@@ -178,38 +173,6 @@ char	*init_exec_name(char **input, char **envp)
 	return (result);
 }
 
-char	*single_qoutation(char **input, char *arg)
-{
-	(*input)++;
-	while (**input != 39)
-	{
-		arg = add_char(arg, **input);
-		(*input)++;
-	}
-	(*input)++;
-	return (arg);
-}
-
-char	*double_quotation(char **input, char **envp, char *arg)
-{
-	(*input)++;
-	while (**input != 34)
-	{
-		if (**input == 36)
-			arg = get_envp(input, envp, arg);
-		else
-		{
-			if (!ft_strncmp(*input, "\\\\", 2) || !ft_strncmp(*input, "\\$", 2) \
-			|| !ft_strncmp(*input, "\\\"", 2))
-				(*input)++;
-			arg = add_char(arg, **input);
-			(*input)++;
-		}
-	}
-	(*input)++;
-	return (arg);
-}
-
 char	*get_envp(char **input, char **envp, char *arg)
 {
 	char	*key;
@@ -232,6 +195,8 @@ char	*get_envp(char **input, char **envp, char *arg)
 	}
 	if (key == NULL)
 	{
+		if (**input != 34 || **input != 39)
+			return(arg);
 		free(arg);
 		return (null_strjoin(arg, "$"));
 	}

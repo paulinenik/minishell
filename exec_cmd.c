@@ -70,7 +70,10 @@ int exec_cmd(t_all *all)
 			status = execve(path, argv, all->env);
 		}
 		if (status == -1)
+		{
+			printf("minishell: %s: No such file or directory\n", path);
 			exit(127); //127?
+		}
 	}
 	wait(&status);
 	g_error = status;

@@ -1,42 +1,50 @@
-ls | wc
-ls | grep main | wc
-git status
-rm a b
-rm myls
-git status
- wc
-cat b
-cat b | wc
-cat b | wc
-git status | wc
-d.c
+ls libft   
+cd libft   
+cd ../      
+;
+;
+;
+;;
+;;
+;
+;;
+;;;;;
+cd ms   
+ ''
+prq; cat prq
+sort < abc | grep t
+wc < abc | grep 1
+hello|world;
 
-rt
-export abc=8 ab=19 abcde=01
-unset ab
+export a=10
 export
- abc=10
+export 111=222
+export 1abc=123
+cd
+pwd
+cd minishell
+pwd
 export
-ho "'$HOME'"
-echo hello >a world >b >c 123234
-cat c
-
+export _abc=10
+env
+export
+export _abc=10
+export
+export "111=222"
 export "111"="222"
 export 'a'='b'
 export
-export 'a'='c'
+export a=6 b=8 c=9
 export
-export b=5 b=7 b=8
+export a=5 a=7 a=8
+export
+unset a1
+unset b
 export
 unset a1=10
-unset 1_qq
-export
+unset 1_aa
+unset a c
 export
-unset a; export
-unset b; export
 export
-export a b c
+env
 export
-unset a b c
-export
-unset ""

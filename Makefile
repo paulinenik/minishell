@@ -9,6 +9,7 @@ SRCS	= 	main.c \
 			print_export.c \
 			null_strjoin.c \
 			array_concat.c \
+			parse_quotes.c \
 
 LIBFT	= libft/libft.a
 
