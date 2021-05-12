@@ -233,7 +233,7 @@ int	get_echo(t_all *all)
 			//write(1, all->data->args[i], ft_strlen(all->data->args[i]));
 			// if (!ft_strncmp(all->data->args[i], "$?", 2))
 			// 	write(1,"brya\n", 5);
-			// 	//printf("%ddnfidifd", g_error);
+			// 	//printf("%ddnfidifd", g_exit_status);
 			// else
 			// {
 				write(1, all->data->args[i], ft_strlen(all->data->args[i]));
@@ -259,7 +259,7 @@ int	get_echo(t_all *all)
 // 			while (all->data->args[++i])
 // 			{
 // 				if (ft_strcmp(all->data->args[i], "$?"))
-// 					ft_putnbr_fd(g_error, 1);
+// 					ft_putnbr_fd(g_exit_status, 1);
 // 				else
 // 				{
 // 					write(1, all->data->args[i], ft_strlen(all->data->args[i]));

@@ -62,7 +62,7 @@ int exec_cmd(t_all *all)
 		}
 		else
 			printf("minishell: %s: Not a directory\n", all->data->bin);
-		g_error = 126;
+		g_exit_status = 126;
 		return (1);
 	}
 	if (!ft_strchr(all->data->bin, '/'))
@@ -73,7 +73,7 @@ int exec_cmd(t_all *all)
 	{
 		return_fd(all->data);
 		printf("minishell: %s: command not found\n", all->data->bin);
-		g_error = 127;
+		g_exit_status = 127;
 		return (1);
 	}
 	pid = fork();
@@ -98,7 +98,7 @@ int exec_cmd(t_all *all)
 		}
 	}
 	wait(&status);
-	g_error = status;
+	g_exit_status = status;
 	free(path);
 	td_array_clear(pwd);
 	td_array_clear(argv);

@@ -26,11 +26,6 @@ void	array_concat(t_data *data, char **new_args)
 		j++;
 	}
 	reallocated[len - 1] = NULL;
-	// while(len > 0)
-	// {
-	// 	printf("|%s|\n", reallocated[len - 1]);
-	// 	len--;
-	// }
 	free(data->args);
 	free(new_args);
 	data->args = reallocated;

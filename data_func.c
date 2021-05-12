@@ -6,7 +6,7 @@ t_data	*init_data(void)
 
 	data = (t_data *)malloc(sizeof(t_data));
 	// if (data == NULL)
-	// 	error
+	// 	malloc error
 	data->bin = NULL;
 	data->args = NULL;
 	data->next = NULL;

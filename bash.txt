@@ -1,16 +1,20 @@
-/bin/
-/bin/ls
-/bin/ls
-/bin/ls/
- wc
-cat < input.txt | wc
+ls >
+ls
+ls
+ls
 ls
 
+lsls
 ls
-c
-   
- ''
-prq; cat prq
+
+echo $?;
+pwd
+pwd
+echo $?
+echo $?
+echo $?; ls
+ls\
+; cat prq
 sort < abc | grep t
 wc < abc | grep 1
 hello|world;
