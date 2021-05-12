@@ -2,6 +2,7 @@
 
 void	parse(char *input, t_all *all)
 {
+	g_error = 0;
 	if (ft_strlen(input) == 1)
 		return ;
 	all->data = init_data();
@@ -20,7 +21,7 @@ void	parse(char *input, t_all *all)
 		else
 			input++;
 	}
-	if (all->data->bin)
+	if (all->data->bin && g_error == 0)
 		to_process(all);
 }
 

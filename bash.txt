@@ -1,15 +1,13 @@
-ls libft   
-cd libft   
-cd ../      
-;
-;
-;
-;;
-;;
-;
-;;
-;;;;;
-cd ms   
+hello | world
+ls
+hello > abc
+ls
+| gfdg
+dgd | ls
+| grep main
+ls
+c
+   
  ''
 prq; cat prq
 sort < abc | grep t

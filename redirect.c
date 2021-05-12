@@ -12,6 +12,12 @@ int	*init_fd(void)
 
 void	redirect_parse(char **input, t_all *all)
 {
+	if (**input == '>' && *(*input + 1) == '<')
+	{
+		printf("minishell: syntax error near unexpected token `<'\n");
+		**input = '\0';
+		g_error = 258;
+	}
 	if (**input == '>' && *(*input + 1) == '>')
 	{
 		(*input)++;
@@ -25,7 +31,11 @@ void	redirect_parse(char **input, t_all *all)
 	if (**input == '>')
 		redirect_write(input, all);
 	if (**input == '<')
+	{
+		if (*(*input + 1) == '>')
+			(*input)++;
 		redirect_read(input, all);
+	}
 	// *input++;
 	// printf("fd[0] is %d\n", all->data->fd[0]);
 }

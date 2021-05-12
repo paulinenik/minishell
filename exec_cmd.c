@@ -54,6 +54,13 @@ int exec_cmd(t_all *all)
 		path = check_path(all->data->bin, get_var_value(all->env, "PATH"));
 	else
 		path = ft_strdup(all->data->bin);
+	if (path == NULL)
+	{
+		return_fd(all->data);
+		printf("minishell: %s: command not found\n", all->data->bin);
+		g_error = 127;
+		return (1);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
