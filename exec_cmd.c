@@ -15,6 +15,8 @@ static int	exec_builtin(t_all * all)
 		return (0);
 	if (!get_unset(all))
 		return (0);
+	if (!get_exit(all))
+		return (0);
 	return (1);
 }
 

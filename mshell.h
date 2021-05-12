@@ -78,6 +78,7 @@ int		check_for_value(t_all *all, int i, int k);
 int		save_index(t_data *data, char **envp);
 int     alnum_search(char **str, int i, int temp, int s);
 char	**unseter(t_all *all, int i, int j, char **copy);
+int		get_exit(t_all *all);
 
 
 int		*init_fd(void);

@@ -1,20 +1,26 @@
-ls libft   
-cd libft   
-cd ../      
-;
-;
-;
-;;
-;;
-;
-;;
-;;;;;
-cd ms   
- ''
-prq; cat prq
-sort < abc | grep t
-wc < abc | grep 1
-hello|world;
+pwd
+export
+abc
+a
+ad
+adc
+abc
+export
+ls
+pwd
+ls -la
+export 
+export abc
+export
+export abcd
+export
+export abde
+export
+gmdfldg,fg
+
+
+exit
+orld;
 
 export a=10
 export

@@ -110,6 +110,7 @@ int     main(int argc, char **argv, char **envp)
 	char	buf[101];
 	t_all	*all;
 	struct	termios	term;
+	struct	termios	term1;
 	int l;
 	char *term_name = "xterm-256color";
 	char	*input;
@@ -122,8 +123,10 @@ int     main(int argc, char **argv, char **envp)
 	all->size = 0;
 	path_init(all);
 	tcgetattr(0, &term);
+	tcgetattr(0, &term1);
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);
+	term.c_lflag &= ~(ISIG);
 	tcsetattr(0, TCSANOW, &term);
 	// term.c_cc[VMIN] = 1;
 	// term.c_cc[VTIME] = 0;
@@ -132,6 +135,10 @@ int     main(int argc, char **argv, char **envp)
 	//	int len = 0;
 	 while(ft_strncmp(buf, "\4", 2))
 	{
+		term.c_lflag &= ~(ECHO);
+		term.c_lflag &= ~(ICANON);
+		term.c_lflag &= ~(ISIG);
+		tcsetattr(0, TCSANOW, &term);
 		write(1, "\033[36;1mminishell$\033[0m ", 23);
 		tputs(save_cursor, 1, ft_putchar);
 		i = 0;
@@ -143,8 +150,8 @@ int     main(int argc, char **argv, char **envp)
 			if(!ft_strncmp(buf,"\e[A",4))
 			{
 				tputs(restore_cursor, 1, ft_putchar);
-				//tputs(tgetstr("dc", 0), 1, ft_putchar);
-				tputs(tigetstr("ed"), 1, ft_putchar);
+				while (--i > 0)
+					tputs(tgetstr("dc", 0), 1, ft_putchar);
 				if(all->commands_hist != NULL)
 				{
 				if (all->size > 0)
@@ -162,8 +169,8 @@ int     main(int argc, char **argv, char **envp)
 			else if(!ft_strncmp(buf,"\e[B", 4))
 			{
 				tputs(restore_cursor, 1, ft_putchar);
-				//tputs(tgetstr("dc", 0), 1, ft_putchar);
-				tputs(tigetstr("ed"), 1, ft_putchar);
+				while (--i > 0)
+					tputs(tgetstr("dc", 0), 1, ft_putchar);
 				if(all->commands_hist != NULL)
 				{
 					if (all->commands_hist[all->size + 1])
@@ -190,21 +197,28 @@ int     main(int argc, char **argv, char **envp)
 			}
 			else if(!ft_strncmp(buf, "\e[D", 4))
 			{
-				if (i > 0)
-				{
+				i++;
+				if (--i > 0)
 					tputs(cursor_left, 1, ft_putchar);
-					i--;
-				}
-				//tputs(tigetstr("ed"), 1, ft_putchar);
 			}
 			else if(!ft_strncmp(buf, "\e[C", 4))
 			{
-				if (i < (int)ft_strlen(input))
-				{
+				i--;
+				if (++i < (int)ft_strlen(input))
 					tputs(cursor_right, 1, ft_putchar);
-					i++;
-				}
-				//tputs(tigetstr("ed"), 1, ft_putchar);
+			}
+			else if(!ft_strncmp(buf, "\3", 2))
+			{
+				write(1,"\n",1);
+				input = add_char(input, '\n');
+				break ;
+			}
+			else if(!ft_strncmp(buf, "\4", 2))
+			{
+				write (1, "exit\n", 6);
+				term = term1;
+				tcsetattr(0, TCSANOW, &term);
+				exit (0);
 			}
 			else
 			{
@@ -213,7 +227,9 @@ int     main(int argc, char **argv, char **envp)
 				write (1, buf, 1);
 				i++;
 			}
-		} while (ft_strncmp(buf, "\n", 1) && ft_strncmp(buf, "\4", 1));
+		} while (ft_strncmp(buf, "\n", 1));
+		term = term1;
+		tcsetattr(0, TCSANOW, &term);
 		input = add_char(input, '\0');
 		//printf("stroka - %s", input);
 		create_history(all, input);

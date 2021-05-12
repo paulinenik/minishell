@@ -245,6 +245,17 @@ int	get_echo(t_all *all)
 	return (0)	;
 }
 
+int	get_exit(t_all *all)
+{
+	if (ft_strncmp(all->data->bin, "exit", 5))
+		return (1);
+	else
+	{
+		write(1,"exit\n", 5);
+		exit(0);
+	}
+	return (0);
+}
 // int	get_echo(t_all *all)
 // {
 // 	int	i;
