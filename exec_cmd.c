@@ -47,9 +47,24 @@ int exec_cmd(t_all *all)
 	char *path;
 	int	status;
 	pid_t	pid;
+	DIR 	*dir_stream;
 
 	pwd = NULL;
 	argv = NULL;
+	if (all->data->bin[ft_strlen(all->data->bin) - 1] == '/')
+	{
+		return_fd(all->data);
+		dir_stream = opendir(all->data->bin);
+		if (dir_stream != NULL)
+		{
+			printf("minishell: %s: is a directory\n", all->data->bin);
+			closedir(dir_stream);
+		}
+		else
+			printf("minishell: %s: Not a directory\n", all->data->bin);
+		g_error = 126;
+		return (1);
+	}
 	if (!ft_strchr(all->data->bin, '/'))
 		path = check_path(all->data->bin, get_var_value(all->env, "PATH"));
 	else

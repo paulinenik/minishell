@@ -3,7 +3,7 @@
 void	parse(char *input, t_all *all)
 {
 	g_error = 0;
-	if (ft_strlen(input) == 1)
+	if (ft_strlen(input) == 0)
 		return ;
 	all->data = init_data();
 	all->data->bin = init_exec_name(&input, all->env);
@@ -34,8 +34,12 @@ void	check_specchar(char **input, t_all *all)
 	{
 		if (all->data->bin == NULL)
 		{
-			printf("minishell: syntax error near unexpected token `%s'\n", *input);
+			if (*(*input + 1) == ';')
+				printf("minishell: syntax error near unexpected token `;;'\n");
+			else
+				printf("minishell: syntax error near unexpected token `;'\n");
 			**input = '\0';
+			g_error = 258;
 			return ;
 		}
 		to_process(all);
@@ -46,6 +50,16 @@ void	check_specchar(char **input, t_all *all)
 	}
 	else if (**input == '|')
 	{
+		if (all->data->bin == NULL || next_data->bin == NULL)
+		{
+			if (*(*input + 1) == '|')
+				printf("minishell: syntax error near unexpected token `||'\n");
+			else
+				printf("minishell: syntax error near unexpected token `|'\n");
+			**input = '\0';
+			g_error = 258;
+			return ;
+		}
 		if (pipe(pipes_fd) < 0)
 			printf("error\n");
 		if (all->data->fd[1] == 1)
@@ -54,13 +68,9 @@ void	check_specchar(char **input, t_all *all)
 		(*input)++;
 		next_data->bin = init_exec_name(input, all->env);
 		next_data->fd[0] = pipes_fd[0];
-		if (all->data->bin == NULL || next_data->bin == NULL)
-		{
-			printf("syntax error\n");
-			**input = '\0';
-			return ;
-		}
 		add_data_front(&all->data, next_data);
+		if (all->data->bin == NULL)
+			g_error = 258;
 	}
 	else
 		redirect_parse(input, all);

@@ -1,10 +1,11 @@
-hello | world
+/bin/
+/bin/ls
+/bin/ls
+/bin/ls/
+ wc
+cat < input.txt | wc
 ls
-hello > abc
-ls
-| gfdg
-dgd | ls
-| grep main
+
 ls
 c
    
