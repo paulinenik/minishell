@@ -49,13 +49,35 @@ int exec_cmd(t_all *all)
 	char *path;
 	int	status;
 	pid_t	pid;
+	DIR 	*dir_stream;
 
 	pwd = NULL;
 	argv = NULL;
+	if (all->data->bin[ft_strlen(all->data->bin) - 1] == '/')
+	{
+		return_fd(all->data);
+		dir_stream = opendir(all->data->bin);
+		if (dir_stream != NULL)
+		{
+			printf("minishell: %s: is a directory\n", all->data->bin);
+			closedir(dir_stream);
+		}
+		else
+			printf("minishell: %s: Not a directory\n", all->data->bin);
+		g_exit_status = 126;
+		return (1);
+	}
 	if (!ft_strchr(all->data->bin, '/'))
 		path = check_path(all->data->bin, get_var_value(all->env, "PATH"));
 	else
 		path = ft_strdup(all->data->bin);
+	if (path == NULL)
+	{
+		return_fd(all->data);
+		printf("minishell: %s: command not found\n", all->data->bin);
+		g_exit_status = 127;
+		return (1);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -78,7 +100,7 @@ int exec_cmd(t_all *all)
 		}
 	}
 	wait(&status);
-	g_error = status;
+	g_exit_status = status;
 	free(path);
 	td_array_clear(pwd);
 	td_array_clear(argv);
