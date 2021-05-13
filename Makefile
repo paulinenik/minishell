@@ -6,10 +6,13 @@ SRCS	= 	main.c \
 			data_func.c \
 			redirect.c \
 			exec_cmd.c \
-			print_export.c \
+			print_exp.c \
 			null_strjoin.c \
 			array_concat.c \
 			parse_quotes.c \
+			get_unset.c \
+			utils.c \
+			utils_2.c
 
 LIBFT	= libft/libft.a
 

@@ -1,56 +1,26 @@
-pwd
-export
-abc
-a
-ad
-adc
-abc
-export
-ls
-pwd
-ls -la
-export 
-export abc
-export
-export abcd
-export
-export abde
-export
-gmdfldg,fg
 
 
-exit
-orld;
+jeijdeifd
+FdFdfs
+FdFdfs
+pwd
+fgfgfgfgfgfgfgf
+pwd
+dfgsfgfdgfsgfdg
 
-export a=10
-export
-export 111=222
-export 1abc=123
-cd
-pwd
-cd minishell
-pwd
-export
-export _abc=10
-env
-export
-export _abc=10
-export
-export "111=222"
-export "111"="222"
-export 'a'='b'
-export
-export a=6 b=8 c=9
-export
-export a=5 a=7 a=8
-export
-unset a1
-unset b
-export
-unset a1=10
-unset 1_aa
-unset a c
-export
-export
-env
-export
+jfn
+clear
+
+
+
+
+d-
+
+echo -n
+echo -n
+export_abc=10
+export_abc=10
+touch abc
+cat > abc
+cat abc
+dfdfd

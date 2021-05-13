@@ -2,36 +2,36 @@
 
 void print_export(t_all *all, int i, int j)
 {
-    char **copy;
-
+    char    **copy;
+    
     copy = init(all->env, 0);
-    while(copy[++i])
+    while (copy[++i])
         copy = alph_sort(copy, i + 1);
     i = -1;
-    while(copy[++i])
+    while (copy[++i])
     {
-        write(1,"\ndeclare -x ",13);
+        write(1, "\ndeclare -x ",13);
         j = -1;
-        while(copy[i][++j])
-            if(copy[i][j] == '=')
+        while (copy[i][++j])
+            if (copy[i][j] == '=')
             {
-                write(1,"=\"",3);
+                write(1, "=\"",3);
                 write(1, (copy[i] + j + 1), ft_strlen(copy[i] + j + 1));
-                write(1,"\"",1);
+                write(1, "\"",1);
                 break ;
             }
             else
                 write(1,&copy[i][j], 1);
     }
-    write(1,"\n",1);
-    while(--i >= 0)
+    write(1, "\n",1);
+    while (--i >= 0)
         free(copy[i]);
     free(copy);
 }
 
  int     help_export(t_all *all, int i, int j, char **copy)
  {
-    write(1,"hmeee",5);
+    write(1, "hmeee",5);
     free(copy[j]);
     copy[j] = NULL;
     copy[j] = ft_strdup(all->data->args[i]);
@@ -45,7 +45,7 @@ int     help2_export(t_all *all, int i, int j, int nbr)
     k = -1;
     if (nbr == -1 && !ft_scmp(all->data->args[i], all->env[j],'='))
     {
-        write(1,"here",5);
+        write(1, "here",5);
         k = 0;
         if (check_for_value(all, j, -1) != -1 && ((int)ft_strlen(all->data->args[i]) > check_for_value(all, j, -1)))
         {
@@ -56,41 +56,13 @@ int     help2_export(t_all *all, int i, int j, int nbr)
     return (k);
 }
 
-int     alnum_search(char **str, int i, int temp, int s)
-{
-    while(str[i][++temp])
-        {
-            if(str[i][temp] == '=')
-                break ;
-            if(ft_isalnum(str[i][temp]) == 0)
-            {
-                temp = -2;
-                break ;
-            }
-        }
-        if ((str[i][0] == '=') || (temp != -2 && str[i][temp] == '=' && s == -1))
-			temp = -2;
-        if (((str[i][0] <= '9' && str[i][0] >= '0') ||
-        temp == -2) && (s < 0) )
-            {
-                write(1, "minishell: ", 12);
-                (s < 0 && s == -2) ?  write(1,"export: `", 10) : write(1,"unset: `", 8);
-                write(1,str[i], ft_strlen(str[i]));
-                write(1,"': not a valid identifier\n",26);
-                return(0);
-            }
-        return (-1);
-}
-                
-
-
 void    exp_cor(t_all *all, char **copy, int nbr, int i)
 {
     int k;
     int j;
 
     j = -1;
-    while(all->env[++j])
+    while (all->env[++j])
     {
         k = alnum_search(all->data->args, i, -1, -2);
         if (k == 0)
@@ -105,12 +77,11 @@ void    exp_cor(t_all *all, char **copy, int nbr, int i)
     }
     if (k == -1)
     {
-        write(1,"HELLO",6);
+        write(1, "HELLO",6);
         copy[all->len_env] = ft_strdup(all->data->args[i]);
         all->len_env++;
     }
 }
-
 
 void check_export(t_all *all, int i, int k, int j)
 {
@@ -120,19 +91,19 @@ void check_export(t_all *all, int i, int k, int j)
         j = -1;
         i = -1;
 		nbr = 0;
-		while(all->data->args[++i]);
-		while(all->env[++j]);
+		while (all->data->args[++i]);
+		while (all->env[++j]);
 		all->len_env = j;
 		k = save_index(all->data, all->env);
 		copy = init(all->env, i - k);
 		i = -1;
-		while(all->data->args[++i])
+		while (all->data->args[++i])
 		{
 			nbr = check_for_value(all, i, 0);
             exp_cor(all, copy, nbr, i);
 		}
 		copy[all->len_env] = NULL;
-		while(--j >= 0)
+		while (--j >= 0)
 		   free(all->env[j]);
 		free(all->env);
 		all->env = copy;

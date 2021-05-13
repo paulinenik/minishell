@@ -7,27 +7,6 @@
 #include <stdio.h>
 #include "mshell.h"
 
-int     get_next_line(char **line)
-{
-	char	buf[10000];
-	int		b_read;
-	int		i;
-
-	if (((i = 0) && read(0, &buf[i], 0) < 0) || !(line))
-		return (-1);
-	while ((b_read = read(0, &buf[i], 1)) > 0 && buf[i] != '\n')
-		i++;
-	buf[i] = '\0';
-	if (b_read != -1 && (*line = malloc((i + 1) * sizeof(char))))
-	{
-		i = -1;
-		while (buf[++i])
-			(*line)[i] = buf[i];
-		(*line)[i] = '\0';
-	}
-	return (b_read);
-}
-
 char	**init(char **envp, int k)
 {
 	int		i;
@@ -115,6 +94,7 @@ int     main(int argc, char **argv, char **envp)
 	char *term_name = "xterm-256color";
 	char	*input;
 	input = NULL;
+	int len = 0;
 
 	all = (t_all *)malloc(sizeof(t_all));
 	all->env = init(envp, 0);
@@ -142,7 +122,6 @@ int     main(int argc, char **argv, char **envp)
 		write(1, "\033[36;1mminishell$\033[0m ", 23);
 		tputs(save_cursor, 1, ft_putchar);
 		i = 0;
-		//len = 0;
 		do
 		{
 		 	l = read(0, buf, 100);
@@ -197,15 +176,19 @@ int     main(int argc, char **argv, char **envp)
 			}
 			else if(!ft_strncmp(buf, "\e[D", 4))
 			{
-				i++;
-				if (--i > 0)
+				if (i > 0)
+				{
 					tputs(cursor_left, 1, ft_putchar);
+					i--;
+				}
 			}
 			else if(!ft_strncmp(buf, "\e[C", 4))
 			{
-				i--;
-				if (++i < (int)ft_strlen(input))
+				if (i < (int)ft_strlen(input))
+				{
 					tputs(cursor_right, 1, ft_putchar);
+					i++;
+				}
 			}
 			else if(!ft_strncmp(buf, "\3", 2))
 			{
@@ -220,7 +203,7 @@ int     main(int argc, char **argv, char **envp)
 				tcsetattr(0, TCSANOW, &term);
 				exit (0);
 			}
-			else
+			else 
 			{
 				if (*buf != '\n')
 					input = add_char(input, *buf);
@@ -231,16 +214,12 @@ int     main(int argc, char **argv, char **envp)
 		term = term1;
 		tcsetattr(0, TCSANOW, &term);
 		input = add_char(input, '\0');
-		//printf("stroka - %s", input);
 		create_history(all, input);
 		parse(input, all);
 		if (input != NULL)
 			free(input);
 		input = NULL;
 		clear_all(&all->data);
-		// write(1, "hello\n", 6);
-		// printf("%s input after clear\n", input);
-		i++;
 	}
 	write(1,"\n", 1);
 	close(all->fd);
