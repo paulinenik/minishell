@@ -30,7 +30,7 @@ void	path_init(t_all *all)
 	char *str;
 	
 	i = -1;
-	str = get_var_value(all->env,"HOME");
+	str = get_env_value(all->env,"HOME");
 	all->home_path = ft_strdup(str);
 	// while(all->home_path[++i])
 	// 	printf("%c",all->home_path[i]);
@@ -82,7 +82,7 @@ void	create_history(t_all *all, char *str)
 
 int     main(int argc, char **argv, char **envp)
 {
-	printf("%d\n", ft_strncmp("ab","ab=", 3));
+	// printf("%d\n", ft_strncmp("ab","ab=", 3));
 	(void)argc;
 	(void)argv;
 	g_exit_status[0] = 0;
@@ -94,7 +94,6 @@ int     main(int argc, char **argv, char **envp)
 	char *term_name = "xterm-256color";
 	char	*input;
 	input = NULL;
-	int len = 0;
 
 	all = (t_all *)malloc(sizeof(t_all));
 	all->env = init(envp, 0);
@@ -112,14 +111,13 @@ int     main(int argc, char **argv, char **envp)
 	// term.c_cc[VTIME] = 0;
 	tgetent(0, term_name);
 		int i = 0;
-	//	int len = 0;
 	 while(ft_strncmp(buf, "\4", 2))
 	{
 		term.c_lflag &= ~(ECHO);
 		term.c_lflag &= ~(ICANON);
 		term.c_lflag &= ~(ISIG);
 		tcsetattr(0, TCSANOW, &term);
-		write(1, "\033[36;1mminishell$\033[0m ", 23);
+		write(2, "\033[36;1mminishell$\033[0m ", 23);
 		tputs(save_cursor, 1, ft_putchar);
 		i = 0;
 		do

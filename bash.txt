@@ -1,26 +1,62 @@
+ls | wc
+cat parse.c | grep int
+cat parse.c | grep int | wc
 
 
-jeijdeifd
-FdFdfs
-FdFdfs
-pwd
-fgfgfgfgfgfgfgf
-pwd
-dfgsfgfdgfsgfdg
-
-jfn
-clear
-
+make fclean
+ls
+ls
+ls
+ asdsa
 
 
 
-d-
 
-echo -n
-echo -n
-export_abc=10
-export_abc=10
-touch abc
-cat > abc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dsfasdfadsf
+echo $?
+cd test
+sfdsfdfsdf > new
+ls
+cat < abc
+cat < abc > new
+cat new
+cat >> abc < new
 cat abc
-dfdfd
+cat < input.txt | wc
+make
+cd ..
+make
+./minishell
+exit
+ < abc
+ls >> abc
+cat abc
+ls >< abc
+echo $?
+ls
+ls <> abc
+cat >> abc
+cat abc
+wc < abc >> abc; cat abc -e
+ls <
+ls >
+echo $?
+cd ..
+ls | grep main
+pwd; ls grep get
+pwd; ls | grep get
+wc < ls | wc

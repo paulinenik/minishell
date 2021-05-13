@@ -59,36 +59,3 @@ int	data_size(t_data *data)
 	}
 	return (i);
 }
-
-int	array_size(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-		i++;
-	return (i);
-}
-
-char	**array_add_front(char **arr, char *str)
-{
-	char **new_array;
-	int	i;
-
-	i = 1;
-	new_array = (char **)malloc(sizeof(char *) * (array_size(arr) + 2));
-	if (new_array == NULL)
-	{
-		td_array_clear(arr);
-		free(str);
-		exit(ENOMEM);
-	}
-	new_array[0] = ft_strdup(str);
-	while(arr[i - 1] != NULL)
-	{
-		new_array[i] = ft_strdup(arr[i - 1]);
-		i++;
-	}
-	new_array[i] = NULL;
-	return (new_array);
-}

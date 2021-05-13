@@ -1,6 +1,6 @@
 #include "mshell.h"
 
-int	get_pwd(t_all *all)
+int	get_pwd(void)
 {
 	char	dir[1024];
 
@@ -53,7 +53,7 @@ int	get_cd(t_all *all)
 	getcwd(dir, 1024);
 	if (all->data->args == NULL || all->data->args[0][0] == '~')
 	{
-		key = get_var_value(all->env, "HOME");
+		key = get_env_value(all->env, "HOME");
 		if (key == NULL || key[0] == 0)
 		{
 			printf("minishell: cd: HOME not set\n");
@@ -77,7 +77,7 @@ int	get_echo(t_all *all)
 		write(1, "\n", 2);
 	else
 	{
-		if (!ft_strncmp(all->data->args[0], "-n", 2))
+		if (!ft_strncmp(all->data->args[0], "-n", 3))
 			i = 0;
 		while (all->data->args[++i])
 		{
@@ -85,7 +85,7 @@ int	get_echo(t_all *all)
 			if (all->data->args[i + 1] != NULL)
 				write(1, " ", 1);
 		}
-		if (ft_strncmp(all->data->args[0], "-n", 2))
+		if (ft_strncmp(all->data->args[0], "-n", 3))
 			write(1, "\n", 1);
 	}
 	return (0);

@@ -11,17 +11,17 @@ char	*single_qoutation(char **input, char *arg)
 	if (**input !='\0')
 		(*input)++;
 	if (arg == NULL)
-		return(ft_strdup(""));
+		return (ft_strdup(""));
 	return (arg);
 }
 
 char	*double_quotation(char **input, char **envp, char *arg)
 {
 	(*input)++;
-	while (**input != 34  && **input !='\0')
+	while (**input != 34 && **input !='\0')
 	{
 		if (**input == 36)
-			arg = get_envp(input, envp, arg);
+			arg = parse_dollar(input, envp, arg);
 		else
 		{
 			if (!ft_strncmp(*input, "\\\\", 2) || !ft_strncmp(*input, "\\$", 2) \
@@ -34,6 +34,6 @@ char	*double_quotation(char **input, char **envp, char *arg)
 	if (**input !='\0')
 		(*input)++;
 	if (arg == NULL)
-		return(ft_strdup(""));
+		return (ft_strdup(""));
 	return (arg);
 }

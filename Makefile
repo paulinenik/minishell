@@ -1,15 +1,15 @@
 SRCS	= 	main.c \
 			parse.c \
 			get_pwd.c \
-			delete_char.c \
+			string_methods.c \
 			clear.c \
-			data_func.c \
+			data_methods.c \
+			array_methods.c \
 			redirect.c \
 			exec_cmd.c \
 			print_exp.c \
-			null_strjoin.c \
-			array_concat.c \
 			parse_quotes.c \
+			parse_dollar.c \
 			get_unset.c \
 			utils.c \
 			utils_2.c
@@ -30,7 +30,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 $(NAME):	$(LIBFT) $(HDRS) $(SRCS) mshell.h
 			@cp $(LIBFT) .
-			$(CC) $(SRCS) -g $(TCAP_FLAGS) -I./libft libft.a -o $(NAME)
+			$(CC) $(CFLAGS) $(SRCS) $(TCAP_FLAGS) -I./libft libft.a -o $(NAME)
 			@echo "\033[36mminishell is compiled successfully\n\033[0m"
 
 $(LIBFT):	
@@ -38,10 +38,6 @@ $(LIBFT):
 			@echo "\033[36mlibft is compiled successfully\n\033[0m"
 		
 all:		$(NAME)
-
-flags:		$(LIBFT) $(HDRS) $(SRCS) mshell.h
-			@cp $(LIBFT) .
-			$(CC) $(CFLAGS) $(SRCS) -g $(TCAP_FLAGS) -I./libft libft.a -o $(NAME)
 
 clean:	
 			$(RM) $(NAME)

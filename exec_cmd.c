@@ -1,10 +1,9 @@
 #include "mshell.h"
 
-
-static int	exec_builtin(t_all * all)
+static int	exec_builtin(t_all *all)
 {
 	if (!ft_strncmp(all->data->bin, "pwd", 4))
-		g_exit_status[0] = get_pwd(all);
+		g_exit_status[0] = get_pwd();
 	else if (!ft_strncmp(all->data->bin, "export", 7))
 		g_exit_status[0] = get_export(all);
 	else if (!ft_strncmp(all->data->bin, "env", 4))
@@ -19,12 +18,12 @@ static int	exec_builtin(t_all * all)
 		g_exit_status[0] = get_exit(all);
 	else
 		return (1);
-	return(0);
+	return (0);
 }
 
 void	to_process(t_all *all)
 {
-	int exit_status;
+	int		exit_status;
 	t_data	*data;
 
 	if (data_size(all->data) > 1)
@@ -42,14 +41,14 @@ void	to_process(t_all *all)
 	all->data = data;
 }
 
-int exec_cmd(t_all *all)
+int	exec_cmd(t_all *all)
 {
-	char **pwd;
+	char	**pwd;
 	char	**argv;
-	char *path;
-	int	status;
+	char	*path;
+	int		status;
 	pid_t	pid;
-	DIR 	*dir_stream;
+	DIR		*dir_stream;
 
 	pwd = NULL;
 	argv = NULL;
@@ -68,7 +67,7 @@ int exec_cmd(t_all *all)
 		return (1);
 	}
 	if (!ft_strchr(all->data->bin, '/'))
-		path = check_path(all->data->bin, get_var_value(all->env, "PATH"));
+		path = check_path(all->data->bin, get_env_value(all->env, "PATH"));
 	else
 		path = ft_strdup(all->data->bin);
 	if (path == NULL)
@@ -107,13 +106,13 @@ int exec_cmd(t_all *all)
 	return (0);
 }
 
-char *check_path(char *filename, char *path)
+char	*check_path(char *filename, char *path)
 {
 	char			**path_list;
-	DIR 			*dir_stream;
+	DIR				*dir_stream;
 	struct dirent	*info;
 	int				i;
-	char 			*newpath;
+	char			*newpath;
 
 	i = 0;
 	newpath = NULL;
@@ -124,7 +123,7 @@ char *check_path(char *filename, char *path)
 		free(path);
 		exit(ENOMEM);
 	}
-	while(path_list[i] != NULL)
+	while (path_list[i] != NULL)
 	{
 		dir_stream = opendir(path_list[i]);
 		if (dir_stream == NULL)
@@ -140,7 +139,7 @@ char *check_path(char *filename, char *path)
 			path_list[i] = add_char(path_list[i], '/');
 			newpath = ft_strjoin(path_list[i], filename);
 			closedir(dir_stream);
-			break;
+			break ;
 		}
 		closedir(dir_stream);
 		i++;

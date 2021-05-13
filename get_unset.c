@@ -68,6 +68,7 @@ int	get_unset(t_all *all)
 	char	**copy;
 
 	j = -1;
+	copy = NULL;
 	if (ft_strncmp(all->data->bin, "unset", 6))
 		return (1);
 	if ((all->data->args != NULL))
