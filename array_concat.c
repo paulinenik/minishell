@@ -13,8 +13,12 @@ void	array_concat(t_data *data, char **new_args)
 	j = 0;
 	len = array_size(data->args) + array_size(new_args) + 1;
 	reallocated = (char **)malloc(sizeof(char *) * len);
-	// if (reallocated == NULL)
-	// 	malloc error
+	if (reallocated == NULL)
+	{
+		td_array_clear(new_args);
+		clear_all(&data);
+		exit(ENOMEM);
+	}
 	while(data->args[i] != NULL)
 	{
 		reallocated[i] = data->args[i];

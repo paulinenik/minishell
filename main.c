@@ -85,7 +85,7 @@ int     main(int argc, char **argv, char **envp)
 	printf("%d\n", ft_strncmp("ab","ab=", 3));
 	(void)argc;
 	(void)argv;
-	g_exit_status = 0;
+	g_exit_status[0] = 0;
 	char	buf[101];
 	t_all	*all;
 	struct	termios	term;

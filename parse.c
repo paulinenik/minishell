@@ -1,8 +1,11 @@
 #include "mshell.h"
 
+
+
 void	parse(char *input, t_all *all)
 {
-	g_exit_status = 0;
+	g_exit_status[1] = g_exit_status[0];
+	g_exit_status[0] = 0;
 	if (ft_strlen(input) == 0)
 		return ;
 	all->data = init_data();
@@ -21,7 +24,7 @@ void	parse(char *input, t_all *all)
 		else
 			input++;
 	}
-	if (all->data->bin && g_exit_status == 0)
+	if (all->data->bin && (g_exit_status[0] == 0 || data_size(all->data) > 1))
 		to_process(all);
 }
 
@@ -39,7 +42,7 @@ void	check_specchar(char **input, t_all *all)
 			else
 				printf("minishell: syntax error near unexpected token `;'\n");
 			**input = '\0';
-			g_exit_status = 258;
+			g_exit_status[0] = 258;
 			return ;
 		}
 		to_process(all);
@@ -57,7 +60,7 @@ void	check_specchar(char **input, t_all *all)
 			else
 				printf("minishell: syntax error near unexpected token `|'\n");
 			**input = '\0';
-			g_exit_status = 258;
+			g_exit_status[0] = 258;
 			return ;
 		}
 		if (pipe(pipes_fd) < 0)
@@ -70,7 +73,7 @@ void	check_specchar(char **input, t_all *all)
 		next_data->fd[0] = pipes_fd[0];
 		add_data_front(&all->data, next_data);
 		if (all->data->bin == NULL)
-			g_exit_status = 258;
+			g_exit_status[0] = 258;
 	}
 	else
 		redirect_parse(input, all);
@@ -94,8 +97,13 @@ char	**get_args(char **input, char **envp)
 		if (content != NULL)
 		{
 			item = ft_lstnew(content);
-			// if (item == NULL)
-			// 	malloc error;
+			if (item == NULL)
+			{
+				free(&input);
+				td_array_clear(envp);
+				ft_lstclear(&list, &free);
+				exit(ENOMEM);
+			}
 			ft_lstadd_back(&list, item);
 			if (**input == ' ')
 				(*input)++;
@@ -118,8 +126,8 @@ char	**list_to_array(t_list *list)
 		return (NULL);
 	list_size = ft_lstsize(list);
 	array = (char **)malloc(sizeof(char *) * (list_size + 1));
-	// if (array == NULL)
-	// 	malloc error;
+	if (array == NULL)
+		exit(ENOMEM);
 	while (i < list_size)
 	{
 		array[i] = ft_strdup(list->content);
@@ -127,11 +135,6 @@ char	**list_to_array(t_list *list)
 		list = list->next;
 	}
 	array[i] = NULL;
-	// while (i >= 0)
-	// {
-	// 	printf("|%s| - arg[%d]\n", array[i], i);
-	// 	i--;
-	// }
 	ft_lstclear(&head, &free);
 	return (array);
 }
@@ -186,6 +189,7 @@ char	*get_envp(char **input, char **envp, char *arg)
 {
 	char	*key;
 	char	*new;
+	char	*status;
 
 	key = NULL;
 	(*input)++;
@@ -193,13 +197,19 @@ char	*get_envp(char **input, char **envp, char *arg)
 	{
 		(*input)++;
 		free(arg);
-		return (null_strjoin(arg, ft_itoa(g_exit_status)));
+		status = ft_itoa(g_exit_status[1]);
+		if (status == NULL)
+			exit(ENOMEM);
+		g_exit_status[0] = 0;
+		new = null_strjoin(arg, status);
+		free(status);
+		return (new);
 	}
 	while (ft_isalnum(**input) != 0)
 	{
 		key = add_char(key, **input);
-		// if (key == NULL)
-		// 	malloc error
+		if (key == NULL)
+			exit(ENOMEM);
 		(*input)++;
 	}
 	if (key == NULL)
@@ -213,8 +223,8 @@ char	*get_envp(char **input, char **envp, char *arg)
 	new = null_strjoin(arg, get_var_value(envp, key));
 	free(arg);
 	free(key);
-	// if (arg == NULL)
-	// 	malloc error
+	if (new == NULL)
+		exit(ENOMEM);
 	return (new);
 }
 

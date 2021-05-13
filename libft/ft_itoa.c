@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 11:54:45 by jshondra          #+#    #+#             */
-/*   Updated: 2021/04/08 20:31:24 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/05/13 18:26:40 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 static char		*plus(int n, int l)
 {
 	int		nbr;
-	// int		k;
 	char	*str;
 
-	// k = l;
 	nbr = n;
 	while (n != 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/05/12 18:35:42 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/05/13 18:36:59 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_all
 	int				fd;
 }				t_all;
 
-int		g_exit_status;
+int		g_exit_status[2];
 void	parse(char *input, t_all *all);
 t_data	*init_data(void);
 char	*add_char(char *str, char c);

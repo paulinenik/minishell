@@ -16,7 +16,7 @@ void	redirect_parse(char **input, t_all *all)
 	{
 		printf("minishell: syntax error near unexpected token `<'\n");
 		**input = '\0';
-		g_exit_status = 258;
+		g_exit_status[0] = 258;
 	}
 	if (**input == '>' && *(*input + 1) == '>')
 	{
@@ -48,14 +48,17 @@ void	redirect_append(char **input, t_all *all)
 	{
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		**input = '\0';
-		g_exit_status = 258;
+		g_exit_status[0] = 258;
 		return ;
 	}	
 	if (all->data->fd[1] != 1)
 		close(all->data->fd[1]);
 	all->data->fd[1] = open(path, O_APPEND | O_CREAT | O_WRONLY, 0644);
-	// if (all->data->fd[1] == -1)
-	// 	errno
+	if (all->data->fd[1] == -1)
+	{
+		printf("minishell: %s: %s\n", path, strerror(errno));
+		exit(errno);
+	}
 	free(path);
 }
 
@@ -69,14 +72,17 @@ void	redirect_write(char **input, t_all *all)
 	{
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		**input = '\0';
-		g_exit_status = 258;
+		g_exit_status[0] = 258;
 		return ;
 	}
 	if (all->data->fd[1] != 1)
 		close(all->data->fd[1]);
 	all->data->fd[1] = open(path, O_TRUNC | O_CREAT | O_WRONLY, 0644);
-	// if (all->data->fd[1] == -1)
-	// 	errno
+	if (all->data->fd[1] == -1)
+	{
+		printf("minishell: %s: %s\n", path, strerror(errno));
+		exit(errno);
+	}
 	free(path);
 }
 
@@ -89,14 +95,17 @@ void	redirect_read(char **input, t_all *all)
 	{
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		**input = '\0';
-		g_exit_status = 258;
+		g_exit_status[0] = 258;
 		return ;
 	}
 	if (all->data->fd[0] != 0)
 		close(all->data->fd[0]);
 	all->data->fd[0] = open(path, O_RDONLY, 0644);
-	// if (all->data->fd[0] == -1)
-	// 	errno
+	if (all->data->fd[0] == -1)
+	{
+		printf("minishell: %s: %s\n", path, strerror(errno));
+		exit(errno);
+	}
 	free(path);
 }
 

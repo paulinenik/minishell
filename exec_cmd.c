@@ -3,21 +3,23 @@
 
 static int	exec_builtin(t_all * all)
 {
-	if (!get_pwd(all))
-		return (0);
-	if (!get_export(all))
-		return (0);
-	if (!get_env(all))
-		return (0);
-	if (!get_cd(all))
-		return (0);
-	if (!get_echo(all))
-		return (0);
-	if (!get_unset(all))
-		return (0);
-	if (!get_exit(all))
-		return (0);
-	return (1);
+	if (!ft_strncmp(all->data->bin, "pwd", 4))
+		g_exit_status[0] = get_pwd(all);
+	else if (!ft_strncmp(all->data->bin, "export", 7))
+		g_exit_status[0] = get_export(all);
+	else if (!ft_strncmp(all->data->bin, "env", 4))
+		g_exit_status[0] = get_env(all);
+	else if (!ft_strncmp(all->data->bin, "cd", 3))
+		g_exit_status[0] = get_cd(all);
+	else if (!ft_strncmp(all->data->bin, "echo", 5))
+		g_exit_status[0] = get_echo(all);
+	else if (!ft_strncmp(all->data->bin, "unset", 6))
+		g_exit_status[0] = get_unset(all);
+	else if (!ft_strncmp(all->data->bin, "exit", 5))
+		g_exit_status[0] = get_exit(all);
+	else
+		return (1);
+	return(0);
 }
 
 void	to_process(t_all *all)
@@ -25,7 +27,6 @@ void	to_process(t_all *all)
 	int exit_status;
 	t_data	*data;
 
-	exit_status = 1;
 	if (data_size(all->data) > 1)
 		revert_data(&all->data);
 	data = all->data;
@@ -33,10 +34,9 @@ void	to_process(t_all *all)
 	{
 		change_fd(all->data);
 		exit_status = exec_builtin(all);
-		if (exit_status == 1)
+		if (exit_status)
 			exit_status = exec_cmd(all);
 		return_fd(all->data);
-
 		all->data = all->data->next;
 	}
 	all->data = data;
@@ -64,7 +64,7 @@ int exec_cmd(t_all *all)
 		}
 		else
 			printf("minishell: %s: Not a directory\n", all->data->bin);
-		g_exit_status = 126;
+		g_exit_status[0] = 126;
 		return (1);
 	}
 	if (!ft_strchr(all->data->bin, '/'))
@@ -75,7 +75,7 @@ int exec_cmd(t_all *all)
 	{
 		return_fd(all->data);
 		printf("minishell: %s: command not found\n", all->data->bin);
-		g_exit_status = 127;
+		g_exit_status[0] = 127;
 		return (1);
 	}
 	pid = fork();
@@ -95,12 +95,12 @@ int exec_cmd(t_all *all)
 		}
 		if (status == -1)
 		{
-			printf("minishell: %s: No such file or directory\n", path);
-			exit(127); //127?
+			printf("minishell: %s: %s\n", path, strerror(errno));
+			exit(127);
 		}
 	}
 	wait(&status);
-	g_exit_status = status;
+	g_exit_status[0] = status;
 	free(path);
 	td_array_clear(pwd);
 	td_array_clear(argv);
@@ -116,15 +116,22 @@ char *check_path(char *filename, char *path)
 	char 			*newpath;
 
 	i = 0;
-	path_list = ft_split(path, ':');
 	newpath = NULL;
-	// if (path_list == NULL)
-	// 	malloc_error
+	path_list = ft_split(path, ':');
+	if (path_list == NULL)
+	{
+		free(filename);
+		free(path);
+		exit(ENOMEM);
+	}
 	while(path_list[i] != NULL)
 	{
 		dir_stream = opendir(path_list[i]);
-		// if (dir_stream == NULL)
-		// 	error
+		if (dir_stream == NULL)
+		{
+			printf("minishell: %s: %s\n", path_list[i], strerror(errno));
+			exit(errno);
+		}
 		info = readdir(dir_stream);
 		while (info != NULL && ft_strcmp(info->d_name, filename))
 			info = readdir(dir_stream);

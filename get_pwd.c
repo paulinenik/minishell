@@ -4,8 +4,6 @@ int	get_pwd(t_all *all)
 {
 	char	dir[1024];
 
-	if (ft_strncmp(all->data->bin, "pwd\0", 4))
-		return (1);
 	getcwd(dir, 1024);
 	printf("%s\n", dir);
 	return (0);
@@ -13,8 +11,6 @@ int	get_pwd(t_all *all)
 
 int	get_export(t_all *all)
 {
-	if (ft_strncmp(all->data->bin, "export\0", 7))
-		return (1);
 	if (all->data->args == NULL)
 		print_export(all, -1, -1);
 	else if (all->data->args != NULL)
@@ -27,8 +23,6 @@ int	get_env(t_all *all)
 	int	i;
 
 	i = -1;
-	if (ft_strncmp(all->data->bin, "env", 4))
-		return (1);
 	if (all->data->args == NULL)
 	{
 		while (all->env[++i])
@@ -57,8 +51,6 @@ int	get_cd(t_all *all)
 
 	key = NULL;
 	getcwd(dir, 1024);
-	if (ft_strncmp(all->data->bin, "cd", 3))
-		return (1);
 	if (all->data->args == NULL || all->data->args[0][0] == '~')
 	{
 		key = get_var_value(all->env, "HOME");
@@ -81,8 +73,6 @@ int	get_echo(t_all *all)
 	int	i;
 
 	i = -1;
-	if (ft_strncmp(all->data->bin, "echo", 5))
-		return (1);
 	if (all->data->args == NULL)
 		write(1, "\n", 2);
 	else

@@ -5,8 +5,8 @@ t_data	*init_data(void)
 	t_data	*data;
 
 	data = (t_data *)malloc(sizeof(t_data));
-	// if (data == NULL)
-	// 	malloc error
+	if (data == NULL)
+		exit(ENOMEM);
 	data->bin = NULL;
 	data->args = NULL;
 	data->next = NULL;
@@ -77,8 +77,12 @@ char	**array_add_front(char **arr, char *str)
 
 	i = 1;
 	new_array = (char **)malloc(sizeof(char *) * (array_size(arr) + 2));
-	// if (new_array == NULL)
-	// 	malloc err
+	if (new_array == NULL)
+	{
+		td_array_clear(arr);
+		free(str);
+		exit(ENOMEM);
+	}
 	new_array[0] = ft_strdup(str);
 	while(arr[i - 1] != NULL)
 	{
