@@ -1,33 +1,14 @@
 #include "mshell.h"
 
-
 char	*parse_dollar(char **input, char **envp, char *arg)
 {
 	char	*key;
 	char	*new;
-	char	*status;
 
-	key = NULL;
 	(*input)++;
 	if (**input == '?')
-	{
-		(*input)++;
-		free(arg);
-		status = ft_itoa(g_exit_status[1]);
-		if (status == NULL)
-			exit(ENOMEM);
-		g_exit_status[0] = 0;
-		new = null_strjoin(arg, status);
-		free(status);
-		return (new);
-	}
-	while (ft_isalnum(**input) != 0)
-	{
-		key = add_char(key, **input);
-		if (key == NULL)
-			exit(ENOMEM);
-		(*input)++;
-	}
+		return (get_exit_status(input, arg));
+	key = get_env_key(input);
 	if (key == NULL)
 	{
 		if (**input == 34 || **input == 39)
@@ -35,12 +16,44 @@ char	*parse_dollar(char **input, char **envp, char *arg)
 		free(arg);
 		return (null_strjoin(arg, "$"));
 	}
-	key = add_char(key, '=');
 	new = null_strjoin(arg, get_env_value(envp, key));
-	free(arg);
-	free(key);
 	if (new == NULL)
 		exit(ENOMEM);
+	free(arg);
+	free(key);
+	return (new);
+}
+
+char	*get_env_key(char **input)
+{
+	char	*key;
+
+	key = NULL;
+	while (ft_isalnum(**input) != 0)
+	{
+		key = add_char(key, **input);
+		if (key == NULL)
+			exit(ENOMEM);
+		(*input)++;
+	}
+	if (key != NULL)
+		key = add_char(key, '=');
+	return (key);
+}
+
+char	*get_exit_status(char **input, char *arg)
+{
+	char	*status;
+	char	*new;
+
+	(*input)++;
+	status = ft_itoa(g_exit_status[1]);
+	if (status == NULL)
+		exit(ENOMEM);
+	g_exit_status[0] = 0;
+	new = null_strjoin(arg, status);
+	free(arg);
+	free(status);
 	return (new);
 }
 
@@ -50,6 +63,8 @@ char	*get_env_value(char **envp, char *key)
 	int		i;
 
 	i = 0;
+	if (key == NULL)
+		return (NULL);
 	while (envp[i] && (ft_strncmp(envp[i], key, ft_strlen(key)) != 0))
 		i++;
 	if (envp[i] != NULL)

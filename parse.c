@@ -33,8 +33,8 @@ char	*init_exec_name(char **input, char **envp)
 	result = NULL;
 	while (**input == ' ')
 		(*input)++;
-	while (ft_strchr(" |;\n", **input) == NULL && \
-	**input != '\0')
+	while (**input != '\0' && \
+	ft_strchr(" |;\n", **input) == NULL)
 	{
 		if (**input == 39)
 			result = single_qoutation(input, result);
@@ -65,20 +65,14 @@ char	**get_args(char **input, char **envp)
 	list = NULL;
 	while (**input == ' ')
 		(*input)++;
-	while (ft_strchr("|><;\n", **input) == NULL && \
-	**input != '\0')
+	while (ft_strchr("|><;\n", **input) == NULL && **input != '\0')
 	{
 		content = init_exec_name(input, envp);
 		if (content != NULL)
 		{
 			item = ft_lstnew(content);
 			if (item == NULL)
-			{
-				free(&input);
-				td_array_clear(envp);
-				ft_lstclear(&list, &free);
 				exit(ENOMEM);
-			}
 			ft_lstadd_back(&list, item);
 			if (**input == ' ')
 				(*input)++;
@@ -91,51 +85,15 @@ char	**get_args(char **input, char **envp)
 void	check_specchar(char **input, t_all *all)
 {
 	t_data	*next_data;
-	int		pipes_fd[2];
 
 	if (**input == ';')
-	{
-		if (all->data->bin == NULL)
-		{
-			if (*(*input + 1) == ';')
-				printf("minishell: syntax error near unexpected token `;;'\n");
-			else
-				printf("minishell: syntax error near unexpected token `;'\n");
-			**input = '\0';
-			g_exit_status[0] = 258;
-			return ;
-		}
-		to_process(all);
-		clear_all(&all->data);
-		all->data = init_data();
-		(*input)++;
-		all->data->bin = init_exec_name(input, all->env);
-	}
+		parse_semicolon(input, all);
 	else if (**input == '|')
 	{
-		if (all->data->bin == NULL)
-		{
-			if (*(*input + 1) == '|')
-				printf("minishell: syntax error near unexpected token `||'\n");
-			else
-				printf("minishell: syntax error near unexpected token `|'\n");
-			**input = '\0';
-			g_exit_status[0] = 258;
-			return ;
-		}
-		if (pipe(pipes_fd) < 0)
-		{
-			printf("minishell: %s\n", strerror(errno));
-			**input = '\0';
-			g_exit_status[0] = errno;
-			return ;
-		}
-		if (all->data->fd[1] == 1)
-			all->data->fd[1] = pipes_fd[1];
 		next_data = init_data();
 		(*input)++;
 		next_data->bin = init_exec_name(input, all->env);
-		next_data->fd[0] = pipes_fd[0];
+		next_data->fd[0] = parse_pipes(input, all);
 		add_data_front(&all->data, next_data);
 		if (all->data->bin == NULL)
 			g_exit_status[0] = 258;

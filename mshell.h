@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/05/13 21:09:41 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/05/15 14:41:59 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	return_fd(t_data *data);
 
 void	to_process(t_all *all);
 int		exec_cmd(t_all *all);
+void	check_for_directory(t_all *all);
 char	*check_path(char *filename, char *path);
 
 int		array_size(char **arr);
@@ -98,5 +99,15 @@ char	**array_add_front(char **arr, char *str);
 
 char	*null_strjoin(char const *s1, char const *s2);
 void	array_concat(t_data *data, char **new_args);
+
+void	create_child_process(char *path, t_all *all);
+void init_cwd_argv(t_all * all);
+int	exec_builtin(t_all *all);
+char	*get_path(t_all *all);
+char	*search_bin(char *filename, char **path_list);
+char	*get_exit_status(char **input, char *arg);
+char	*get_env_key(char **input);
+void	parse_semicolon(char **input, t_all *all);
+int	parse_pipes(char **input, t_all *all);
 
 #endif

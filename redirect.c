@@ -1,43 +1,5 @@
 #include "mshell.h"
 
-int	*init_fd(void)
-{
-	int	*fds;
-
-	fds = (int *)malloc(sizeof(int) * 2);
-	fds[0] = 0;
-	fds[1] = 1;
-	return (fds);
-}
-
-void	redirect_parse(char **input, t_all *all)
-{
-	if (**input == '>' && *(*input + 1) == '<')
-	{
-		printf("minishell: syntax error near unexpected token `<'\n");
-		**input = '\0';
-		g_exit_status[0] = 258;
-	}
-	if (**input == '>' && *(*input + 1) == '>')
-	{
-		(*input)++;
-		redirect_append(input, all);
-	}
-	// if (**input == '<' && *(input + 1) == '<')
-	// {
-	// 	(*input)++;
-	// 	// wait until
-	// }
-	if (**input == '>')
-		redirect_write(input, all);
-	if (**input == '<')
-	{
-		if (*(*input + 1) == '>')
-			(*input)++;
-		redirect_read(input, all);
-	}
-}
-
 void	redirect_append(char **input, t_all *all)
 {
 	char	*path;
@@ -93,6 +55,7 @@ void	redirect_write(char **input, t_all *all)
 void	redirect_read(char **input, t_all *all)
 {
 	char	*path;
+
 	(*input)++;
 	path = init_exec_name(input, all->env);
 	if (path == NULL)

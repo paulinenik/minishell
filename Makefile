@@ -12,7 +12,9 @@ SRCS	= 	main.c \
 			parse_dollar.c \
 			get_unset.c \
 			utils.c \
-			utils_2.c
+			utils_2.c \
+			make_fork.c \
+			parse_tokens.c \
 
 LIBFT	= libft/libft.a
 

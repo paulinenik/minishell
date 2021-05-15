@@ -59,3 +59,13 @@ int	data_size(t_data *data)
 	}
 	return (i);
 }
+
+int	*init_fd(void)
+{
+	int	*fds;
+
+	fds = (int *)malloc(sizeof(int) * 2);
+	fds[0] = 0;
+	fds[1] = 1;
+	return (fds);
+}

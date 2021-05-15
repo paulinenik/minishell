@@ -3,33 +3,25 @@
 void	array_concat(t_data *data, char **new_args)
 {
 	int		i;
-	int		j;
-	size_t	len;
+	int		common_len;
+	int		arg_len;
 	char	**reallocated;
 
 	if (new_args == NULL)
 		return ;
 	i = 0;
-	j = 0;
-	len = array_size(data->args) + array_size(new_args) + 1;
-	reallocated = (char **)malloc(sizeof(char *) * len);
+	arg_len = array_size(data->args);
+	common_len = arg_len + array_size(new_args) + 1;
+	reallocated = (char **)malloc(sizeof(char *) * common_len);
 	if (reallocated == NULL)
-	{
-		td_array_clear(new_args);
-		clear_all(&data);
 		exit(ENOMEM);
-	}
-	while (data->args[i] != NULL)
+	ft_memcpy(reallocated, data->args, sizeof(char *) * (arg_len));
+	while (new_args[i] != NULL)
 	{
-		reallocated[i] = data->args[i];
+		reallocated[i + arg_len] = new_args[i];
 		i++;
 	}
-	while (new_args[j] != NULL)
-	{
-		reallocated[i + j] = new_args[j];
-		j++;
-	}
-	reallocated[len - 1] = NULL;
+	reallocated[common_len - 1] = NULL;
 	free(data->args);
 	free(new_args);
 	data->args = reallocated;
@@ -51,13 +43,11 @@ char	**array_add_front(char **arr, char *str)
 	int		i;
 
 	i = 1;
+	if (!(ft_strncmp(arr[0], ".", 2)))
+		return (arr);
 	new_array = (char **)malloc(sizeof(char *) * (array_size(arr) + 2));
 	if (new_array == NULL)
-	{
-		td_array_clear(arr);
-		free(str);
 		exit(ENOMEM);
-	}
 	new_array[0] = ft_strdup(str);
 	while (arr[i - 1] != NULL)
 	{
