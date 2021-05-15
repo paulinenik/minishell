@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 16:40:03 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/14 22:08:41 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/05/15 16:04:21 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ char	*ft_strdup(const char *c)
 		return (NULL);
 	while (c[i])
 		i++;
-	if ((src = ft_calloc(i + 1, 1)) != NULL)
+	src = ft_calloc(i + 1, 1);
+	if (src != NULL)
 	{
 		i = 0;
 		while (c[i])

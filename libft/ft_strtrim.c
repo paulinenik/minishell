@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:54:14 by jshondra          #+#    #+#             */
-/*   Updated: 2020/11/04 19:15:31 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/15 16:00:56 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		check(char const *s1, char const *set)
+static int	check(char const *s1, char const *set)
 {
-	int j;
-	int i;
+	int	j;
+	int	i;
 
 	i = -1;
 	while (s1[++i])
@@ -29,10 +29,10 @@ static int		check(char const *s1, char const *set)
 	return (i);
 }
 
-static int		check1(char const *s1, char const *set)
+static int	check1(char const *s1, char const *set)
 {
-	int j;
-	int n;
+	int	j;
+	int	n;
 
 	n = ft_strlen(s1);
 	while (--n > 0)
@@ -46,7 +46,7 @@ static int		check1(char const *s1, char const *set)
 	return (n);
 }
 
-char			*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	int		i;
 	int		j;
@@ -63,7 +63,8 @@ char			*ft_strtrim(char const *s1, char const *set)
 		return (new = ft_calloc(1, 1));
 	d = i;
 	n = check1(s1, set);
-	if ((new = malloc(n - i + 2)) != NULL)
+	new = malloc(n - i + 2);
+	if (new != NULL)
 	{
 		j = 0;
 		while (j <= n - i)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 16:20:24 by jshondra          #+#    #+#             */
-/*   Updated: 2020/11/04 18:48:04 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/15 16:12:21 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_memcpy(void *rest, const void *restsrc, size_t n)
 	size_t			i;
 
 	str = rest;
-	str2 = (char*)restsrc;
+	str2 = (char *)restsrc;
 	i = 0;
 	if (rest == NULL && restsrc == NULL)
 		return (NULL);

@@ -6,13 +6,13 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 11:54:45 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/13 18:26:40 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/05/15 16:14:30 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char		*plus(int n, int l)
+static char	*plus(int n, int l)
 {
 	int		nbr;
 	char	*str;
@@ -23,7 +23,8 @@ static char		*plus(int n, int l)
 		l++;
 		n /= 10;
 	}
-	if ((str = (char *)malloc(l + 1)) == NULL)
+	str = (char *)malloc(l + 1);
+	if (str == NULL)
 		return (NULL);
 	str[l] = '\0';
 	l--;
@@ -36,7 +37,7 @@ static char		*plus(int n, int l)
 	return (str);
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	int		l;
 	char	*str;
@@ -51,7 +52,8 @@ char			*ft_itoa(int n)
 		l = 1;
 		n *= -1;
 	}
-	if ((str = plus(n, l)) == NULL)
+	str = plus(n, l);
+	if (str == NULL)
 		return (NULL);
 	if (l == 1)
 		str[0] = '-';

@@ -1,13 +1,13 @@
 #include "libft.h"
 
-int		ft_scmp(const char *s1, const char *s2, char c)
+int	ft_scmp(const char *s1, const char *s2, char c)
 {
 	unsigned char	*str;
 	unsigned char	*str2;
 	size_t			i;
 
-	str = (unsigned char*)s1;
-	str2 = (unsigned char*)s2;
+	str = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
 	i = 0;
 	if ((str == 0) && (str2 == 0))
 		return (0);

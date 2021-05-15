@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 16:09:03 by jshondra          #+#    #+#             */
-/*   Updated: 2020/11/06 14:23:52 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/15 15:08:21 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _LIBFT_H
+#ifndef LIBFT_H
 
-# define _LIBFT_H
+# define LIBFT_H
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -55,7 +55,7 @@ char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int					ft_strcmp(char *s1, char *s2);
 int					ft_scmp(const char *s1, const char *s2, char c);
 
-typedef struct		s_list
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;

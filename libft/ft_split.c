@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:44:05 by jshondra          #+#    #+#             */
-/*   Updated: 2020/11/05 15:18:18 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/15 16:10:04 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		crt(char const *s, char c)
+static int	crt(char const *s, char c)
 {
-	int i;
-	int k;
-	int words;
+	int	i;
+	int	k;
+	int	words;
 
 	words = 0;
 	k = 0;
@@ -34,10 +34,10 @@ static int		crt(char const *s, char c)
 	return (words);
 }
 
-static int		count(char const *s, char c)
+static int	count(char const *s, char c)
 {
-	int i;
-	int symbols;
+	int	i;
+	int	symbols;
 
 	i = 0;
 	symbols = 0;
@@ -51,9 +51,9 @@ static int		count(char const *s, char c)
 	return (symbols);
 }
 
-static char		**cut(char **new, int i)
+static char	**cut(char **new, int i)
 {
-	int j;
+	int	j;
 
 	j = -1;
 	while (++j < i)
@@ -62,7 +62,7 @@ static char		**cut(char **new, int i)
 	return (NULL);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	int		i;
 	int		j;
@@ -75,11 +75,14 @@ char			**ft_split(char const *s, char c)
 	i = -1;
 	j = -1;
 	k = crt(s, c);
-	if ((new = ft_calloc(k + 1, sizeof(char *))) != NULL)
+	new = ft_calloc(k + 1, sizeof(char *));
+	if (new != NULL)
+	{
 		while (++i < k)
 		{
 			nbr = count(s, c);
-			if ((new[i] = (ft_calloc(nbr + 1, 1))) == NULL)
+			new[i] = (ft_calloc(nbr + 1, 1));
+			if (new[i] == NULL)
 				return (new = cut(new, i));
 			while (*s == c && *s)
 				s++;
@@ -87,5 +90,6 @@ char			**ft_split(char const *s, char c)
 				new[i][j] = *s++;
 			j = -1;
 		}
+	}
 	return (new);
 }
