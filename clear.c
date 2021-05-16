@@ -37,3 +37,9 @@ void	clear_all(t_data **data)
 		(*data) = head;
 	}
 }
+
+void	stop_parse(char **input, int error_code)
+{
+	**input = '\0';
+	g_exit_status[0] = error_code;
+}

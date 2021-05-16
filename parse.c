@@ -4,6 +4,7 @@ void	parse(char *input, t_all *all)
 {
 	g_exit_status[1] = g_exit_status[0];
 	g_exit_status[0] = 0;
+	all->operators_flag = 0;
 	if (ft_strlen(input) == 0)
 		return ;
 	all->data = init_data();
@@ -17,7 +18,7 @@ void	parse(char *input, t_all *all)
 			else
 				array_concat(all->data, get_args(&input, all->env));
 		}
-		else if (ft_strchr("|><;", *input) != NULL)
+		else if (ft_strchr("|&><;", *input) != NULL)
 			check_specchar(&input, all);
 		else
 			input++;
@@ -34,7 +35,7 @@ char	*init_exec_name(char **input, char **envp)
 	while (**input == ' ')
 		(*input)++;
 	while (**input != '\0' && \
-	ft_strchr(" |;\n", **input) == NULL)
+	ft_strchr(" &|;\n", **input) == NULL)
 	{
 		if (**input == 39)
 			result = single_qoutation(input, result);
@@ -65,7 +66,7 @@ char	**get_args(char **input, char **envp)
 	list = NULL;
 	while (**input == ' ')
 		(*input)++;
-	while (ft_strchr("|><;\n", **input) == NULL && **input != '\0')
+	while (ft_strchr("|><&;\n", **input) == NULL && **input != '\0')
 	{
 		content = init_exec_name(input, envp);
 		if (content != NULL)
@@ -86,14 +87,20 @@ void	check_specchar(char **input, t_all *all)
 {
 	t_data	*next_data;
 
-	if (**input == ';')
+	if (**input == ';' || !ft_strncmp("&&", *input, 2))
 		parse_semicolon(input, all);
 	else if (**input == '|')
 	{
 		next_data = init_data();
 		(*input)++;
-		next_data->bin = init_exec_name(input, all->env);
+		if (**input != '|')
+			next_data->bin = init_exec_name(input, all->env);
 		next_data->fd[0] = parse_pipes(input, all);
+		if (next_data->fd[0] == -1)
+		{	
+			clear_all(&next_data);
+			return ;
+		}
 		add_data_front(&all->data, next_data);
 		if (all->data->bin == NULL)
 			g_exit_status[0] = 258;

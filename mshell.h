@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/05/15 14:41:59 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/05/16 20:41:00 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_all
 	int				size;
 	int				len_env;
 	int				fd;
+	int				operators_flag;
 }				t_all;
 
 int		g_exit_status[2];
@@ -109,5 +110,7 @@ char	*get_exit_status(char **input, char *arg);
 char	*get_env_key(char **input);
 void	parse_semicolon(char **input, t_all *all);
 int	parse_pipes(char **input, t_all *all);
+void	stop_parse(char **input, int error_code);
+void	toggle_operator_flag(char **input, t_all *all);
 
 #endif
