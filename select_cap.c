@@ -26,6 +26,8 @@ char	*selector_cap(char *input, int *i, char buf[101], t_all *all)
 		input = move_right(input, i);
 	else if (!ft_strncmp(buf, "\3", 2))
 		input = control_c(input, buf);
+	else if (!ft_strncmp(buf, "\t", 2))
+		;
 	else
 		input = usual_cap(input, i, buf);
 	return (input);
