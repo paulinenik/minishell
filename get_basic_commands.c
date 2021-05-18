@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_basic_commands.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/18 01:50:27 by jshondra          #+#    #+#             */
+/*   Updated: 2021/05/18 01:50:29 by jshondra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mshell.h"
 
 int	get_pwd(void)
@@ -31,9 +43,11 @@ int	get_env(t_all *all)
 	}
 	else
 	{
+		if (!all->data->args[0])
+			printf("env: \"\": No such file or directory\n");
 		while (all->data->args[++i])
 		{
-			if (all->data->args[i][0] == 0)
+			if (all->data->args[i][0] == 0 || all->data->args[i] == NULL)
 			{
 				printf("env: %s: No such file or directory\n", \
 				all->data->args[i]);
@@ -54,14 +68,15 @@ int	get_cd(t_all *all)
 	if (all->data->args == NULL || all->data->args[0][0] == '~')
 	{
 		key = get_env_value(all->env, "HOME");
-		if (key == NULL || key[0] == 0)
+		if ((key == NULL || key[0] == 0) && all->data->args == NULL)
 		{
 			printf("minishell: cd: HOME not set\n");
+			g_exit_status[0] = 1;
 			free(key);
 			return (0);
 		}
 		else
-			check_dir(key);
+			check_dir(all->home_path);
 	}
 	else
 		check_dir(all->data->args[0]);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_unset.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/18 01:49:41 by jshondra          #+#    #+#             */
+/*   Updated: 2021/05/18 01:49:48 by jshondra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mshell.h"
 
 char	**unseter(t_all *all, int	i, int	j, char	**copy)
@@ -21,8 +33,9 @@ char	**unseter(t_all *all, int	i, int	j, char	**copy)
 		alnum_search(all->data->args, i, -1, -1);
 	}
 	i = -1;
-	while (all->env[++i]);
-	copy = malloc((i + 1 - k) * sizeof(char	*));
+	while (all->env[++i])
+		;
+	copy = malloc ((i + 1 - k) * sizeof(char *));
 	copy[i - k] = NULL;
 	return (copy);
 }
@@ -75,7 +88,8 @@ int	get_unset(t_all *all)
 	{
 		copy = unseter(all, -1, -1, copy);
 		unset_errors(all, -1, -1, copy);
-		while (all->env[++j]);
+		while (all->env[++j])
+			;
 		while (--j >= 0)
 			free(all->env[j]);
 		free(all->env);

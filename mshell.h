@@ -6,7 +6,7 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/05/16 20:41:00 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/05/18 01:48:32 by jshondra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <dirent.h>
 # include <errno.h>
 # include <string.h>
+# include <termios.h>
+# include <string.h>
+# include <stdio.h>
 
 typedef struct s_data
 {
@@ -42,6 +45,7 @@ typedef struct s_all
 	int				len_env;
 	int				fd;
 	int				operators_flag;
+	int				amount;
 }				t_all;
 
 int		g_exit_status[2];
@@ -81,6 +85,21 @@ char	**unseter(t_all *all, int i, int j, char **copy);
 int		get_exit(t_all *all);
 void	check_dir(char	*str);
 int		alnum_search(char **str, int i, int temp, int s);
+void	free_copy(char **copy, int i);
+char	*move_left(char *input, int *i);
+char	*move_right(char *input, int *i);
+char	*delete_symbol(char *input, int *i);
+char	*control_c(char *input, char buf[101]);
+void	ctrl_d(struct	termios	term, struct termios term1, char *input);
+char	*usual_cap(char *input, int *i, char buf[101]);
+char	*arrow_down(char *input, t_all *all, int *i, int l);
+char	*arrow_up(char *input, t_all *all, int *i, int l);
+char	*select_cap(t_all *all, char *input, struct termios term, \
+struct termios term1);
+void	create_history(t_all *all, char *str);
+char	*delete_symbol(char *input, int *i);
+char	*arrow_down(char *input, t_all *all, int *i, int l);
+char	*arrow_up(char *input, t_all *all, int *i, int l);
 
 int		*init_fd(void);
 void	redirect_parse(char **input, t_all *all);
@@ -102,14 +121,14 @@ char	*null_strjoin(char const *s1, char const *s2);
 void	array_concat(t_data *data, char **new_args);
 
 void	create_child_process(char *path, t_all *all);
-void init_cwd_argv(t_all * all);
-int	exec_builtin(t_all *all);
+void	init_cwd_argv(t_all *all);
+int		exec_builtin(t_all *all);
 char	*get_path(t_all *all);
 char	*search_bin(char *filename, char **path_list);
 char	*get_exit_status(char **input, char *arg);
 char	*get_env_key(char **input);
 void	parse_semicolon(char **input, t_all *all);
-int	parse_pipes(char **input, t_all *all);
+int		parse_pipes(char **input, t_all *all);
 void	stop_parse(char **input, int error_code);
 void	toggle_operator_flag(char **input, t_all *all);
 

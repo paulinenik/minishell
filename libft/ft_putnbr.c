@@ -1,54 +1,32 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/03 17:09:29 by jshondra          #+#    #+#             */
-/*   Updated: 2020/11/04 18:51:37 by jshondra         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "libft.h"
-
-void	cut(int *n)
+void	put(long int *n, long int *b)
 {
-	if (*n == -2147483648)
+	if ((*n < 0))
 	{
-		write(1, "-2147483648", 11);
-	}
-}
-
-void	put(int *n, int *b)
-{
-	if ((*n < 0) && (*n != -2147483648))
-	{
-		write(1, "-", 1);
 		*n *= -1;
 		*b *= -1;
 	}
 }
 
-void	ft_putnbr(int n)
+void	ft_putnbr(long int n)
 {
-	int		l;
-	int		v;
-	char	c;
+	long int	l;
+	long int	v;
+	char		c;
 
 	l = 1;
 	v = n;
 	put(&v, &n);
-	while ((v = v / 10) > 0)
+	v /= 10;
+	while (v > 0)
+	{
+		v /= 10;
 		l *= 10;
+	}
 	while (l > 0)
 	{
-		cut(&n);
-		if (n == -2147483648)
-			break ;
 		v = n / l;
 		c = v + 48;
-		write(1, &c, 1);
+		ft_putchar(c);
 		if (v % l == 0)
 			v = v / l;
 		else

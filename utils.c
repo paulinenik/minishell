@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/18 01:47:16 by jshondra          #+#    #+#             */
+/*   Updated: 2021/05/18 01:47:18 by jshondra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mshell.h"
 
 char	**alph_sort(char	**copy, int	n)
@@ -71,4 +83,12 @@ void	check_dir(char	*str)
 {
 	if (chdir(str) == -1)
 		printf("minishell: cd: %s: No such file or directory\n", str);
+	g_exit_status[0] = 1;
+}
+
+void	free_copy(char **copy, int i)
+{
+	while (--i >= 0)
+		free(copy[i]);
+	free(copy);
 }

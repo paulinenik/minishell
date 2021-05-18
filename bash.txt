@@ -1,0 +1,30 @@
+unset a b
+export
+unset a1=10
+unset 1_aa
+unset '1_aa"
+unset b c
+export
+export
+en
+env
+export
+:
+
+clear
+unset a1=10
+export
+
+
+
+xport abc
+env
+clear
+export ABC
+export
+env
+clear
+ls
+clear
+env
+env

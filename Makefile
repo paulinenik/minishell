@@ -1,6 +1,18 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jshondra <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/05/18 01:48:45 by jshondra          #+#    #+#              #
+#    Updated: 2021/05/18 01:48:48 by jshondra         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 SRCS	= 	main.c \
 			parse.c \
-			get_pwd.c \
+			get_basic_commands.c \
 			string_methods.c \
 			clear.c \
 			data_methods.c \
@@ -15,6 +27,9 @@ SRCS	= 	main.c \
 			utils_2.c \
 			make_fork.c \
 			parse_tokens.c \
+			term_caps.c \
+			select_cap.c \
+			create_history.c \
 
 LIBFT	= libft/libft.a
 
