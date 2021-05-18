@@ -83,8 +83,9 @@ void	dir_back(t_all *all)
 {
 	char	*str;
 	char	dir[1024];
+	int 	i;
 
-	str = get_env_value(all->env, "OLDPWD");
+	i = -1;
 	if (all->flag == -1)
 	{
 		printf("minishell: cd: OLDPWD not set\n");
@@ -92,11 +93,39 @@ void	dir_back(t_all *all)
 	}
 	else
 	{
+		str = get_env_value(all->env, "OLDPWD");
 		check_dir(str, all);
 		getcwd(dir, 1024);
-		printf("%s", dir);
+		while(dir[++i])
+			;
+		write(1, dir, i);
+		write(1, "\n", 1);
 	}
-	//free(str);
+}
+
+void	change_env(char *s1, t_all *all, int k, char dir[1024])
+{
+	int	i;
+
+	i = -1;
+	if (k == 1)
+	{
+		while (all->env[++i])
+			if (!ft_strncmp("OLDPWD", all->env[i], 6))
+			{
+				free(all->env[i]);
+				all->env[i] = ft_strdup(s1);
+			}
+	}
+	else
+	{
+		while (all->env[++i])
+			if (!ft_strncmp("PWD", all->env[i], 3))
+			{
+				free(all->env[i]);
+				all->env[i] = ft_strdup(s1);
+			}
+	}
 }
 
 void	check_dir(char	*str, t_all *all)
@@ -112,19 +141,20 @@ void	check_dir(char	*str, t_all *all)
 	}
 	else
 	{
-		s1 = ft_strjoin("export OLDPWD=", dir);
-		// parse(s1, all);
+		int i = -1;
+		s1 = ft_strjoin("OLDPWD=", dir);
+		change_env(s1, all, 1, dir);
 		free(s1);
 		getcwd(dir, 1024);
-		// s1 = ft_strjoin("export PWD=", dir);
-		parse(s1, all);
+		s1 = ft_strjoin("export PWD=", dir);
+		i = -1;
+		change_env(s1, all, 0, dir);
 		free(s1);
-		write(1, "hello\n", 6);
-		// clear_all(&all->data);
 		g_exit_status[0] = 1;
 		all->flag++;
 	}
 }
+
 
 void	free_copy(char **copy, int i)
 {

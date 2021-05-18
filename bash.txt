@@ -1,9 +1,15 @@
 cd ..
+cd --
+cd ..
+cd -
+cd -
+
+
+d ..
+cd--
+cd --
  ..
-r
-hell..
-485
-export abc=sjdidmfkmdskmfkmsdkfmsdkm,fkls,dfksd,flk,sdlf,ds
+sdkfmsdkm,fkls,dfksd,flk,sdlf,ds
 export OLDPWD=/Users/jshondra
 export OLDPWD=/Users/jshondra/minishell
 export abc
