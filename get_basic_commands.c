@@ -36,24 +36,24 @@ int	get_env(t_all *all)
 
 	i = -1;
 	if (all->data->args == NULL)
-	{
-		while (all->env[++i])
-			if (check_for_value(all, i, -1) != -1)
-				printf("%s\n", all->env[i]);
-	}
+		print_env(all, i);
 	else
 	{
-		if (!all->data->args[0])
-			printf("env: \"\": No such file or directory\n");
 		while (all->data->args[++i])
 		{
-			if (all->data->args[i][0] == 0 || all->data->args[i] == NULL)
+			if ((((all->data->args[i][0] == 0 || all->data->args[i] \
+			 == NULL) && all->dola != 1) || (all->data->args[i] \
+			  && all->dola != 1)) || (all->data->args[0][0] \
+			   && all->dola == 1))
 			{
 				printf("env: %s: No such file or directory\n", \
 				all->data->args[i]);
-				break ;
+				return (0);
 			}
 		}
+		i = 1;
+		if (all->data->args[0][0] == 0 && all->dola == 1)
+			print_env(all, i);
 	}
 	return (0);
 }
@@ -65,7 +65,8 @@ int	get_cd(t_all *all)
 
 	key = NULL;
 	getcwd(dir, 1024);
-	if (all->data->args == NULL || all->data->args[0][0] == '~')
+	if (all->data->args == NULL || all->data->args[0][0] == '~' \
+	|| !ft_strncmp(all->data->args[0], "--", 3))
 	{
 		key = get_env_value(all->env, "HOME");
 		if ((key == NULL || key[0] == 0) && all->data->args == NULL)
@@ -76,10 +77,12 @@ int	get_cd(t_all *all)
 			return (0);
 		}
 		else
-			check_dir(all->home_path);
+			check_dir(all->home_path, all);
 	}
+	else if (!ft_strcmp(all->data->args[0], "-"))
+		dir_back(all);
 	else
-		check_dir(all->data->args[0]);
+		check_dir(all->data->args[0], all);
 	return (0);
 }
 

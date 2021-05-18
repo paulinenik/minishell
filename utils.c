@@ -79,11 +79,51 @@ int	check_for_value(t_all *all, int	i, int	k)
 	return (-1);
 }
 
-void	check_dir(char	*str)
+void	dir_back(t_all *all)
 {
+	char	*str;
+	char	dir[1024];
+
+	str = get_env_value(all->env, "OLDPWD");
+	if (all->flag == -1)
+	{
+		printf("minishell: cd: OLDPWD not set\n");
+		return ;
+	}
+	else
+	{
+		check_dir(str, all);
+		getcwd(dir, 1024);
+		printf("%s", dir);
+	}
+	//free(str);
+}
+
+void	check_dir(char	*str, t_all *all)
+{
+	char	dir[1024];
+	char	*s1;
+
+	getcwd(dir, 1024);
 	if (chdir(str) == -1)
+	{
 		printf("minishell: cd: %s: No such file or directory\n", str);
-	g_exit_status[0] = 1;
+		g_exit_status[0] = 1;
+	}
+	else
+	{
+		s1 = ft_strjoin("export OLDPWD=", dir);
+		// parse(s1, all);
+		free(s1);
+		getcwd(dir, 1024);
+		// s1 = ft_strjoin("export PWD=", dir);
+		parse(s1, all);
+		free(s1);
+		write(1, "hello\n", 6);
+		// clear_all(&all->data);
+		g_exit_status[0] = 1;
+		all->flag++;
+	}
 }
 
 void	free_copy(char **copy, int i)

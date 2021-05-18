@@ -1,3 +1,5 @@
+#include "libft.h"
+
 void	put(long int *n, long int *b)
 {
 	if ((*n < 0))

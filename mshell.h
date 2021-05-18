@@ -46,6 +46,8 @@ typedef struct s_all
 	int				fd;
 	int				operators_flag;
 	int				amount;
+	int				dola;
+	int				flag;
 }				t_all;
 
 int		g_exit_status[2];
@@ -83,7 +85,7 @@ int		save_index(t_data *data, char **envp);
 int		alnum_search(char **str, int i, int temp, int s);
 char	**unseter(t_all *all, int i, int j, char **copy);
 int		get_exit(t_all *all);
-void	check_dir(char	*str);
+void	check_dir(char	*str, t_all *all);
 int		alnum_search(char **str, int i, int temp, int s);
 void	free_copy(char **copy, int i);
 char	*move_left(char *input, int *i);
@@ -100,6 +102,9 @@ void	create_history(t_all *all, char *str);
 char	*delete_symbol(char *input, int *i);
 char	*arrow_down(char *input, t_all *all, int *i, int l);
 char	*arrow_up(char *input, t_all *all, int *i, int l);
+void	print_env(t_all *all, int i);
+void	dir_back(t_all *all);
+void	ft_signal_cltr_c(int sig);
 
 int		*init_fd(void);
 void	redirect_parse(char **input, t_all *all);

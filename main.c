@@ -35,17 +35,26 @@ void	path_init(t_all *all, char **envp)
 {
 	char	*str;
 	char	*term_name;
+	int		i;
 
+	i = -1;
 	g_exit_status[0] = 0;
-	term_name = "xterm-256color";
 	all->env = init(envp, 0);
+	term_name = "xterm-256color";
 	all->data = NULL;
 	all->commands_hist = NULL;
 	all->size = 0;
 	all->amount = 0;
-	str = get_env_value(all->env, "HOME");
-	all->home_path = ft_strdup(str);
+	all->flag = 0;
+	get_env_value(envp, "HOME");
+	all->home_path = ft_strdup(get_env_value(envp, "HOME"));
 	tgetent(0, term_name);
+	str = get_env_value(envp, "OLDPWD");
+	if (str[0] == 0)
+	{
+		parse("export OLDPWD", all);
+		all->flag = -1;	
+	}
 }
 
 void	start_minishell(t_all *all, struct termios term, \
@@ -66,6 +75,8 @@ struct termios term1)
 	tcsetattr(0, TCSANOW, &term);
 	input = add_char(input, '\0');
 	create_history(all, input);
+	if (ft_strchr(input, '$'))
+		all->dola = 1;
 	parse(input, all);
 	if (input != NULL)
 		free(input);

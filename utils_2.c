@@ -48,3 +48,10 @@ int	alnum_search(char **str, int i, int temp, int s)
 	}
 	return (-1);
 }
+
+void	print_env(t_all *all, int i)
+{
+	while (all->env[++i])
+		if (check_for_value(all, i, -1) != -1)
+			printf("%s\n", all->env[i]);
+}

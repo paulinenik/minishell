@@ -27,6 +27,7 @@ char	**unseter(t_all *all, int	i, int	j, char	**copy)
 					ft_strlen(all->data->args[i]) + 1) == 61))
 			{
 				k++;
+				write(1, "hello", 5);
 				break ;
 			}
 		}
@@ -53,6 +54,7 @@ char	**unset_errors(t_all *all, int	i, int	j, char	**copy)
 	int	f;
 
 	f = 0;
+	k = 1;
 	while (all->env[++i])
 	{
 		j = -1;
