@@ -35,7 +35,7 @@ char	*init_exec_name(char **input, char **envp)
 	while (**input == ' ')
 		(*input)++;
 	while (**input != '\0' && \
-	ft_strchr(" &|;\n", **input) == NULL)
+	ft_strchr(" &><|;\n", **input) == NULL)
 	{
 		if (**input == 39)
 			result = single_qoutation(input, result);
