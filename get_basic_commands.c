@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_basic_commands.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 01:50:27 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/18 01:50:29 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/19 22:44:42 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	get_env(t_all *all)
 			{
 				printf("env: %s: No such file or directory\n", \
 				all->data->args[i]);
-				return (0);
+				return (127);
 			}
 		}
 		i = 1;
@@ -72,9 +72,8 @@ int	get_cd(t_all *all)
 		if ((key == NULL || key[0] == 0) && all->data->args == NULL)
 		{
 			printf("minishell: cd: HOME not set\n");
-			g_exit_status[0] = 1;
 			free(key);
-			return (0);
+			return (1);
 		}
 		else
 			check_dir(all->home_path, all);

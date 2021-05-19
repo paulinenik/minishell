@@ -21,10 +21,11 @@ void	create_child_process(char *path, t_all *all)
 		if (status == -1)
 		{
 			printf("minishell: %s: %s\n", path, strerror(errno));
-			exit(errno);
+			exit(127);
 		}
 	}
 	wait(&g_exit_status[0]);
+	g_exit_status[0] = g_exit_status[0] >> 8;
 	td_array_clear(argv);
 }
 
