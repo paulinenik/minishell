@@ -48,6 +48,7 @@ typedef struct s_all
 	int				amount;
 	int				dola;
 	int				flag;
+	int				shlvl;
 }				t_all;
 
 int		g_exit_status[2];
@@ -105,6 +106,14 @@ char	*arrow_up(char *input, t_all *all, int *i, int l);
 void	print_env(t_all *all, int i);
 void	dir_back(t_all *all);
 void	ft_signal_cltr_c(int sig);
+void	sigint2(int num);
+void	sigquit2(int num);
+void	sigquit(int num);
+void	sigint(int num);
+void	exit_code(t_all *all);
+void	set_shlvl(t_all *all);
+void	catch_sig(t_all *all);
+void	help_dir(int i, char *str, t_all *all, char dir[1024]);
 
 int		*init_fd(void);
 void	redirect_parse(char **input, t_all *all);

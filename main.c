@@ -35,9 +35,7 @@ void	path_init(t_all *all, char **envp)
 {
 	char	*str;
 	char	*term_name;
-	int		i;
 
-	i = -1;
 	g_exit_status[0] = 0;
 	all->env = init(envp, 0);
 	term_name = "xterm-256color";
@@ -49,11 +47,13 @@ void	path_init(t_all *all, char **envp)
 	get_env_value(envp, "HOME");
 	all->home_path = ft_strdup(get_env_value(envp, "HOME"));
 	tgetent(0, term_name);
-	str = get_env_value(envp, "OLDPWD");
+	str = get_env_value(envp, "OLDPWD=");
+	set_shlvl(all);
 	if (str[0] == 0)
 	{
 		parse("export OLDPWD", all);
-		all->flag = -1;	
+		all->flag = -1;
+		free(str);
 	}
 }
 
@@ -97,6 +97,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!all)
 		return (1);
 	path_init(all, envp);
+	catch_sig(all);
 	tcgetattr(0, &term);
 	tcgetattr(0, &term1);
 	 while (1)

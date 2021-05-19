@@ -30,6 +30,7 @@ void	print_export(t_all *all, int i, int j)
 			{
 				write(1, "=\"", 3);
 				write(1, (copy[i] + j + 1), ft_strlen(copy[i] + j + 1));
+				write(1, "\"", 2);
 				break ;
 			}
 			else

@@ -101,12 +101,25 @@ int	get_unset(t_all *all)
 
 int	get_exit(t_all *all)
 {
+	int	i;
+
+	i = -1;
+	write(1, "exit\n", 5);
 	if (ft_strncmp(all->data->bin, "exit", 5))
 		return (1);
 	else
 	{
 		write(1, "exit\n", 5);
-		exit(0);
+		exit_code(all);
+		while (all->data->args[0][++i])
+		{
+			if (ft_isalpha(all->data->args[0][i]))
+			{
+				printf("exit: %s: numeric argument required\n", \
+				all->data->args[0]);
+				exit(255);
+			}
+		}
 	}
 	return (0);
 }

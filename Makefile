@@ -30,6 +30,9 @@ SRCS	= 	main.c \
 			term_caps.c \
 			select_cap.c \
 			create_history.c \
+			signal.c \
+			utils_3.c \
+			#arrows_del.c
 
 LIBFT	= libft/libft.a
 
