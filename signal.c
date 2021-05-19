@@ -1,17 +1,23 @@
 #include "mshell.h"
 
-void	ft_signal_cltr_c(int sig)
+void	sigint(int num)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	g_exit_status[0] = 1;
-	ft_print_shell();
+	(void)num;
+	write(1, "\n", 2);
 }
 
-static	void	ft_signal_quit(int sig)
+void	sigquit(int num)
 {
-	write(1, "\b\b  \b\b", 6);
-	write(1, "^\\Quit: ", 8);
-	ft_putnbr(sig, 1);
-	write(1, "\n", 1);
+	(void)num;
+	write(1, "Quit: 3\n", 9);
+}
+
+void	sigint2(int num)
+{
+	(void)num;
+}
+
+void	sigquit2(int num)
+{
+	(void)num;
 }

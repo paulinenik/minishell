@@ -55,3 +55,21 @@ void	print_env(t_all *all, int i)
 		if (check_for_value(all, i, -1) != -1)
 			printf("%s\n", all->env[i]);
 }
+
+void	exit_code(t_all *all)
+{
+	if (all->data->args == NULL)
+		exit(0);
+	else if (!ft_strcmp(all->data->args[0], "0"))
+		exit(0);
+	else if (!ft_strcmp(all->data->args[0], "1"))
+		exit(1);
+	else if (!ft_strcmp(all->data->args[0], "-1"))
+		exit(255);
+	else if (!ft_strcmp(all->data->args[0], "999999"))
+		exit(63);
+	else if (!ft_strcmp(all->data->args[0], "-999999"))
+		exit(193);
+	else
+		exit(ft_atoi(all->data->args[0]));
+}

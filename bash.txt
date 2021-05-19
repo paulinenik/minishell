@@ -1,17 +1,59 @@
-cd ..
-cd --
+cd -
+cd -
 cd ..
 cd -
 cd -
-
-
-d ..
-cd--
+cd -
+cd ..
+cd -
+cd ~
+cd -
+cd -
 cd --
- ..
-sdkfmsdkm,fkls,dfksd,flk,sdlf,ds
-export OLDPWD=/Users/jshondra
-export OLDPWD=/Users/jshondra/minishell
-export abc
-a
-bash
+cd -
+cd ~
+cd -
+ c
+echo 124 a > b > c
+cat a
+cat b
+cat c
+cat < c > 1
+cat 1
+echo "123" '>' a 
+echo "eqwe\""
+echo "eqwe\""'222'
+echo "eqwe\""'222'$PWD
+echo "eqwe\""'222'$PWD'1'
+echo fsdfsdfsdfsdfsdfsdfsdfsdfsdfdsfsd
+echo '1'1"1"
+echo '1'1"1"asd
+echo '1'1"1"asd'\'
+echo '1'1"1"asd'\''adasdasdas'
+ls > a
+cat a
+ls
+echo 123 > a | grep 123
+echo 123 | grep 123 > 1
+cat 1
+echo 123 | grep 123 > 1; echo 12312312
+echo 123 | grep 123 > 1; echo 12312312; cat 1
+env
+export avc=123
+env
+export
+export
+env
+ls
+unset avc
+env
+unset TERM_PROGRAM
+unset TERM
+env
+unset PATH
+env
+unset OLDPWD
+env
+export
+unset SHLVL
+export
