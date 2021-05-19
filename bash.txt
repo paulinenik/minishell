@@ -1,17 +1,1 @@
-cd ..
-cd --
-cd ..
-cd -
-cd -
 
-
-d ..
-cd--
-cd --
- ..
-sdkfmsdkm,fkls,dfksd,flk,sdlf,ds
-export OLDPWD=/Users/jshondra
-export OLDPWD=/Users/jshondra/minishell
-export abc
-a
-bash

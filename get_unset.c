@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 01:49:41 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/18 01:49:48 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/19 21:45:36 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	**unseter(t_all *all, int	i, int	j, char	**copy)
 					ft_strlen(all->data->args[i]) + 1) == 61))
 			{
 				k++;
-				write(1, "hello", 5);
 				break ;
 			}
 		}

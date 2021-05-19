@@ -75,6 +75,5 @@ char	*get_env_value(char **envp, char *key)
 		if (value == NULL)
 			return (NULL);
 	}
-	write(5, "hell", 4);
 	return (value);
 }
