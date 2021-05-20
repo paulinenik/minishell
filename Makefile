@@ -3,36 +3,35 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jshondra <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/18 01:48:45 by jshondra          #+#    #+#              #
-#    Updated: 2021/05/18 01:48:48 by jshondra         ###   ########.fr        #
+#    Updated: 2021/05/20 17:52:55 by rgordon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	= 	main.c \
-			parse.c \
-			get_basic_commands.c \
-			string_methods.c \
-			clear.c \
-			data_methods.c \
-			array_methods.c \
-			redirect.c \
-			exec_cmd.c \
-			print_exp.c \
-			parse_quotes.c \
-			parse_dollar.c \
-			get_unset.c \
-			utils.c \
-			utils_2.c \
-			make_fork.c \
-			parse_tokens.c \
-			term_caps.c \
-			select_cap.c \
-			create_history.c \
-			signal.c \
-			utils_3.c \
-			#arrows_del.c
+SRCS	= 	srcs/main.c \
+			srcs/redirect.c \
+			srcs/exec_cmd/exec_cmd.c \
+			srcs/exec_cmd/make_fork.c \
+			srcs/builtins/get_basic_commands.c \
+			srcs/builtins/get_unset.c \
+			srcs/builtins/print_exp.c \
+			srcs/parse/parse.c \
+			srcs/parse/parse_tokens.c \
+			srcs/parse/parse_quotes.c \
+			srcs/parse/parse_dollar.c \
+			srcs/utils/string_methods.c \
+			srcs/utils/clear.c \
+			srcs/utils/data_methods.c \
+			srcs/utils/array_methods.c \
+			srcs/utils/utils.c \
+			srcs/utils/utils_2.c \
+			srcs/utils/utils_3.c \
+			srcs/termc/term_caps.c \
+			srcs/termc/select_cap.c \
+			srcs/termc/create_history.c \
+			srcs/termc/signal.c \
 
 LIBFT	= libft/libft.a
 
@@ -50,7 +49,7 @@ CFLAGS =
 
 $(NAME):	$(LIBFT) $(HDRS) $(SRCS) mshell.h
 			@cp $(LIBFT) .
-			$(CC) $(CFLAGS) $(SRCS) $(TCAP_FLAGS) -I./libft libft.a -o $(NAME)
+			$(CC) $(CFLAGS) $(SRCS) $(TCAP_FLAGS) -I./libft -I. libft.a -o $(NAME)
 			@echo "\033[36mminishell is compiled successfully\n\033[0m"
 
 $(LIBFT):	
