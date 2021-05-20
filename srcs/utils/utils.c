@@ -144,7 +144,7 @@ void	check_dir(char	*str, t_all *all)
 		i = -1;
 		change_env(s1, all, 0, dir);
 		free(s1);
-		g_exit_status[0] = 1;
 		all->flag++;
+		g_exit_status[0] = 0;
 	}
 }

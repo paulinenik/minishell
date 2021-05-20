@@ -85,7 +85,8 @@ int	get_cd(t_all *all)
 		dir_back(all);
 	else
 		check_dir(all->data->args[0], all);
-	return (0);
+	free(key);
+	return (g_exit_status[0]);
 }
 
 int	get_echo(t_all *all)

@@ -108,20 +108,14 @@ int	get_exit(t_all *all)
 
 	i = -1;
 	write(1, "exit\n", 5);
-	if (ft_strncmp(all->data->bin, "exit", 5))
-		return (1);
-	else
+	exit_code(all);
+	while (all->data->args[0][++i])
 	{
-		write(1, "exit\n", 5);
-		exit_code(all);
-		while (all->data->args[0][++i])
+		if (ft_isalpha(all->data->args[0][i]))
 		{
-			if (ft_isalpha(all->data->args[0][i]))
-			{
-				printf("exit: %s: numeric argument required\n", \
-				all->data->args[0]);
-				exit(255);
-			}
+			printf("exit: %s: numeric argument required\n", \
+			all->data->args[0]);
+			exit(255);
 		}
 	}
 	return (0);

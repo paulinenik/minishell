@@ -56,7 +56,7 @@ void	path_init(t_all *all, char **envp)
 	set_shlvl(all);
 	if (str[0] == 0)
 	{
-		parse("export OLDPWD", all);
+		set_oldpwd(all);
 		all->flag = -1;
 		free(str);
 	}

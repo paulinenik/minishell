@@ -76,3 +76,18 @@ void	exit_code(t_all *all)
 	else
 		exit(ft_atoi(all->data->args[0]));
 }
+
+void	set_oldpwd(t_all *all)
+{
+	int		i;
+	char	**copy;
+
+	i = -1;
+	copy = init(all->env, 1);
+	while (all->env[++i])
+		;
+	copy[i] = ft_strdup("OLDPWD");
+	copy[i + 1] = NULL;
+	td_array_clear(all->env);
+	all->env = copy;
+}

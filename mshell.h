@@ -102,6 +102,7 @@ void	exit_code(t_all *all);
 void	set_shlvl(t_all *all);
 void	catch_sig(t_all *all);
 void	help_dir(int i, char *str, t_all *all, char dir[1024]);
+void	set_oldpwd(t_all *all);
 
 int		*init_fd(void);
 void	redirect_parse(char **input, t_all *all);

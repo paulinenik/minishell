@@ -1,0 +1,14 @@
+exit -1
+ME
+cd --
+cd ~
+cd ..
+cd -
+pwd
+cd ./education
+cd -
+cd ..
+unset OLDPWD
+cd -
+cd --
+cd ~
