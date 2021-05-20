@@ -1,21 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   mshell.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/05 19:35:10 by rgordon           #+#    #+#             */
-/*   Updated: 2021/05/18 01:48:32 by jshondra         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MSHELL_H
 # define MSHELL_H
 # include <term.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include "libft/libft.h"
+# include "libft.h"
 # include <stdio.h>
 # include <fcntl.h>
 # include <dirent.h>
@@ -23,7 +11,7 @@
 # include <string.h>
 # include <termios.h>
 # include <string.h>
-# include <stdio.h>
+# include <signal.h>
 
 typedef struct s_data
 {
@@ -76,7 +64,7 @@ int		get_env(t_all *all);
 int		get_cd(t_all *all);
 void	td_array_clear(char **arr);
 int		get_echo(t_all *all);
-void	clear_all(t_data **data);
+void	clear_data(t_data **data);
 int		get_unset(t_all *all);
 void	print_export(t_all *all, int i, int j);
 char	**alph_sort(char **copy, int n);

@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/05/18 01:48:45 by jshondra          #+#    #+#              #
-#    Updated: 2021/05/20 17:52:55 by rgordon          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 SRCS	= 	srcs/main.c \
 			srcs/redirect.c \
 			srcs/exec_cmd/exec_cmd.c \
@@ -67,6 +55,7 @@ leaks:
 fclean:		clean
 			make fclean -C libft/
 			$(RM) $(NAME) libft.a
+			echo > bash.txt
 			@echo "\033[36mDone!\n\033[0m"
 
 re:			fclean all

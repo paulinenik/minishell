@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   select_cap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 01:49:12 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/18 01:49:14 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/20 18:25:24 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mshell.h"
+#include "libft.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <term.h>
 
 char	*selector_cap(char *input, int *i, char buf[101], t_all *all)
 {

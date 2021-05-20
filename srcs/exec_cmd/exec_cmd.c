@@ -1,4 +1,8 @@
 #include "mshell.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <dirent.h>
+#include <stdio.h>
 
 void	to_process(t_all *all)
 {

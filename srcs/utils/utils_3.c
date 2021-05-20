@@ -1,4 +1,8 @@
 #include "mshell.h"
+#include "libft.h"
+#include <signal.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 void	set_shlvl(t_all *all)
 {

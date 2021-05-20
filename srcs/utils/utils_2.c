@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 01:47:24 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/18 01:47:26 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/20 18:31:25 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mshell.h"
+#include "libft.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 int	help_search(char **str, int i, int temp)
 {

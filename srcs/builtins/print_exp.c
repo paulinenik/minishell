@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   print_exp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 01:47:59 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/18 01:48:01 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/20 18:16:04 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mshell.h"
+#include "libft.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 void	print_export(t_all *all, int i, int j)
 {

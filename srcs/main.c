@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 01:47:02 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/18 01:47:05 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/20 18:07:59 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mshell.h"
+#include "libft.h"
+#include "unistd.h"
+#include <term.h>
+#include <termios.h>
+#include <stdlib.h>
 
 char	**init(char **envp, int k)
 {
@@ -81,7 +86,7 @@ struct termios term1)
 	if (input != NULL)
 		free(input);
 	input = NULL;
-	clear_all(&all->data);
+	clear_data(&all->data);
 }
 
 int	main(int argc, char **argv, char **envp)

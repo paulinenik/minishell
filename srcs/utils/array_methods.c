@@ -1,4 +1,7 @@
 #include "mshell.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <errno.h>
 
 void	array_concat(t_data *data, char **new_args)
 {

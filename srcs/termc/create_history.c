@@ -1,4 +1,8 @@
 #include "mshell.h"
+#include "libft.h"
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdlib.h>
 
 void	print_in_file(char *str, t_all *all)
 {

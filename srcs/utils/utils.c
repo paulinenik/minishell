@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 01:47:16 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/18 01:47:18 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/20 18:33:40 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mshell.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 
 char	**alph_sort(char	**copy, int	n)
 {

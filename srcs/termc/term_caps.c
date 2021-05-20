@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   term_caps.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jshondra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 01:47:33 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/18 01:49:23 by jshondra         ###   ########.fr       */
+/*   Updated: 2021/05/20 18:27:24 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mshell.h"
+#include <term.h>
+#include <termios.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 char	*move_right(char *input, int *i)
 {

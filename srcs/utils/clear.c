@@ -1,4 +1,5 @@
 #include "mshell.h"
+#include <stdlib.h>
 
 void	td_array_clear(char **arr)
 {
@@ -17,7 +18,7 @@ void	td_array_clear(char **arr)
 	arr = NULL;
 }
 
-void	clear_all(t_data **data)
+void	clear_data(t_data **data)
 {
 	t_data	*head;
 

@@ -19,7 +19,7 @@ void	parse_semicolon(char **input, t_all *all)
 		to_process(all);
 	if (**input != ';')
 		toggle_operator_flag(input, all);
-	clear_all(&all->data);
+	clear_data(&all->data);
 	all->data = init_data();
 	(*input)++;
 	all->data->bin = init_exec_name(input, all->env);

@@ -1,4 +1,5 @@
 #include "mshell.h"
+#include <unistd.h>
 
 void	sigint(int num)
 {

@@ -1,4 +1,9 @@
 #include "mshell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <dirent.h>
 
 void	create_child_process(char *path, t_all *all)
 {

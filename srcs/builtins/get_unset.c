@@ -6,11 +6,14 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 01:49:41 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/19 21:45:36 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/05/20 18:15:06 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mshell.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 char	**unseter(t_all *all, int	i, int	j, char	**copy)
 {

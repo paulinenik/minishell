@@ -1,4 +1,7 @@
 #include "mshell.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <errno.h>
 
 char	*parse_dollar(char **input, char **envp, char *arg)
 {

@@ -1,4 +1,7 @@
 #include "mshell.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <errno.h>
 
 t_data	*init_data(void)
 {
@@ -65,6 +68,8 @@ int	*init_fd(void)
 	int	*fds;
 
 	fds = (int *)malloc(sizeof(int) * 2);
+	if (fds == NULL)
+		exit(ENOMEM);
 	fds[0] = 0;
 	fds[1] = 1;
 	return (fds);

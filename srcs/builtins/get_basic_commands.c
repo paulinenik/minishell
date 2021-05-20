@@ -6,11 +6,14 @@
 /*   By: rgordon <rgordon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 01:50:27 by jshondra          #+#    #+#             */
-/*   Updated: 2021/05/19 22:44:42 by rgordon          ###   ########.fr       */
+/*   Updated: 2021/05/20 18:13:16 by rgordon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mshell.h"
+#include "libft.h"
+#include <stdio.h>
+#include <unistd.h>
 
 int	get_pwd(void)
 {

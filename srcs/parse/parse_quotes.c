@@ -1,4 +1,6 @@
 #include "mshell.h"
+#include "libft.h"
+#include <stdlib.h>
 
 char	*single_qoutation(char **input, char *arg)
 {

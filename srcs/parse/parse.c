@@ -1,4 +1,7 @@
 #include "mshell.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <errno.h>
 
 void	parse(char *input, t_all *all)
 {
@@ -98,7 +101,7 @@ void	check_specchar(char **input, t_all *all)
 		next_data->fd[0] = parse_pipes(input, all);
 		if (next_data->fd[0] == -1)
 		{	
-			clear_all(&next_data);
+			clear_data(&next_data);
 			return ;
 		}
 		add_data_front(&all->data, next_data);
